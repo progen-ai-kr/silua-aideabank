@@ -48,6 +48,43 @@ if (menu && toggles.length) {
   }));
 }
 
+// 메인 화면의 세로 스크롤 진행률을 이미지 줄의 가로 이동 거리로 바꿉니다.
+const scrollHero = document.querySelector(".hero");
+const scrollStage = document.querySelector(".hero-scroll-stage");
+const scrollTrack = document.querySelector(".hero-marquee-track");
+
+if (scrollHero && scrollStage && scrollTrack) {
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let animationFrame = 0;
+
+  const updateScrollGallery = () => {
+    animationFrame = 0;
+
+    if (reducedMotion.matches) {
+      scrollTrack.style.transform = "translate3d(0, 0, 0)";
+      return;
+    }
+
+    const headerHeight = document.querySelector(".site-header")?.getBoundingClientRect().height || 0;
+    const heroTop = scrollHero.getBoundingClientRect().top;
+    const scrollDistance = Math.max(1, scrollHero.offsetHeight - scrollStage.offsetHeight);
+    const progress = Math.min(1, Math.max(0, (headerHeight - heroTop) / scrollDistance));
+    const horizontalDistance = Math.max(0, scrollTrack.scrollWidth - scrollStage.clientWidth);
+
+    scrollTrack.style.transform = `translate3d(${-horizontalDistance * progress}px, 0, 0)`;
+  };
+
+  const requestGalleryUpdate = () => {
+    if (!animationFrame) animationFrame = requestAnimationFrame(updateScrollGallery);
+  };
+
+  addEventListener("scroll", requestGalleryUpdate, { passive: true });
+  addEventListener("resize", requestGalleryUpdate);
+  reducedMotion.addEventListener?.("change", requestGalleryUpdate);
+  scrollTrack.querySelectorAll("img").forEach((image) => image.addEventListener("load", requestGalleryUpdate, { once: true }));
+  requestGalleryUpdate();
+}
+
 // 고정 문구용 한·영 번역입니다. 관리자에서 작성한 제품·포트폴리오 본문은 원문을 유지합니다.
 const translations = {
   ko: {
@@ -100,7 +137,7 @@ function applyPageTranslation(page, text) {
 
   if (page === "index.html") {
     setText(".hero h1", text.heroTitle);
-    setText(".hero > p:not(.eyebrow)", text.heroSub);
+    setText(".hero-copy > p:not(.eyebrow)", text.heroSub);
     setText(".hero .btn", text.action);
     if (sections[0]) {
       setText("h2", text.strengths, sections[0]);
