@@ -52,7 +52,7 @@ if (menu && toggles.length) {
 const translations = {
   ko: {
     common: {
-      notice: "공지",
+      notice: "문의",
       menuOpen: "주요 메뉴 열기",
       menuClose: "주요 메뉴 닫기",
       admin: "관리자 로그인",
