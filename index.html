@@ -95,6 +95,17 @@
     </a>
   </section>
 
+  <!-- ===== 인기상품: products.json의 공개 제품을 자동으로 불러옵니다. ===== -->
+  <section class="popular-products" id="popular-products">
+    <h2>지금 인기 있는 상품이에요</h2>
+    <div class="popular-product-grid" id="home-looks" aria-live="polite"></div>
+    <div class="popular-pagination" aria-label="인기상품 페이지 이동">
+      <button class="popular-page-button" id="popularPrevious" type="button" aria-label="이전 상품">‹</button>
+      <p><strong id="popularCurrent">1</strong> / <span id="popularTotal">1</span></p>
+      <button class="popular-page-button" id="popularNext" type="button" aria-label="다음 상품">›</button>
+    </div>
+  </section>
+
   <!-- ===== 강점 3가지 [작성서 04 홈: 강점3가지] ===== -->
   <section class="section">
     <p class="eyebrow">WHY US</p>
@@ -118,13 +129,6 @@
     </div>
   </section>
 
-  <!-- ===== 대표 제품 미리보기 — products.json에서 자동으로 채워짐 ===== -->
-  <section class="section">
-    <p class="eyebrow">COLLECTION</p>
-    <h2>대표 룩</h2>
-    <div class="grid" id="home-looks"></div>
-  </section>
-
   <!-- ===== 푸터 (5페이지 공통) [작성서 01: 푸터 표기 정보] ===== -->
   <footer class="footer">
     <p class="logo">SILUA</p>
@@ -138,25 +142,55 @@
   <script src="script.js"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
-    // 공개 제품 중 '홈 대표 제품'을 최대 4개 보여줍니다.
+    // 공개 제품을 인기상품 카드로 보여주며 화면 크기에 맞춰 페이지를 나눕니다.
     ProductCatalog.loadVisibleProducts()
       .then((products) => {
         const featured = products.filter((product) => product.featured);
-        const homeProducts = (featured.length ? featured : products).slice(0, 4);
-        document.getElementById("home-looks").innerHTML = homeProducts
-          .map((p) => {
+        const homeProducts = featured.length ? featured : products;
+        const grid = document.getElementById("home-looks");
+        const previous = document.getElementById("popularPrevious");
+        const next = document.getElementById("popularNext");
+        const currentLabel = document.getElementById("popularCurrent");
+        const totalLabel = document.getElementById("popularTotal");
+        let currentPage = 0;
+        let itemsPerPage = 1;
+
+        const getItemsPerPage = () => window.innerWidth >= 901 ? 4 : window.innerWidth >= 720 ? 2 : 1;
+
+        const renderProducts = () => {
+          itemsPerPage = getItemsPerPage();
+          const totalPages = Math.max(1, Math.ceil(homeProducts.length / itemsPerPage));
+          currentPage = Math.min(currentPage, totalPages - 1);
+          const visibleProducts = homeProducts.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+          const isEnglish = document.documentElement.lang === "en";
+
+          grid.innerHTML = visibleProducts.map((p) => {
             const image = ProductCatalog.safeImageUrl(p.images && p.images[0]);
             const img = image
               ? '<img src="' + ProductCatalog.escapeHtml(image) + '" alt="' + ProductCatalog.escapeHtml(p.name) + '" onerror="this.remove()" />'
               : "";
+            const price = p.price || (isEnglish ? "Price on request" : "가격 문의");
             return (
-              '<a class="card" href="product.html?id=' + encodeURIComponent(p.id) + '">' +
-              '<div class="card-img">' + img + "</div>" +
-              '<p class="k">' + ProductCatalog.escapeHtml(p.label || p.category || "") + "</p>" +
-              "<h3>" + ProductCatalog.escapeHtml(p.name) + "</h3></a>"
+              '<a class="popular-product-card" href="product.html?id=' + encodeURIComponent(p.id) + '">' +
+              '<div class="popular-product-image">' + img + '<span class="popular-zoom" aria-hidden="true"></span></div>' +
+              '<p class="popular-product-label">' + ProductCatalog.escapeHtml(p.label || p.category || "") + "</p>" +
+              '<h3>' + ProductCatalog.escapeHtml(p.name) + '</h3>' +
+              '<p class="popular-product-price">' + ProductCatalog.escapeHtml(price) + '</p>' +
+              '<span class="popular-product-action">' + (isEnglish ? "VIEW PRODUCT" : "상품 보기") + '</span></a>'
             );
-          })
-          .join("");
+          }).join("");
+
+          currentLabel.textContent = String(currentPage + 1);
+          totalLabel.textContent = String(totalPages);
+          previous.disabled = currentPage === 0;
+          next.disabled = currentPage === totalPages - 1;
+        };
+
+        previous.addEventListener("click", () => { currentPage -= 1; renderProducts(); });
+        next.addEventListener("click", () => { currentPage += 1; renderProducts(); });
+        window.addEventListener("resize", renderProducts);
+        document.addEventListener("silua:languagechange", renderProducts);
+        renderProducts();
       })
       .catch(() => {});
   </script>
