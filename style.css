@@ -13,7 +13,7 @@
   --header-light: #fff;
   --header-glass: rgba(245, 242, 236, .3);
   --header-hover: #9c7770;
-  --hero-overlay: rgba(253, 252, 249, 0);
+  --hero-overlay: rgba(253, 252, 249, .54);
   --font-main: "Pretendard", -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
   --font-display: Georgia, "Times New Roman", serif;
 
