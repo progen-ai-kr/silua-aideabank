@@ -58,7 +58,6 @@ a { color: inherit; }
 .gnb-menu a { display: flex; min-height: 44px; align-items: center; border-top: 1px solid var(--line); color: var(--ink); font-size: 12px; letter-spacing: 1.2px; text-decoration: none; }
 .gnb-submenu { margin: 0; padding: 0 0 10px 16px; list-style: none; }
 .gnb-submenu a { min-height: 38px; border-top: 0; color: var(--ink-soft); font-size: 11px; }
-.gnb-submenu-title { padding: 8px 0 4px; color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: .08em; }
 .gnb-submenu-section { margin-top: 5px; color: var(--ink); font-size: 11px; font-weight: 600; }
 .gnb-submenu-section > a { color: var(--ink); font-weight: 600; }
 .gnb-submenu-detail a { min-height: 32px; padding-left: 12px; font-size: 10px; }
@@ -75,7 +74,7 @@ a { color: inherit; }
 .search-button span::after { content: ""; position: absolute; right: -6px; bottom: -4px; width: 7px; height: 1.5px; background: var(--ink); transform: rotate(45deg); transform-origin: left center; }
 
 /* ===== 히어로: 일정 간격으로 교체되는 페이드 슬라이드 ===== */
-.hero { position: relative; min-height: calc(100svh - 34px); margin-top: -70px; overflow: hidden; background: var(--surface); display: flex; align-items: center; justify-content: center; padding: 48px 22px; text-align: left; isolation: isolate; }
+.hero { position: relative; min-height: calc(100svh - 34px); margin-top: -70px; overflow: hidden; background: var(--surface); display: flex; align-items: center; justify-content: flex-start; padding: 48px 22px; text-align: left; isolation: isolate; }
 .hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--hero-overlay); pointer-events: none; }
 .hero-slides { position: absolute; inset: 0; z-index: -2; }
 .hero-slide { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity 1s ease; }
@@ -87,7 +86,7 @@ a { color: inherit; }
 .hero-indicator.is-active { background: var(--ink); }
 .hero-indicator:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 .hero .eyebrow { font-size: 12px; letter-spacing: 3px; color: var(--ink-soft); text-transform: uppercase; }
-.hero h1 { width: 100%; max-width: 100%; overflow-wrap: anywhere; font-family: var(--font-display); font-size: clamp(28px, 8vw, 58px); letter-spacing: 1px; }
+.hero h1 { width: 100%; max-width: 100%; overflow-wrap: break-word; font-family: var(--font-display); font-size: clamp(23px, 4.5vw, 40px); line-height: 1.35; letter-spacing: 1px; word-break: keep-all; }
 .hero p { width: 100%; max-width: 560px; overflow-wrap: anywhere; color: var(--ink-soft); }
 
 /* ===== 홈 카테고리: 이미지 + 제목 + 짧은 소개 ===== */
@@ -323,6 +322,7 @@ a { color: inherit; }
   .product-gallery.columns-3 { grid-template-columns: repeat(3, 1fr); }
   .product-highlight { padding: 64px; }
   .contact-list { grid-template-columns: repeat(2, 1fr); }
+  .story-contact .contact-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 /* 데스크톱: 큰 SILUA에 커서를 올리면 메뉴가 왼쪽부터 차례로 나타납니다. */
@@ -330,6 +330,7 @@ a { color: inherit; }
   .top-header { padding: 0 24px; }
   .gnb { height: 78px; padding: 0 24px; }
   .hero { margin-top: -78px; padding-inline: 7vw; }
+  .hero-copy { max-width: 540px; }
   .popular-product-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
   .logo { font-size: 27px; }
   .menu-button { display: none; }
@@ -341,6 +342,7 @@ a { color: inherit; }
   .gnb-menu.open > li:nth-child(3) { animation-delay: .14s; }
   .gnb-menu.open > li:nth-child(4) { animation-delay: .21s; }
   .gnb-menu.open > li:nth-child(5) { animation-delay: .28s; }
+  .gnb-menu.open > li:nth-child(6) { animation-delay: .35s; }
   .gnb-menu > li > a { position: relative; min-height: 78px; border: 0; font-size: clamp(10px, 1vw, 12px); transition: color .25s ease; }
   .gnb-menu > li > a:hover { color: var(--header-hover); }
   .gnb-menu > li > a::after { content: ""; position: absolute; left: 0; bottom: 20px; width: 0; height: 1px; background: var(--header-hover); transition: width .25s ease; }
