@@ -46,7 +46,7 @@ a { color: inherit; }
 .top-links span { opacity: .7; }
 .language-button { padding: 4px 0; border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; opacity: .55; }
 .language-button[aria-pressed="true"] { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
-.gnb { position: relative; height: 70px; padding: 0 20px; display: flex; align-items: center; background: var(--header-glass); border-bottom: 1px solid var(--line); }
+.gnb { position: relative; height: 70px; padding: 0 20px; display: flex; align-items: center; background: var(--header-glass); border-bottom: 1px solid var(--line); opacity: .3; }
 .logo { flex-shrink: 0; color: var(--ink); font-family: var(--font-display); font-size: 24px; font-weight: 500; letter-spacing: 2px; text-decoration: none; }
 .logo-menu-button { padding: 0; border: 0; background: transparent; cursor: pointer; }
 .gnb-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; max-height: calc(100dvh - 104px); overflow-y: auto; margin: 0; padding: 8px 20px 18px; flex-direction: column; background: var(--header-light); border-bottom: 1px solid var(--line); list-style: none; }
