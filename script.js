@@ -3,7 +3,7 @@ const menu = document.querySelector(".gnb-menu");
 const gnb = document.querySelector(".gnb");
 const logoToggle = document.querySelector(".logo-menu-button");
 const menuButton = document.querySelector(".menu-button");
-const toggles = document.querySelectorAll(".logo-menu-button, .menu-button");
+const toggles = document.querySelectorAll(".menu-button");
 const desktopHover = window.matchMedia("(min-width: 901px) and (hover: hover) and (pointer: fine)");
 
 if (menu && toggles.length) {
@@ -19,8 +19,7 @@ if (menu && toggles.length) {
   };
 
   logoToggle?.addEventListener("click", () => {
-    if (desktopHover.matches) return;
-    setMenuState(!menu.classList.contains("open"));
+    location.href = "index.html";
   });
 
   menuButton?.addEventListener("click", () => {
@@ -43,7 +42,12 @@ if (menu && toggles.length) {
     if (desktopHover.matches) setMenuState(true);
   });
 
-  menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => {
+  // 영문 상위 메뉴는 페이지 이동 없이 하위 메뉴를 보여주는 역할만 합니다.
+  menu.querySelectorAll(":scope > li > a").forEach((link) => link.addEventListener("click", (event) => {
+    event.preventDefault();
+  }));
+
+  menu.querySelectorAll(".gnb-submenu a").forEach((link) => link.addEventListener("click", () => {
     setMenuState(false);
   }));
 }
@@ -90,6 +94,7 @@ const translations = {
   ko: {
     common: {
       notice: "문의",
+      home: "홈으로 이동",
       menuOpen: "주요 메뉴 열기",
       menuClose: "주요 메뉴 닫기",
       admin: "관리자 로그인",
@@ -108,6 +113,7 @@ const translations = {
   en: {
     common: {
       notice: "NOTICE",
+      home: "Go to home",
       menuOpen: "Open main menu",
       menuClose: "Close main menu",
       admin: "Administrator login",
@@ -200,7 +206,10 @@ function applyLanguage(language, remember = true) {
   document.querySelectorAll(".language-button").forEach((button) => {
     button.setAttribute("aria-pressed", String(button.dataset.language === selected));
   });
-  document.querySelectorAll(".logo-menu-button, .menu-button").forEach((button) => {
+  logoToggle?.setAttribute("aria-label", dictionary.common.home);
+  logoToggle?.removeAttribute("aria-controls");
+  logoToggle?.removeAttribute("aria-expanded");
+  document.querySelectorAll(".menu-button").forEach((button) => {
     button.setAttribute("aria-label", menu?.classList.contains("open") ? dictionary.common.menuClose : dictionary.common.menuOpen);
   });
   document.querySelector(".user-button")?.setAttribute("aria-label", dictionary.common.admin);
