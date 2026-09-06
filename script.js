@@ -55,9 +55,14 @@ if (menu && toggles.length) {
 // 메인 이미지가 일정 간격으로 부드럽게 사라지고 다음 이미지로 교체됩니다.
 const hero = document.querySelector(".hero");
 const heroSlides = [...document.querySelectorAll(".hero-slide")];
-const heroIndicators = [...document.querySelectorAll(".hero-indicator")];
+const heroPagination = document.querySelector(".hero-pagination");
 
-if (hero && heroSlides.length && heroSlides.length === heroIndicators.length) {
+if (hero && heroSlides.length && heroPagination) {
+  heroPagination.innerHTML = heroSlides.map((_, index) => (
+    `<button class="hero-indicator${index === 0 ? " is-active" : ""}" type="button" ` +
+    `aria-label="${index + 1}번째 이미지 보기" aria-current="${index === 0}"></button>`
+  )).join("");
+  const heroIndicators = [...heroPagination.querySelectorAll(".hero-indicator")];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let currentSlide = 0;
   let slideTimer = 0;

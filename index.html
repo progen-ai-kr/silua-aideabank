@@ -71,12 +71,8 @@
       <p>서브 카피 (40자 내) — 브랜드를 소개하는 짧은 문장을 적으세요.</p>
       <a href="products.html" class="btn">컬렉션 보기</a>
     </div>
-    <div class="hero-pagination" aria-label="메인 이미지 선택">
-      <button class="hero-indicator is-active" type="button" aria-label="첫 번째 이미지 보기" aria-current="true"></button>
-      <button class="hero-indicator" type="button" aria-label="두 번째 이미지 보기" aria-current="false"></button>
-      <button class="hero-indicator" type="button" aria-label="세 번째 이미지 보기" aria-current="false"></button>
-      <button class="hero-indicator" type="button" aria-label="네 번째 이미지 보기" aria-current="false"></button>
-    </div>
+    <!-- 이미지 수를 기준으로 전환 막대가 자동 생성됩니다. -->
+    <div class="hero-pagination" aria-label="메인 이미지 선택"></div>
   </section>
 
   <!-- ===== 메인 카테고리: 전용 사진을 받으면 이미지 경로만 교체하세요. ===== -->
@@ -104,6 +100,11 @@
       <p><strong id="popularCurrent">1</strong> / <span id="popularTotal">1</span></p>
       <button class="popular-page-button" id="popularNext" type="button" aria-label="다음 상품">›</button>
     </div>
+  </section>
+
+  <!-- ===== 에디토리얼 상품 그리드: 공개 제품을 큰 이미지 중심으로 표시합니다. ===== -->
+  <section class="editorial-products" aria-label="SILUA 상품 갤러리">
+    <div class="editorial-product-grid" id="homeEditorialGrid"></div>
   </section>
 
   <!-- ===== 강점 3가지 [작성서 04 홈: 강점3가지] ===== -->
@@ -148,6 +149,7 @@
         const featured = products.filter((product) => product.featured);
         const homeProducts = featured.length ? featured : products;
         const grid = document.getElementById("home-looks");
+        const editorialGrid = document.getElementById("homeEditorialGrid");
         const previous = document.getElementById("popularPrevious");
         const next = document.getElementById("popularNext");
         const currentLabel = document.getElementById("popularCurrent");
@@ -186,11 +188,32 @@
           next.disabled = currentPage === totalPages - 1;
         };
 
+        const renderEditorialProducts = () => {
+          const isEnglish = document.documentElement.lang === "en";
+          editorialGrid.innerHTML = homeProducts.map((p) => {
+            const image = ProductCatalog.safeImageUrl(p.images && p.images[0]);
+            const img = image
+              ? '<img src="' + ProductCatalog.escapeHtml(image) + '" alt="' + ProductCatalog.escapeHtml(p.name) + '" onerror="this.remove()" />'
+              : "";
+            const price = p.price || (isEnglish ? "Price on request" : "가격 문의");
+            return (
+              '<a class="editorial-product-card" href="product.html?id=' + encodeURIComponent(p.id) + '">' +
+              '<figure>' + img + '</figure><div class="editorial-product-copy">' +
+              '<h3>' + ProductCatalog.escapeHtml(p.name) + '</h3>' +
+              '<p>' + ProductCatalog.escapeHtml(price) + '</p></div></a>'
+            );
+          }).join("");
+        };
+
         previous.addEventListener("click", () => { currentPage -= 1; renderProducts(); });
         next.addEventListener("click", () => { currentPage += 1; renderProducts(); });
         window.addEventListener("resize", renderProducts);
-        document.addEventListener("silua:languagechange", renderProducts);
+        document.addEventListener("silua:languagechange", () => {
+          renderProducts();
+          renderEditorialProducts();
+        });
         renderProducts();
+        renderEditorialProducts();
       })
       .catch(() => {});
   </script>
