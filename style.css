@@ -36,7 +36,7 @@ a { color: inherit; }
 .brand-links,
 .top-links { position: relative; z-index: 1; }
 .top-notice { position: absolute; left: 50%; width: 34%; overflow: hidden; margin: 0; font-size: 9px; text-align: center; text-overflow: ellipsis; white-space: nowrap; transform: translateX(-50%); }
-.brand-links a { font-weight: 600; text-decoration: none; }
+.brand-links span { font-weight: 600; }
 .top-links { gap: 12px; }
 .top-links a,
 .language-button { transition: opacity .2s ease; }
