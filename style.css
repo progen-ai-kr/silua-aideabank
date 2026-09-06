@@ -11,7 +11,7 @@
   --line: #e8e4dd;      /* 테두리 선 */
   --header-dark: #222;
   --header-light: #fff;
-  --header-glass: #f8f6f2;
+  --header-glass: rgba(245, 242, 236, .7);
   --header-hover: #9c7770;
   --hero-overlay: rgba(253, 252, 249, .54);
   --font-main: "Pretendard", -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
@@ -46,7 +46,7 @@ a { color: inherit; }
 .top-links span { opacity: .7; }
 .language-button { padding: 4px 0; border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; opacity: .55; }
 .language-button[aria-pressed="true"] { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
-.gnb { position: relative; height: 70px; padding: 0 20px; display: flex; align-items: center; background: var(--header-glass); border-bottom: 1px solid var(--line); }
+.gnb { position: relative; height: 70px; padding: 0 20px; display: flex; align-items: center; background: var(--header-glass); border-bottom: 0; }
 .logo { flex-shrink: 0; color: var(--ink); font-family: var(--font-display); font-size: 24px; font-weight: 500; letter-spacing: 2px; text-decoration: none; }
 .logo-menu-button { padding: 0; border: 0; background: transparent; cursor: pointer; }
 .gnb-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; max-height: calc(100dvh - 104px); overflow-y: auto; margin: 0; padding: 8px 20px 18px; flex-direction: column; background: var(--header-light); border-bottom: 1px solid var(--line); list-style: none; }
@@ -66,8 +66,8 @@ a { color: inherit; }
 .search-button span::after { content: ""; position: absolute; right: -6px; bottom: -4px; width: 7px; height: 1.5px; background: var(--ink); transform: rotate(45deg); transform-origin: left center; }
 
 /* ===== 히어로: 세로 스크롤에 연동되는 가로 이미지 갤러리 ===== */
-.hero { position: relative; height: 260vh; overflow: clip; background: var(--surface); }
-.hero-scroll-stage { position: sticky; top: 104px; height: calc(100vh - 104px); overflow: hidden; display: flex; align-items: center; justify-content: center; text-align: center; padding: 48px 22px; isolation: isolate; }
+.hero { position: relative; height: 260vh; margin-top: -70px; overflow: clip; background: var(--surface); }
+.hero-scroll-stage { position: sticky; top: 34px; height: calc(100vh - 34px); overflow: hidden; display: flex; align-items: center; justify-content: center; text-align: center; padding: 48px 22px; isolation: isolate; }
 .hero-scroll-stage::after { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--hero-overlay); pointer-events: none; }
 .hero-marquee { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
 .hero-marquee-track { display: flex; width: max-content; height: 100%; transform: translate3d(0, 0, 0); will-change: transform; }
@@ -268,7 +268,8 @@ a { color: inherit; }
 @media (min-width: 901px) {
   .top-header { padding: 0 24px; }
   .gnb { height: 78px; padding: 0 24px; }
-  .hero-scroll-stage { top: 112px; height: calc(100vh - 112px); }
+  .hero { margin-top: -78px; }
+  .hero-scroll-stage { top: 34px; height: calc(100vh - 34px); }
   .logo { font-size: 27px; }
   .menu-button { display: none; }
   .gnb-menu { position: static; display: none; overflow: visible; margin-left: clamp(24px, 4vw, 70px); padding: 0; flex-direction: row; gap: clamp(14px, 2vw, 46px); background: transparent; border: 0; }

@@ -69,7 +69,7 @@ if (scrollHero && scrollStage && scrollTrack) {
       return;
     }
 
-    const headerHeight = document.querySelector(".site-header")?.getBoundingClientRect().height || 0;
+    const headerHeight = document.querySelector(".top-header")?.getBoundingClientRect().height || 0;
     const heroTop = scrollHero.getBoundingClientRect().top;
     const scrollDistance = Math.max(1, scrollHero.offsetHeight - scrollStage.offsetHeight);
     const progress = Math.min(1, Math.max(0, (headerHeight - heroTop) / scrollDistance));
