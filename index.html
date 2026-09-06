@@ -59,25 +59,40 @@
 
   <!-- ===== 히어로 [작성서 04 홈: 메인 카피·서브 카피] ===== -->
   <section class="hero">
-    <div class="hero-scroll-stage">
-      <!-- 세로 스크롤 위치에 맞춰 이미지 줄이 좌우로 이동합니다. -->
-      <div class="hero-marquee" aria-hidden="true">
-        <div class="hero-marquee-track">
-          <div class="hero-marquee-group">
-            <figure class="hero-marquee-item"><img src="images/main-01.jpg" alt="" fetchpriority="high" /></figure>
-            <figure class="hero-marquee-item"><img src="images/main-02.jpg" alt="" /></figure>
-            <figure class="hero-marquee-item"><img src="images/main-03.jpg" alt="" /></figure>
-            <figure class="hero-marquee-item"><img src="images/main-04.jpg" alt="" /></figure>
-          </div>
-        </div>
-      </div>
-      <div class="hero-copy">
-        <p class="eyebrow">BRAND KEYWORD · KEYWORD</p>
-        <h1>메인 카피 (20자 내)</h1>
-        <p>서브 카피 (40자 내) — 브랜드를 소개하는 짧은 문장을 적으세요.</p>
-        <a href="products.html" class="btn">컬렉션 보기</a>
-      </div>
+    <div class="hero-slides" aria-live="polite">
+      <figure class="hero-slide is-active"><img src="images/main-01.jpg" alt="SILUA 메인 컬렉션 1" fetchpriority="high" /></figure>
+      <figure class="hero-slide"><img src="images/main-02.jpg" alt="SILUA 메인 컬렉션 2" /></figure>
+      <figure class="hero-slide"><img src="images/main-03.jpg" alt="SILUA 메인 컬렉션 3" /></figure>
+      <figure class="hero-slide"><img src="images/main-04.jpg" alt="SILUA 메인 컬렉션 4" /></figure>
     </div>
+    <div class="hero-copy">
+      <p class="eyebrow">BRAND KEYWORD · KEYWORD</p>
+      <h1>메인 카피 (20자 내)</h1>
+      <p>서브 카피 (40자 내) — 브랜드를 소개하는 짧은 문장을 적으세요.</p>
+      <a href="products.html" class="btn">컬렉션 보기</a>
+    </div>
+    <div class="hero-pagination" aria-label="메인 이미지 선택">
+      <button class="hero-indicator is-active" type="button" aria-label="첫 번째 이미지 보기" aria-current="true"></button>
+      <button class="hero-indicator" type="button" aria-label="두 번째 이미지 보기" aria-current="false"></button>
+      <button class="hero-indicator" type="button" aria-label="세 번째 이미지 보기" aria-current="false"></button>
+      <button class="hero-indicator" type="button" aria-label="네 번째 이미지 보기" aria-current="false"></button>
+    </div>
+  </section>
+
+  <!-- ===== 메인 카테고리: 전용 사진을 받으면 이미지 경로만 교체하세요. ===== -->
+  <section class="home-categories" aria-label="SILUA 카테고리">
+    <a class="home-category" href="products.html">
+      <figure><img src="images/main-01.jpg" alt="브라이덜 컬렉션" /></figure>
+      <div class="home-category-copy"><h2>BRIDAL</h2><p>인생의 주인공이 되는 날</p><span>자세히 보기 &gt;</span></div>
+    </a>
+    <a class="home-category" href="products.html">
+      <figure><img src="images/main-02.jpg" alt="이브닝 컬렉션" /></figure>
+      <div class="home-category-copy"><h2>EVENING</h2><p>화려하게 빛나는 순간</p><span>자세히 보기 &gt;</span></div>
+    </a>
+    <a class="home-category" href="products.html">
+      <figure><img src="images/main-03.jpg" alt="모던 컬렉션" /></figure>
+      <div class="home-category-copy"><h2>MODERN</h2><p>특별한 날의 레디투웨어</p><span>자세히 보기 &gt;</span></div>
+    </a>
   </section>
 
   <!-- ===== 강점 3가지 [작성서 04 홈: 강점3가지] ===== -->
