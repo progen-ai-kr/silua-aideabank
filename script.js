@@ -121,7 +121,7 @@ const translations = {
       footer: "상호: ○○○ · 대표자: ○○○<br>사업자등록번호: 000-00-00000 · 주소: ○○○"
     },
     pages: {
-      "index.html": { title: "SILUA", heroTitle: "메인 카피 (20자 내)", heroSub: "서브 카피 (40자 내) — 브랜드를 소개하는 짧은 문장을 적으세요.", action: "컬렉션 보기", categories: ["인생의 주인공이 되는 날", "화려하게 빛나는 순간", "특별한 날의 레디투웨어"], categoryMore: "자세히 보기 >", strengths: "우리 브랜드의 강점", strengthTitle: "강점 제목", strengthBody: "강점 설명을 적으세요.", looks: "인기 상품", editorialTitle: "신제품" },
+      "index.html": { title: "SILUA", heroTitle: "메인 카피 (20자 내)", heroSub: "서브 카피 (40자 내) — 브랜드를 소개하는 짧은 문장을 적으세요.", action: "컬렉션 보기", categories: ["인생의 주인공이 되는 날", "화려하게 빛나는 순간", "특별한 날의 레디투웨어"], categoryMore: "자세히 보기 >", strengths: "우리 브랜드의 강점", strengthTitle: "강점 제목", strengthBody: "강점 설명을 적으세요.", looks: "인기 상품", editorialTitle: "신 제품" },
       "about.html": { title: "브랜드 소개 — SILUA", head: "브랜드 소개", intro: "브랜드 한 줄 소개를 여기에 적으세요.", story: "브랜드 스토리", storyText: "브랜드 스토리를 여기에 붙여넣으세요. 문단이 여러 개면 <p> 태그를 복사해서 나눠 넣으면 됩니다.", storySecond: "두 번째 문단 예시입니다.", keywords: "브랜드 키워드", keywordItems: ["키워드1", "키워드2", "키워드3", "키워드4", "키워드5"], philosophy: "브랜드 철학", philosophyText: "브랜드 철학 문구를 여기에 적으세요.", people: "만드는 사람들", photo: "사진 설명" },
       "products.html": { title: "제품 — SILUA", head: "제품", intro: "취급 품목을 여기에 적으세요. (예: Dress / Jacket / Shirt / Skirt)" },
       "product.html": { title: "제품 상세 — SILUA", loading: "제품 정보를 불러오는 중…", purchase: "구매 안내", close: "구매 안내 닫기", confirm: "확인", back: "← 제품 목록으로" },
