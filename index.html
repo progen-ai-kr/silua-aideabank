@@ -191,7 +191,9 @@
 
         const renderEditorialProducts = () => {
           const isEnglish = document.documentElement.lang === "en";
-          editorialGrid.innerHTML = homeProducts.map((p) => {
+          // 인기상품은 PC에서 3열 × 3행이 되도록 최대 9개까지만 보여줍니다.
+          const editorialProducts = homeProducts.slice(0, 9);
+          editorialGrid.innerHTML = editorialProducts.map((p) => {
             const image = ProductCatalog.safeImageUrl(p.images && p.images[0]);
             const img = image
               ? '<img src="' + ProductCatalog.escapeHtml(image) + '" alt="' + ProductCatalog.escapeHtml(p.name) + '" onerror="this.remove()" />'
