@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- [작성서 01] 브랜드명으로 바꾸세요 -->
-  <title>브랜드 이름</title>
+  <title>SILUA</title>
   <!-- [작성서 02] 한 줄 소개 → 검색·공유 미리보기에 나오는 설명 -->
   <meta name="description" content="브랜드 한 줄 소개를 여기에 적으세요." />
 
   <!-- 카톡/인스타 공유 미리보기 (OG 태그) — 브랜드명·소개·대표이미지로 바꾸세요 -->
-  <meta property="og:title" content="브랜드 이름" />
+  <meta property="og:title" content="SILUA" />
   <meta property="og:description" content="브랜드 한 줄 소개" />
   <meta property="og:image" content="images/og.jpg" />
   <meta property="og:type" content="website" />
@@ -22,90 +22,215 @@
 <body>
 
   <!-- ===== 상단 메뉴 (5페이지 공통 — 수정하면 모든 페이지에 똑같이 반영하세요) ===== -->
-  <header class="nav">
-    <div class="nav-inner">
-      <a href="index.html" class="logo">BRAND</a>
-      <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
-      <nav class="nav-menu">
-        <a href="index.html" class="active">홈</a>
-        <a href="about.html">브랜드 소개</a>
-        <a href="products.html">제품</a>
-        <a href="portfolio.html">포트폴리오</a>
-        <a href="contact.html">문의</a>
-      </nav>
+  <header class="site-header">
+    <div class="top-header">
+      <div class="brand-links"><span>SILUA</span></div>
+      <p class="top-notice">공지사항을 입력해주세요</p>
+      <div class="top-links"><a href="contact.html">NOTICE</a><button class="language-button" type="button" data-language="ko" aria-pressed="true">KR</button><span aria-hidden="true">|</span><button class="language-button" type="button" data-language="en" aria-pressed="false">EN</button></div>
     </div>
+    <nav class="gnb" aria-label="주요 메뉴">
+      <button class="logo logo-menu-button" type="button" aria-label="주요 메뉴 열기" aria-controls="primary-menu" aria-expanded="false">SILUA</button>
+      <ul class="gnb-menu" id="primary-menu">
+        <li class="gnb-category">
+          <a href="products.html">SELF WEDDING</a>
+          <ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤</a></li></ul>
+        </li>
+        <li class="gnb-category">
+          <a href="products.html">EVENING &amp; PARTY</a>
+          <ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤</a></li></ul>
+        </li>
+        <li class="gnb-category">
+          <a href="products.html">WEDDING ATTIRE</a>
+          <ul class="gnb-submenu"><li><a href="products.html">원피스</a></li><li><a href="products.html">투피스</a></li><li><a href="products.html">수트</a></li></ul>
+        </li>
+        <li class="gnb-category">
+          <a href="products.html">ACCESSORIES</a>
+          <ul class="gnb-submenu"><li><a href="products.html">구두</a></li><li><a href="products.html">잡화</a></li></ul>
+        </li>
+        <li class="gnb-category reservation-menu"><a href="contact.html">RESERVATION</a><ul class="gnb-submenu reservation-submenu"><li class="gnb-submenu-section">공방 체험</li><li class="gnb-submenu-detail"><a href="contact.html">노리개 만들기</a></li><li class="gnb-submenu-detail"><a href="contact.html">구두 꾸미기</a></li><li class="gnb-submenu-detail"><a href="contact.html">키링 만들기</a></li><li class="gnb-submenu-section"><a href="contact.html">1:1 퍼스널진단</a></li></ul></li><li><a href="about.html">STORY</a></li>
+      </ul>
+      <div class="gnb-icons">
+        <button class="icon-button menu-button" type="button" aria-label="메뉴 열기" aria-controls="primary-menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <button class="icon-button user-button" type="button" aria-label="로그인 및 회원가입"><span class="user-head"></span><span class="user-body"></span></button>
+        <button class="icon-button search-button" type="button" aria-label="제품 검색"><span></span></button>
+      </div>
+    </nav>
   </header>
 
   <!-- ===== 히어로 [작성서 04 홈: 메인 카피·서브 카피] ===== -->
   <section class="hero">
-    <p class="eyebrow">BRAND KEYWORD · KEYWORD</p>
-    <h1>메인 카피 (20자 내)</h1>
-    <p>서브 카피 (40자 내) — 브랜드를 소개하는 짧은 문장을 적으세요.</p>
-    <a href="products.html" class="btn">컬렉션 보기</a>
+    <div class="hero-slides" aria-live="polite">
+      <figure class="hero-slide is-active"><img src="images/main-01.jpg" alt="SILUA 메인 컬렉션 1" fetchpriority="high" /></figure>
+      <figure class="hero-slide"><img src="images/main-02.jpg" alt="SILUA 메인 컬렉션 2" /></figure>
+      <figure class="hero-slide"><img src="images/main-03.jpg" alt="SILUA 메인 컬렉션 3" /></figure>
+      <figure class="hero-slide"><img src="images/main-04.jpg" alt="SILUA 메인 컬렉션 4" /></figure>
+    </div>
+    <div class="hero-copy">
+      <p class="eyebrow">BRAND KEYWORD · KEYWORD</p>
+      <h1>전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.</h1>
+      <p>서브 카피 (40자 내) — 브랜드를 소개하는 짧은 문장을 적으세요.</p>
+      <a href="products.html" class="btn">컬렉션 보기</a>
+    </div>
+    <!-- 이미지 수를 기준으로 전환 막대가 자동 생성됩니다. -->
+    <div class="hero-pagination" aria-label="메인 이미지 선택"></div>
   </section>
 
-  <!-- ===== 강점 3가지 [작성서 04 홈: 강점3가지] ===== -->
-  <section class="section">
-    <p class="eyebrow">WHY US</p>
-    <h2>우리 브랜드의 강점</h2>
-    <div class="features">
-      <div class="feature">
-        <p class="num">01</p>
-        <h3>강점 제목</h3>
-        <p>강점 설명을 적으세요.</p>
-      </div>
-      <div class="feature">
-        <p class="num">02</p>
-        <h3>강점 제목</h3>
-        <p>강점 설명을 적으세요.</p>
-      </div>
-      <div class="feature">
-        <p class="num">03</p>
-        <h3>강점 제목</h3>
-        <p>강점 설명을 적으세요.</p>
-      </div>
+  <!-- ===== 메인 카테고리: 전용 사진을 받으면 이미지 경로만 교체하세요. ===== -->
+  <section class="home-categories" id="themes" aria-label="SILUA 카테고리">
+    <a class="home-category" data-theme-category="self-wedding" href="products.html?collection=self-wedding">
+      <figure><img src="images/theme-bridal.png" alt="브라이덜 컬렉션" /></figure>
+      <div class="home-category-copy"><h2>Self Weading</h2><p>인생의 주인공이 되는 날</p><span>자세히 보기 &gt;</span></div>
+    </a>
+    <a class="home-category" data-theme-category="evening-party" href="products.html?collection=evening-party">
+      <figure><img src="images/theme-evening.png" alt="이브닝 컬렉션" /></figure>
+      <div class="home-category-copy"><h2>Evening &amp; Party</h2><p>화려하게 빛나는 순간</p><span>자세히 보기 &gt;</span></div>
+    </a>
+    <a class="home-category" data-theme-category="wedding-attire" href="products.html?collection=wedding-attire">
+      <figure><img src="images/theme-modern.png" alt="모던 컬렉션" /></figure>
+      <div class="home-category-copy"><h2>Wedding Attire</h2><p>특별한 날의 레디투웨어</p><span>자세히 보기 &gt;</span></div>
+    </a>
+  </section>
+
+  <!-- ===== 인기상품: products.json의 공개 제품을 자동으로 불러옵니다. ===== -->
+  <section class="popular-products" id="popular-products">
+    <h2>인기 상품</h2>
+    <div class="popular-product-grid" id="home-looks" aria-live="polite"></div>
+    <div class="popular-pagination" aria-label="인기상품 페이지 이동">
+      <button class="popular-page-button" id="popularPrevious" type="button" aria-label="이전 상품">‹</button>
+      <p><strong id="popularCurrent">1</strong> / <span id="popularTotal">1</span></p>
+      <button class="popular-page-button" id="popularNext" type="button" aria-label="다음 상품">›</button>
     </div>
   </section>
 
-  <!-- ===== 대표 제품 미리보기 — products.json에서 자동으로 채워짐 ===== -->
-  <section class="section">
-    <p class="eyebrow">COLLECTION</p>
-    <h2>대표 룩</h2>
-    <div class="grid" id="home-looks"></div>
+  <!-- ===== 에디토리얼 상품 그리드: 공개 제품을 큰 이미지 중심으로 표시합니다. ===== -->
+  <section class="editorial-products" aria-label="SILUA 상품 갤러리">
+    <h2>신 제품</h2>
+    <div class="editorial-product-grid" id="homeEditorialGrid"></div>
   </section>
 
   <!-- ===== 푸터 (5페이지 공통) [작성서 01: 푸터 표기 정보] ===== -->
-  <footer class="footer">
-    <p class="logo">BRAND</p>
-    <p class="biz">
-      상호: ○○○ · 대표자: ○○○<br />
-      사업자등록번호: 000-00-00000 · 주소: ○○○
-    </p>
-    <p>© 브랜드 이름. All rights reserved.</p>
+  <footer class="footer" id="site-footer">
+    <nav class="footer-banners" aria-label="빠른 안내">
+      <a class="footer-banner" href="contact.html"><span class="footer-banner-label">RESERVATION</span><strong>공방 체험 예약</strong><span class="footer-banner-copy">노리개 · 구두 꾸미기 · 키링 만들기</span></a>
+      <a class="footer-banner" href="contact.html"><span class="footer-banner-label">PERSONAL SERVICE</span><strong>1:1 퍼스널진단</strong><span class="footer-banner-copy">나에게 어울리는 스타일을 만나보세요</span></a>
+      <a class="footer-banner" href="about.html"><span class="footer-banner-label">SILUA STORY</span><strong>브랜드 이야기</strong><span class="footer-banner-copy">전통을 오늘의 새로운 선으로 풀어냅니다</span></a>
+    </nav>
+    <div class="footer-main">
+      <div class="footer-brand">
+        <p class="logo">SILUA</p>
+        <p class="footer-tagline">전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="SILUA Instagram"><span class="footer-social-icon" aria-hidden="true">IG</span><span>Instagram</span></a>
+          <a href="contact.html" aria-label="SILUA KakaoTalk"><span class="footer-social-icon" aria-hidden="true">K</span><span>KakaoTalk</span></a>
+        </div>
+      </div>
+      <div class="footer-customer">
+        <h2>고객센터</h2>
+        <p class="footer-customer-title">이메일 문의</p>
+        <a class="footer-email" href="mailto:hello@brand.com">hello@brand.com</a>
+        <p class="footer-hours">평일 10:00 – 18:00</p>
+      </div>
+      <div class="footer-company">
+        <h2>COMPANY</h2>
+        <p class="biz">상호: ○○○ · 대표자: ○○○<br />사업자등록번호: 000-00-00000 · 주소: ○○○</p>
+      </div>
+    </div>
+    <div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=20260908-admin-hidden"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
-    // 공개 제품 중 '홈 대표 제품'을 최대 4개 보여줍니다.
+    // 공개 제품을 인기상품 카드로 보여주며 화면 크기에 맞춰 페이지를 나눕니다.
     ProductCatalog.loadVisibleProducts()
       .then((products) => {
+        // 관리자 상품의 카테고리와 대표 이미지를 이용해 홈 테마 사진을 자동 구성합니다.
+        const themeCategoryKeywords = {
+          "self-wedding": ["SELF WEDDING", "SELF-WEDDING", "셀프 웨딩", "셀프웨딩", "BRIDAL", "브라이덜"],
+          "evening-party": ["EVENING & PARTY", "EVENING", "PARTY", "이브닝", "파티"],
+          "wedding-attire": ["WEDDING ATTIRE", "웨딩 예복", "예복", "원피스", "투피스", "SUIT", "수트"]
+        };
+        document.querySelectorAll("[data-theme-category]").forEach((card) => {
+          const theme = card.dataset.themeCategory;
+          const keywords = themeCategoryKeywords[theme] || [];
+          const matchingProduct = products.find((product) => {
+            const source = `${product.category || ""} ${product.label || ""}`.toUpperCase();
+            return keywords.some((keyword) => source.includes(keyword));
+          });
+          const managedImage = ProductCatalog.safeImageUrl(matchingProduct && matchingProduct.images && matchingProduct.images[0]);
+          if (managedImage) card.querySelector("img").src = managedImage;
+        });
+
         const featured = products.filter((product) => product.featured);
-        const homeProducts = (featured.length ? featured : products).slice(0, 4);
-        document.getElementById("home-looks").innerHTML = homeProducts
-          .map((p) => {
+        const homeProducts = featured.length ? featured : products;
+        const grid = document.getElementById("home-looks");
+        const editorialGrid = document.getElementById("homeEditorialGrid");
+        const previous = document.getElementById("popularPrevious");
+        const next = document.getElementById("popularNext");
+        const currentLabel = document.getElementById("popularCurrent");
+        const totalLabel = document.getElementById("popularTotal");
+        let currentPage = 0;
+        let itemsPerPage = 1;
+
+        const getItemsPerPage = () => window.innerWidth >= 901 ? 4 : window.innerWidth >= 720 ? 2 : 1;
+
+        const renderProducts = () => {
+          itemsPerPage = getItemsPerPage();
+          const totalPages = Math.max(1, Math.ceil(homeProducts.length / itemsPerPage));
+          currentPage = Math.min(currentPage, totalPages - 1);
+          const visibleProducts = homeProducts.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+          const isEnglish = document.documentElement.lang === "en";
+
+          grid.innerHTML = visibleProducts.map((p) => {
             const image = ProductCatalog.safeImageUrl(p.images && p.images[0]);
             const img = image
               ? '<img src="' + ProductCatalog.escapeHtml(image) + '" alt="' + ProductCatalog.escapeHtml(p.name) + '" onerror="this.remove()" />'
               : "";
+            const price = p.price || (isEnglish ? "Price on request" : "가격 문의");
             return (
-              '<a class="card" href="product.html?id=' + encodeURIComponent(p.id) + '">' +
-              '<div class="card-img">' + img + "</div>" +
-              '<p class="k">' + ProductCatalog.escapeHtml(p.label || p.category || "") + "</p>" +
-              "<h3>" + ProductCatalog.escapeHtml(p.name) + "</h3></a>"
+              '<a class="popular-product-card" href="product.html?id=' + encodeURIComponent(p.id) + '">' +
+              '<div class="popular-product-image">' + img + '<span class="popular-zoom" aria-hidden="true"></span></div>' +
+              '<p class="popular-product-label">' + ProductCatalog.escapeHtml(p.label || p.category || "") + "</p>" +
+              '<h3>' + ProductCatalog.escapeHtml(p.name) + '</h3>' +
+              '<p class="popular-product-price">' + ProductCatalog.escapeHtml(price) + '</p>' +
+              '<span class="popular-product-action">' + (isEnglish ? "VIEW PRODUCT" : "상품 보기") + '</span></a>'
             );
-          })
-          .join("");
+          }).join("");
+
+          currentLabel.textContent = String(currentPage + 1);
+          totalLabel.textContent = String(totalPages);
+          previous.disabled = currentPage === 0;
+          next.disabled = currentPage === totalPages - 1;
+        };
+
+        const renderEditorialProducts = () => {
+          const isEnglish = document.documentElement.lang === "en";
+          // 인기상품은 PC에서 3열 × 3행이 되도록 최대 9개까지만 보여줍니다.
+          const editorialProducts = homeProducts.slice(0, 9);
+          editorialGrid.innerHTML = editorialProducts.map((p) => {
+            const image = ProductCatalog.safeImageUrl(p.images && p.images[0]);
+            const img = image
+              ? '<img src="' + ProductCatalog.escapeHtml(image) + '" alt="' + ProductCatalog.escapeHtml(p.name) + '" onerror="this.remove()" />'
+              : "";
+            const price = p.price || (isEnglish ? "Price on request" : "가격 문의");
+            return (
+              '<a class="editorial-product-card" href="product.html?id=' + encodeURIComponent(p.id) + '">' +
+              '<figure>' + img + '</figure><div class="editorial-product-copy">' +
+              '<h3>' + ProductCatalog.escapeHtml(p.name) + '</h3>' +
+              '<p>' + ProductCatalog.escapeHtml(price) + '</p></div></a>'
+            );
+          }).join("");
+        };
+
+        previous.addEventListener("click", () => { currentPage -= 1; renderProducts(); });
+        next.addEventListener("click", () => { currentPage += 1; renderProducts(); });
+        window.addEventListener("resize", renderProducts);
+        document.addEventListener("silua:languagechange", () => {
+          renderProducts();
+          renderEditorialProducts();
+        });
+        renderProducts();
+        renderEditorialProducts();
       })
       .catch(() => {});
   </script>

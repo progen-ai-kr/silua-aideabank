@@ -3,25 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>제품 — 브랜드 이름</title>
+  <title>제품 — SILUA</title>
   <meta name="description" content="브랜드의 제품(컬렉션)을 소개합니다." />
   <link rel="icon" href="images/favicon.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <header class="nav">
-    <div class="nav-inner">
-      <a href="index.html" class="logo">BRAND</a>
-      <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
-      <nav class="nav-menu">
-        <a href="index.html">홈</a>
-        <a href="about.html">브랜드 소개</a>
-        <a href="products.html" class="active">제품</a>
-        <a href="portfolio.html">포트폴리오</a>
-        <a href="contact.html">문의</a>
-      </nav>
-    </div>
+  <header class="site-header">
+    <div class="top-header"><div class="brand-links"><span>SILUA</span></div><p class="top-notice">공지사항을 입력해주세요</p><div class="top-links"><a href="contact.html">NOTICE</a><button class="language-button" type="button" data-language="ko" aria-pressed="true">KR</button><span aria-hidden="true">|</span><button class="language-button" type="button" data-language="en" aria-pressed="false">EN</button></div></div>
+    <nav class="gnb" aria-label="주요 메뉴"><button class="logo logo-menu-button" type="button" aria-label="주요 메뉴 열기" aria-controls="primary-menu" aria-expanded="false">SILUA</button><ul class="gnb-menu" id="primary-menu"><li class="gnb-category"><a href="products.html">SELF WEDDING</a><ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤</a></li></ul></li><li class="gnb-category"><a href="products.html">EVENING &amp; PARTY</a><ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤</a></li></ul></li><li class="gnb-category"><a href="products.html">WEDDING ATTIRE</a><ul class="gnb-submenu"><li><a href="products.html">원피스</a></li><li><a href="products.html">투피스</a></li><li><a href="products.html">수트</a></li></ul></li><li class="gnb-category"><a href="products.html">ACCESSORIES</a><ul class="gnb-submenu"><li><a href="products.html">구두</a></li><li><a href="products.html">잡화</a></li></ul></li><li class="gnb-category reservation-menu"><a href="contact.html">RESERVATION</a><ul class="gnb-submenu reservation-submenu"><li class="gnb-submenu-section">공방 체험</li><li class="gnb-submenu-detail"><a href="contact.html">노리개 만들기</a></li><li class="gnb-submenu-detail"><a href="contact.html">구두 꾸미기</a></li><li class="gnb-submenu-detail"><a href="contact.html">키링 만들기</a></li><li class="gnb-submenu-section"><a href="contact.html">1:1 퍼스널진단</a></li></ul></li><li><a href="about.html">STORY</a></li></ul><div class="gnb-icons"><button class="icon-button menu-button" type="button" aria-label="메뉴 열기" aria-controls="primary-menu" aria-expanded="false"><span></span><span></span><span></span></button><a class="icon-button user-button" href="admin.html" aria-label="관리자 로그인"><span class="user-head"></span><span class="user-body"></span></a><a class="icon-button search-button" href="products.html" aria-label="제품 검색"><span></span></a></div></nav>
   </header>
 
   <!-- [작성서 05: 취급 품목] -->
@@ -39,31 +30,121 @@
     </div>
   </section>
 
-  <footer class="footer">
-    <p class="logo">BRAND</p>
-    <p class="biz">
-      상호: ○○○ · 대표자: ○○○<br />
-      사업자등록번호: 000-00-00000 · 주소: ○○○
-    </p>
-    <p>© 브랜드 이름. All rights reserved.</p>
+  <footer class="footer" id="site-footer">
+    <nav class="footer-banners" aria-label="빠른 안내">
+      <a class="footer-banner" href="contact.html"><span class="footer-banner-label">RESERVATION</span><strong>공방 체험 예약</strong><span class="footer-banner-copy">노리개 · 구두 꾸미기 · 키링 만들기</span></a>
+      <a class="footer-banner" href="contact.html"><span class="footer-banner-label">PERSONAL SERVICE</span><strong>1:1 퍼스널진단</strong><span class="footer-banner-copy">나에게 어울리는 스타일을 만나보세요</span></a>
+      <a class="footer-banner" href="about.html"><span class="footer-banner-label">SILUA STORY</span><strong>브랜드 이야기</strong><span class="footer-banner-copy">전통을 오늘의 새로운 선으로 풀어냅니다</span></a>
+    </nav>
+    <div class="footer-main">
+      <div class="footer-brand">
+        <p class="logo">SILUA</p>
+        <p class="footer-tagline">전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="SILUA Instagram"><span class="footer-social-icon" aria-hidden="true">IG</span><span>Instagram</span></a>
+          <a href="contact.html" aria-label="SILUA KakaoTalk"><span class="footer-social-icon" aria-hidden="true">K</span><span>KakaoTalk</span></a>
+        </div>
+      </div>
+      <div class="footer-customer">
+        <h2>고객센터</h2>
+        <p class="footer-customer-title">이메일 문의</p>
+        <a class="footer-email" href="mailto:hello@brand.com">hello@brand.com</a>
+        <p class="footer-hours">평일 10:00 – 18:00</p>
+      </div>
+      <div class="footer-company">
+        <h2>COMPANY</h2>
+        <p class="biz">상호: ○○○ · 대표자: ○○○<br />사업자등록번호: 000-00-00000 · 주소: ○○○</p>
+      </div>
+    </div>
+    <div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=20260908-admin-hidden"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
+    const productListParams = new URLSearchParams(location.search);
+    const isRentalMode = productListParams.get("mode") === "rental";
+    const productCollection = productListParams.get("collection") || "";
+    const productService = productListParams.get("service") || "";
+    const productType = productListParams.get("type") || "";
+
+    const collectionLabels = {
+      "self-wedding": { ko: "셀프 웨딩", en: "SELF WEDDING" },
+      "evening-party": { ko: "이브닝 & 파티", en: "EVENING & PARTY" },
+      "wedding-attire": { ko: "웨딩 예복", en: "WEDDING ATTIRE" }
+    };
+    const detailLabels = {
+      rental: { ko: "대여", en: "RENTAL" },
+      custom: { ko: "맞춤", en: "MADE TO ORDER" },
+      "one-piece": { ko: "원피스", en: "ONE PIECE" },
+      "two-piece": { ko: "투피스", en: "TWO PIECE" },
+      suit: { ko: "수트", en: "SUIT" }
+    };
+    const collectionKeywords = {
+      "self-wedding": ["self wedding", "self-wedding", "셀프웨딩", "셀프 웨딩", "bridal", "브라이덜"],
+      "evening-party": ["evening", "party", "이브닝", "파티"],
+      "wedding-attire": ["wedding attire", "웨딩 예복", "예복", "one piece", "one-piece", "two piece", "two-piece", "원피스", "투피스", "suit", "수트"]
+    };
+    const typeKeywords = {
+      "one-piece": ["one piece", "one-piece", "원피스"],
+      "two-piece": ["two piece", "two-piece", "투피스"],
+      suit: ["suit", "수트"]
+    };
+
+    const productSearchText = (product) => [
+      product.name, product.label, product.category, product.summary,
+      ...(Array.isArray(product.keywords) ? product.keywords : [])
+    ].join(" ").toLocaleLowerCase();
+
+    function matchesAny(text, words) {
+      return !words?.length || words.some((word) => text.includes(word));
+    }
+
+    function filterProducts(products) {
+      return products.filter((product) => {
+        const text = productSearchText(product);
+        return matchesAny(text, collectionKeywords[productCollection]) && matchesAny(text, typeKeywords[productType]);
+      });
+    }
+
+    // 선택한 상위 메뉴와 세부 메뉴에 맞춰 서로 다른 제목과 안내를 표시합니다.
+    function applyProductListContext() {
+      const isEnglish = document.documentElement.lang === "en";
+      const language = isEnglish ? "en" : "ko";
+      const collection = collectionLabels[productCollection]?.[language];
+      const detailKey = isRentalMode ? "rental" : (productService || productType);
+      const detail = detailLabels[detailKey]?.[language];
+      if (!collection && !detail) return;
+      if (isRentalMode) document.body.classList.add("rental-mode");
+      document.querySelector(".page-head h1").textContent = [collection, detail].filter(Boolean).join(" · ");
+      document.querySelector(".page-head p").textContent = isEnglish
+        ? (isRentalMode ? "Select a product, then choose your rental period." : "Explore the collection selected from the SILUA menu.")
+        : (isRentalMode ? "상품을 선택한 뒤 대여 기간을 지정할 수 있습니다." : "SILUA 메뉴에서 선택한 컬렉션을 확인해보세요.");
+    }
+
+    document.addEventListener("silua:languagechange", applyProductListContext);
+    applyProductListContext();
+
     // 공개된 products.json 제품을 카드로 그립니다. 학생은 CSS로 자유롭게 디자인할 수 있습니다.
     ProductCatalog.loadVisibleProducts()
       .then((products) => {
         const box = document.getElementById("product-list");
-        box.innerHTML = products
+        const filteredProducts = filterProducts(products);
+        if (!filteredProducts.length) {
+          box.innerHTML = '<p class="catalog-empty">이 분류에 등록된 상품이 아직 없습니다.<br />관리자에서 상품의 카테고리 또는 키워드를 지정하면 자동으로 표시됩니다.</p>';
+          return;
+        }
+        box.innerHTML = filteredProducts
           .map((p) => {
             const image = ProductCatalog.safeImageUrl(p.images && p.images[0]);
             const img = image
               ? '<img src="' + ProductCatalog.escapeHtml(image) + '" alt="' + ProductCatalog.escapeHtml(p.name) + '" onerror="this.remove()" />'
               : "";
             const price = p.price ? '<p class="price">' + ProductCatalog.escapeHtml(p.price) + "</p>" : "";
+            const detailMode = isRentalMode ? "rental" : productService === "custom" ? "purchase" : "";
+            const modeSuffix = detailMode ? "&amp;mode=" + detailMode : "";
             return (
-              '<a class="card" href="product.html?id=' + encodeURIComponent(p.id) + '">' +
+              '<a class="card" href="product.html?id=' + encodeURIComponent(p.id) + modeSuffix + '">' +
               '<div class="card-img">' + img + "</div>" +
               '<p class="k">' + ProductCatalog.escapeHtml(p.label || p.category || "") + "</p>" +
               "<h3>" + ProductCatalog.escapeHtml(p.name) + "</h3>" +
