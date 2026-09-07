@@ -6,7 +6,7 @@
   <title>제품 상세 — SILUA</title>
   <meta name="description" content="제품 상세 정보" />
   <link rel="icon" href="images/favicon.png" />
-  <link rel="stylesheet" href="style.css?v=20260826-buy-popup-2" />
+  <link rel="stylesheet" href="style.css?v=20260907-rental-checkout" />
   <link rel="stylesheet" href="rich-content.css?v=20260826-rich-editor-1" />
 </head>
 <body>
@@ -92,12 +92,13 @@
     <div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=20260908-admin-hidden"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
     const productQuery = new URLSearchParams(location.search);
     const productId = productQuery.get("id");
     const isRentalMode = productQuery.get("mode") === "rental";
+    const isPurchaseOnly = productQuery.get("mode") === "purchase";
 
     function imageMarkup(source, alt, className, eager) {
       const safeSource = ProductCatalog.safeImageUrl(source);
@@ -200,9 +201,19 @@
       const dialog = document.getElementById("purchaseDialog");
       if (!trigger || !dialog) return;
 
-      document.getElementById("purchaseDialogProduct").textContent = product.name || "";
-      document.getElementById("purchaseDialogContent").textContent = String(product.buyNotice || "").trim();
-      trigger.addEventListener("click", () => dialog.showModal());
+      trigger.addEventListener("click", () => {
+        const english = document.documentElement.lang === "en";
+        dialog.querySelector(".purchase-dialog-eyebrow").textContent = "PURCHASE";
+        document.getElementById("purchaseDialogTitle").textContent = english ? "Purchase information" : "구매 안내";
+        document.getElementById("purchaseDialogProduct").textContent = product.name || "";
+        document.getElementById("purchaseDialogContent").textContent = String(product.buyNotice || "").trim() ||
+          (english ? "Online purchase information has not been registered yet. Please contact customer service." : "온라인 구매 정보가 아직 등록되지 않았습니다. 구매는 고객센터로 문의해주세요.");
+        const action = dialog.querySelector(".purchase-dialog-actions .btn");
+        action.type = "submit";
+        action.textContent = english ? "OK" : "확인";
+        action.onclick = null;
+        dialog.showModal();
+      });
       dialog.addEventListener("click", (event) => {
         if (event.target === dialog) dialog.close();
       });
@@ -211,7 +222,7 @@
     function setupRentalCalendar(product) {
       const trigger = document.querySelector("[data-rental-calendar]");
       const dialog = document.getElementById("rentalCalendarDialog");
-      if (!isRentalMode || !trigger || !dialog) return;
+      if (isPurchaseOnly || !trigger || !dialog) return;
 
       const monthLabel = document.getElementById("rentalCalendarMonth");
       const weekdays = document.getElementById("rentalCalendarWeekdays");
@@ -221,6 +232,14 @@
       const previous = document.getElementById("rentalPreviousMonth");
       const next = document.getElementById("rentalNextMonth");
       const close = dialog.querySelector(".rental-calendar-close");
+      const checkoutDialog = document.getElementById("purchaseDialog");
+      const checkoutEyebrow = checkoutDialog && checkoutDialog.querySelector(".purchase-dialog-eyebrow");
+      const checkoutTitle = document.getElementById("purchaseDialogTitle");
+      const checkoutProduct = document.getElementById("purchaseDialogProduct");
+      const checkoutContent = document.getElementById("purchaseDialogContent");
+      const checkoutAction = checkoutDialog && checkoutDialog.querySelector(".purchase-dialog-actions .btn");
+      const checkoutClose = checkoutDialog && checkoutDialog.querySelector(".purchase-dialog-close");
+      const safeBuyLink = ProductCatalog.safeExternalUrl(product.buyLink);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       let visibleMonth = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -240,6 +259,37 @@
       const formatDate = (date) => isEnglish()
         ? new Intl.DateTimeFormat("en", { month: "short", day: "numeric" }).format(date)
         : `${String(date.getMonth() + 1).padStart(2, "0")}월 ${String(date.getDate()).padStart(2, "0")}일`;
+
+      // 날짜를 확정하면 결제 링크 또는 결제 문의 안내를 두 번째 단계로 보여줍니다.
+      function openRentalCheckout() {
+        if (!checkoutDialog || !selectedStart || !selectedEnd) return;
+        const english = isEnglish();
+        const range = `${formatDate(selectedStart)} – ${formatDate(selectedEnd)}`;
+        const price = String(product.price || "").trim();
+        const notice = String(product.buyNotice || "").trim();
+        const fallback = english
+          ? "An online payment link has not been registered yet. Please contact customer service to complete your rental."
+          : "온라인 결제 링크가 아직 등록되지 않았습니다. 대여 결제는 고객센터로 문의해주세요.";
+
+        checkoutEyebrow.textContent = "RENTAL CHECKOUT";
+        checkoutTitle.textContent = english ? "Rental checkout" : "대여 결제 안내";
+        checkoutProduct.textContent = product.name || "";
+        checkoutContent.textContent = [
+          `${english ? "Rental period" : "대여 기간"}  ${range}`,
+          `${english ? "Price" : "상품 금액"}  ${price || (english ? "Please inquire" : "가격 문의")}`,
+          notice || fallback
+        ].join("\n\n");
+        checkoutAction.textContent = safeBuyLink
+          ? (english ? "GO TO PAYMENT" : "결제 페이지로 이동")
+          : (english ? "OK" : "확인");
+        checkoutClose.setAttribute("aria-label", english ? "Close rental checkout" : "대여 결제 안내 닫기");
+        checkoutAction.type = safeBuyLink ? "button" : "submit";
+        checkoutAction.onclick = safeBuyLink ? () => {
+          window.open(safeBuyLink, "_blank", "noopener,noreferrer");
+          checkoutDialog.close();
+        } : null;
+        checkoutDialog.showModal();
+      }
 
       function renderCalendar() {
         const english = isEnglish();
@@ -344,14 +394,21 @@
           ? `Selected: ${formatDate(selectedStart)} – ${formatDate(selectedEnd)}`
           : `선택 기간: ${formatDate(selectedStart)}~${formatDate(selectedEnd)}`;
         dialog.close();
+        openRentalCheckout();
       });
       dialog.addEventListener("click", (event) => {
         if (event.target === dialog) dialog.close();
       });
-      document.addEventListener("silua:languagechange", renderCalendar);
+      checkoutDialog.addEventListener("click", (event) => {
+        if (event.target === checkoutDialog) checkoutDialog.close();
+      });
+      document.addEventListener("silua:languagechange", () => {
+        renderCalendar();
+        if (checkoutDialog.open) openRentalCheckout();
+      });
 
       const backLink = document.querySelector(".product-back a");
-      if (backLink) backLink.href = "products.html?mode=rental";
+      if (backLink && isRentalMode) backLink.href = "products.html?mode=rental";
       renderCalendar();
     }
 
@@ -413,16 +470,18 @@
         const price = product.price ? '<p class="product-price">' + esc(product.price) + "</p>" : "";
         const buyLink = ProductCatalog.safeExternalUrl(product.buyLink);
         const buyNotice = String(product.buyNotice || "").trim();
-        const buyButton = isRentalMode
-          ? '<button class="btn product-buy" type="button" data-rental-calendar aria-haspopup="dialog">' +
-            (document.documentElement.lang === "en" ? "SELECT RENTAL PERIOD" : "대여 기간 선택") + "</button>"
-          : buyLink
-            ? '<a class="btn product-buy" href="' + esc(buyLink) + '" target="_blank" rel="noopener noreferrer">' +
-              esc(product.buyLabel || "구매하기") + " <span aria-hidden=\"true\">↗</span></a>"
-            : buyNotice
-              ? '<button class="btn product-buy" type="button" data-purchase-dialog aria-haspopup="dialog">' +
-                esc(product.buyLabel || "구매하기") + "</button>"
-              : "";
+        const purchaseButton = buyLink
+          ? '<a class="btn product-buy" href="' + esc(buyLink) + '" target="_blank" rel="noopener noreferrer">' +
+            esc(product.buyLabel || "구매하기") + " <span aria-hidden=\"true\">↗</span></a>"
+          : '<button class="btn product-buy" type="button" data-purchase-dialog aria-haspopup="dialog">' +
+            esc(product.buyLabel || "구매하기") + "</button>";
+        const rentalButton = '<button class="btn product-buy product-rental" type="button" data-rental-calendar aria-haspopup="dialog">' +
+          (document.documentElement.lang === "en" ? "RENT" : "대여하기") + "</button>";
+        const actionButtons = isRentalMode
+          ? rentalButton
+          : isPurchaseOnly
+            ? purchaseButton
+            : purchaseButton + rentalButton;
 
         let sections = Array.isArray(product.sections)
           ? product.sections.map((section, index) => renderSection(section, product, index)).join("")
@@ -444,7 +503,7 @@
               '<p class="product-summary">' + esc(product.summary || "") + "</p>" +
               price +
               (tags ? '<div class="tags">' + tags + "</div>" : "") +
-              buyButton +
+              '<div class="product-actions">' + actionButtons + "</div>" +
             "</div>" +
           "</section>" +
           (sections ? '<div class="product-story">' + sections + "</div>" : "");

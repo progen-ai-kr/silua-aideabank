@@ -51,8 +51,8 @@
       </ul>
       <div class="gnb-icons">
         <button class="icon-button menu-button" type="button" aria-label="메뉴 열기" aria-controls="primary-menu" aria-expanded="false"><span></span><span></span><span></span></button>
-        <a class="icon-button user-button" href="admin.html" aria-label="관리자 로그인"><span class="user-head"></span><span class="user-body"></span></a>
-        <a class="icon-button search-button" href="products.html" aria-label="제품 검색"><span></span></a>
+        <button class="icon-button user-button" type="button" aria-label="로그인 및 회원가입"><span class="user-head"></span><span class="user-body"></span></button>
+        <button class="icon-button search-button" type="button" aria-label="제품 검색"><span></span></button>
       </div>
     </nav>
   </header>
@@ -77,17 +77,17 @@
 
   <!-- ===== 메인 카테고리: 전용 사진을 받으면 이미지 경로만 교체하세요. ===== -->
   <section class="home-categories" id="themes" aria-label="SILUA 카테고리">
-    <a class="home-category" data-theme-category="BRIDAL" href="products.html">
+    <a class="home-category" data-theme-category="self-wedding" href="products.html?collection=self-wedding">
       <figure><img src="images/theme-bridal.png" alt="브라이덜 컬렉션" /></figure>
-      <div class="home-category-copy"><h2>BRIDAL</h2><p>인생의 주인공이 되는 날</p><span>자세히 보기 &gt;</span></div>
+      <div class="home-category-copy"><h2>Self Weading</h2><p>인생의 주인공이 되는 날</p><span>자세히 보기 &gt;</span></div>
     </a>
-    <a class="home-category" data-theme-category="EVENING" href="products.html">
+    <a class="home-category" data-theme-category="evening-party" href="products.html?collection=evening-party">
       <figure><img src="images/theme-evening.png" alt="이브닝 컬렉션" /></figure>
-      <div class="home-category-copy"><h2>EVENING</h2><p>화려하게 빛나는 순간</p><span>자세히 보기 &gt;</span></div>
+      <div class="home-category-copy"><h2>Evening &amp; Party</h2><p>화려하게 빛나는 순간</p><span>자세히 보기 &gt;</span></div>
     </a>
-    <a class="home-category" data-theme-category="MODERN" href="products.html">
+    <a class="home-category" data-theme-category="wedding-attire" href="products.html?collection=wedding-attire">
       <figure><img src="images/theme-modern.png" alt="모던 컬렉션" /></figure>
-      <div class="home-category-copy"><h2>MODERN</h2><p>특별한 날의 레디투웨어</p><span>자세히 보기 &gt;</span></div>
+      <div class="home-category-copy"><h2>Wedding Attire</h2><p>특별한 날의 레디투웨어</p><span>자세히 보기 &gt;</span></div>
     </a>
   </section>
 
@@ -138,18 +138,24 @@
     <div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=20260908-admin-hidden"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
     // 공개 제품을 인기상품 카드로 보여주며 화면 크기에 맞춰 페이지를 나눕니다.
     ProductCatalog.loadVisibleProducts()
       .then((products) => {
-        // 관리자 제품의 카테고리를 BRIDAL·EVENING·MODERN으로 지정하면 대표 이미지가 테마 사진에 연결됩니다.
+        // 관리자 상품의 카테고리와 대표 이미지를 이용해 홈 테마 사진을 자동 구성합니다.
+        const themeCategoryKeywords = {
+          "self-wedding": ["SELF WEDDING", "SELF-WEDDING", "셀프 웨딩", "셀프웨딩", "BRIDAL", "브라이덜"],
+          "evening-party": ["EVENING & PARTY", "EVENING", "PARTY", "이브닝", "파티"],
+          "wedding-attire": ["WEDDING ATTIRE", "웨딩 예복", "예복", "원피스", "투피스", "SUIT", "수트"]
+        };
         document.querySelectorAll("[data-theme-category]").forEach((card) => {
           const theme = card.dataset.themeCategory;
+          const keywords = themeCategoryKeywords[theme] || [];
           const matchingProduct = products.find((product) => {
             const source = `${product.category || ""} ${product.label || ""}`.toUpperCase();
-            return source.includes(theme);
+            return keywords.some((keyword) => source.includes(keyword));
           });
           const managedImage = ProductCatalog.safeImageUrl(matchingProduct && matchingProduct.images && matchingProduct.images[0]);
           if (managedImage) card.querySelector("img").src = managedImage;

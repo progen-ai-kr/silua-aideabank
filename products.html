@@ -59,40 +59,92 @@
     <div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=20260908-admin-hidden"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
     const productListParams = new URLSearchParams(location.search);
     const isRentalMode = productListParams.get("mode") === "rental";
+    const productCollection = productListParams.get("collection") || "";
+    const productService = productListParams.get("service") || "";
+    const productType = productListParams.get("type") || "";
 
-    // 대여 메뉴에서 들어오면 목록 제목과 상세페이지 연결에 대여 상태를 유지합니다.
-    function applyProductListMode() {
-      if (!isRentalMode) return;
-      const isEnglish = document.documentElement.lang === "en";
-      document.body.classList.add("rental-mode");
-      document.querySelector(".page-head h1").textContent = isEnglish ? "RENTAL" : "대여 상품";
-      document.querySelector(".page-head p").textContent = isEnglish
-        ? "Select a product, then choose your rental period."
-        : "상품을 선택한 뒤 대여 기간을 지정할 수 있습니다.";
+    const collectionLabels = {
+      "self-wedding": { ko: "셀프 웨딩", en: "SELF WEDDING" },
+      "evening-party": { ko: "이브닝 & 파티", en: "EVENING & PARTY" },
+      "wedding-attire": { ko: "웨딩 예복", en: "WEDDING ATTIRE" }
+    };
+    const detailLabels = {
+      rental: { ko: "대여", en: "RENTAL" },
+      custom: { ko: "맞춤", en: "MADE TO ORDER" },
+      "one-piece": { ko: "원피스", en: "ONE PIECE" },
+      "two-piece": { ko: "투피스", en: "TWO PIECE" },
+      suit: { ko: "수트", en: "SUIT" }
+    };
+    const collectionKeywords = {
+      "self-wedding": ["self wedding", "self-wedding", "셀프웨딩", "셀프 웨딩", "bridal", "브라이덜"],
+      "evening-party": ["evening", "party", "이브닝", "파티"],
+      "wedding-attire": ["wedding attire", "웨딩 예복", "예복", "one piece", "one-piece", "two piece", "two-piece", "원피스", "투피스", "suit", "수트"]
+    };
+    const typeKeywords = {
+      "one-piece": ["one piece", "one-piece", "원피스"],
+      "two-piece": ["two piece", "two-piece", "투피스"],
+      suit: ["suit", "수트"]
+    };
+
+    const productSearchText = (product) => [
+      product.name, product.label, product.category, product.summary,
+      ...(Array.isArray(product.keywords) ? product.keywords : [])
+    ].join(" ").toLocaleLowerCase();
+
+    function matchesAny(text, words) {
+      return !words?.length || words.some((word) => text.includes(word));
     }
 
-    document.addEventListener("silua:languagechange", applyProductListMode);
-    applyProductListMode();
+    function filterProducts(products) {
+      return products.filter((product) => {
+        const text = productSearchText(product);
+        return matchesAny(text, collectionKeywords[productCollection]) && matchesAny(text, typeKeywords[productType]);
+      });
+    }
+
+    // 선택한 상위 메뉴와 세부 메뉴에 맞춰 서로 다른 제목과 안내를 표시합니다.
+    function applyProductListContext() {
+      const isEnglish = document.documentElement.lang === "en";
+      const language = isEnglish ? "en" : "ko";
+      const collection = collectionLabels[productCollection]?.[language];
+      const detailKey = isRentalMode ? "rental" : (productService || productType);
+      const detail = detailLabels[detailKey]?.[language];
+      if (!collection && !detail) return;
+      if (isRentalMode) document.body.classList.add("rental-mode");
+      document.querySelector(".page-head h1").textContent = [collection, detail].filter(Boolean).join(" · ");
+      document.querySelector(".page-head p").textContent = isEnglish
+        ? (isRentalMode ? "Select a product, then choose your rental period." : "Explore the collection selected from the SILUA menu.")
+        : (isRentalMode ? "상품을 선택한 뒤 대여 기간을 지정할 수 있습니다." : "SILUA 메뉴에서 선택한 컬렉션을 확인해보세요.");
+    }
+
+    document.addEventListener("silua:languagechange", applyProductListContext);
+    applyProductListContext();
 
     // 공개된 products.json 제품을 카드로 그립니다. 학생은 CSS로 자유롭게 디자인할 수 있습니다.
     ProductCatalog.loadVisibleProducts()
       .then((products) => {
         const box = document.getElementById("product-list");
-        box.innerHTML = products
+        const filteredProducts = filterProducts(products);
+        if (!filteredProducts.length) {
+          box.innerHTML = '<p class="catalog-empty">이 분류에 등록된 상품이 아직 없습니다.<br />관리자에서 상품의 카테고리 또는 키워드를 지정하면 자동으로 표시됩니다.</p>';
+          return;
+        }
+        box.innerHTML = filteredProducts
           .map((p) => {
             const image = ProductCatalog.safeImageUrl(p.images && p.images[0]);
             const img = image
               ? '<img src="' + ProductCatalog.escapeHtml(image) + '" alt="' + ProductCatalog.escapeHtml(p.name) + '" onerror="this.remove()" />'
               : "";
             const price = p.price ? '<p class="price">' + ProductCatalog.escapeHtml(p.price) + "</p>" : "";
-            const rentalSuffix = isRentalMode ? "&amp;mode=rental" : "";
+            const detailMode = isRentalMode ? "rental" : productService === "custom" ? "purchase" : "";
+            const modeSuffix = detailMode ? "&amp;mode=" + detailMode : "";
             return (
-              '<a class="card" href="product.html?id=' + encodeURIComponent(p.id) + rentalSuffix + '">' +
+              '<a class="card" href="product.html?id=' + encodeURIComponent(p.id) + modeSuffix + '">' +
               '<div class="card-img">' + img + "</div>" +
               '<p class="k">' + ProductCatalog.escapeHtml(p.label || p.category || "") + "</p>" +
               "<h3>" + ProductCatalog.escapeHtml(p.name) + "</h3>" +

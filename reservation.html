@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>예약 — SILUA</title>
+  <meta name="description" content="SILUA 공방 체험과 퍼스널 컬러 진단 예약 안내" />
+  <link rel="icon" href="images/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="top-header"><div class="brand-links"><span>SILUA</span></div><p class="top-notice">공지사항을 입력해주세요</p><div class="top-links"><a href="contact.html">NOTICE</a><button class="language-button" type="button" data-language="ko" aria-pressed="true">KR</button><span aria-hidden="true">|</span><button class="language-button" type="button" data-language="en" aria-pressed="false">EN</button></div></div>
+    <nav class="gnb" aria-label="주요 메뉴"><button class="logo logo-menu-button" type="button" aria-label="주요 메뉴 열기" aria-controls="primary-menu" aria-expanded="false">SILUA</button><ul class="gnb-menu" id="primary-menu"><li class="gnb-category"><a href="products.html">SELF WEDDING</a><ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤</a></li></ul></li><li class="gnb-category"><a href="products.html">EVENING &amp; PARTY</a><ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤</a></li></ul></li><li class="gnb-category"><a href="products.html">WEDDING ATTIRE</a><ul class="gnb-submenu"><li><a href="products.html">원피스</a></li><li><a href="products.html">투피스</a></li><li><a href="products.html">수트</a></li></ul></li><li class="gnb-category"><a href="products.html">ACCESSORIES</a><ul class="gnb-submenu"><li><a href="products.html">구두</a></li><li><a href="products.html">잡화</a></li></ul></li><li class="gnb-category reservation-menu"><a href="contact.html">RESERVATION</a><ul class="gnb-submenu reservation-submenu"><li class="gnb-submenu-section">공방 체험</li><li class="gnb-submenu-detail"><a href="contact.html">노리개 만들기</a></li><li class="gnb-submenu-detail"><a href="contact.html">구두 꾸미기</a></li><li class="gnb-submenu-detail"><a href="contact.html">키링 만들기</a></li><li class="gnb-submenu-section"><a href="contact.html">1:1 퍼스널진단</a></li></ul></li><li><a href="about.html">STORY</a></li></ul><div class="gnb-icons"><button class="icon-button menu-button" type="button" aria-label="메뉴 열기" aria-controls="primary-menu" aria-expanded="false"><span></span><span></span><span></span></button><a class="icon-button user-button" href="admin.html" aria-label="관리자 로그인"><span class="user-head"></span><span class="user-body"></span></a><a class="icon-button search-button" href="products.html" aria-label="제품 검색"><span></span></a></div></nav>
+  </header>
+
+  <main>
+    <section class="page-head reservation-head"><p class="eyebrow">SILUA RESERVATION</p><h1>예약</h1><p>공방 체험부터 1:1 퍼스널 컬러 진단까지 원하는 시간을 선택해보세요.</p></section>
+
+    <section class="reservation-section" id="workshop">
+      <div class="reservation-intro"><p class="eyebrow">WORKSHOP</p><h2>만들기 예약</h2><p>전통의 디테일을 내 손으로 완성하는 소규모 공방 체험입니다.</p></div>
+      <div class="workshop-options" role="group" aria-label="만들기 체험 선택">
+        <button type="button" data-activity="norigae"><span>01</span><strong>노리개 만들기</strong><small>색과 매듭을 골라 나만의 노리개를 만듭니다.</small></button>
+        <button type="button" data-activity="shoes"><span>02</span><strong>구두 꾸미기</strong><small>웨딩 슈즈에 장식과 의미를 더합니다.</small></button>
+        <button type="button" data-activity="keyring"><span>03</span><strong>키링 만들기</strong><small>전통 소재를 활용한 작은 장식을 완성합니다.</small></button>
+      </div>
+      <form class="reservation-form" data-reservation-form="workshop">
+        <label><span>체험 선택</span><select name="service" required><option value="">선택해주세요</option><option value="노리개 만들기">노리개 만들기</option><option value="구두 꾸미기">구두 꾸미기</option><option value="키링 만들기">키링 만들기</option></select></label>
+        <label><span>희망 날짜</span><input type="date" name="date" required /></label>
+        <label><span>희망 시간</span><select name="time" required><option value="">선택해주세요</option><option>11:00</option><option>14:00</option><option>16:00</option></select></label>
+        <label><span>예약자명</span><input type="text" name="name" autocomplete="name" required /></label>
+        <label><span>연락처</span><input type="tel" name="phone" autocomplete="tel" required /></label>
+        <button class="btn reservation-submit" type="submit">예약 내용 확인</button>
+        <p class="reservation-result" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="reservation-section personal-color-section" id="personal-color">
+      <div class="reservation-intro"><p class="eyebrow">PERSONAL COLOR</p><h2>1:1 퍼스널 컬러 예약</h2><p>피부 톤과 분위기를 함께 살펴 드레스·소재·액세서리 컬러를 제안합니다.</p></div>
+      <form class="reservation-form" data-reservation-form="personal-color">
+        <input type="hidden" name="service" value="1:1 퍼스널 컬러 진단" />
+        <label><span>희망 날짜</span><input type="date" name="date" required /></label>
+        <label><span>희망 시간</span><select name="time" required><option value="">선택해주세요</option><option>11:00</option><option>14:00</option><option>16:00</option></select></label>
+        <label><span>예약자명</span><input type="text" name="name" autocomplete="name" required /></label>
+        <label><span>연락처</span><input type="tel" name="phone" autocomplete="tel" required /></label>
+        <button class="btn reservation-submit" type="submit">예약 내용 확인</button>
+        <p class="reservation-result" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <!-- 예약 날짜를 고르는 모바일 하단형 달력입니다. -->
+  <dialog id="reservationDateDialog" class="rental-calendar-dialog" aria-labelledby="reservationCalendarMonth">
+    <section class="rental-calendar-card">
+      <span class="rental-calendar-handle" aria-hidden="true"></span>
+      <form class="rental-calendar-close-form" method="dialog"><button class="rental-calendar-close" type="submit" aria-label="달력 닫기">×</button></form>
+      <header class="rental-calendar-header">
+        <button class="rental-calendar-nav" id="reservationPreviousMonth" type="button" aria-label="이전 달">‹</button>
+        <h2 id="reservationCalendarMonth"></h2>
+        <button class="rental-calendar-nav" id="reservationNextMonth" type="button" aria-label="다음 달">›</button>
+      </header>
+      <div class="rental-calendar-weekdays" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+      <div class="rental-calendar-days" id="reservationCalendarDays" role="grid"></div>
+      <p class="rental-calendar-hint" id="reservationCalendarHint">예약 날짜를 선택해주세요.</p>
+      <button class="rental-calendar-confirm" id="reservationCalendarConfirm" type="button" disabled>예약 날짜 선택</button>
+    </section>
+  </dialog>
+
+  <footer class="footer" id="site-footer">
+    <nav class="footer-banners" aria-label="빠른 안내"><a class="footer-banner" href="#workshop"><span class="footer-banner-label">RESERVATION</span><strong>공방 체험 예약</strong><span class="footer-banner-copy">노리개 · 구두 꾸미기 · 키링 만들기</span></a><a class="footer-banner" href="#personal-color"><span class="footer-banner-label">PERSONAL SERVICE</span><strong>1:1 퍼스널진단</strong><span class="footer-banner-copy">나에게 어울리는 스타일을 만나보세요</span></a><a class="footer-banner" href="about.html"><span class="footer-banner-label">SILUA STORY</span><strong>브랜드 이야기</strong><span class="footer-banner-copy">전통을 오늘의 새로운 선으로 풀어냅니다</span></a></nav>
+    <div class="footer-main"><div class="footer-brand"><p class="logo">SILUA</p><p class="footer-tagline">전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.</p><div class="footer-socials"><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><span class="footer-social-icon">IG</span><span>Instagram</span></a><a href="contact.html"><span class="footer-social-icon">K</span><span>KakaoTalk</span></a></div></div><div class="footer-customer"><h2>고객센터</h2><p class="footer-customer-title">이메일 문의</p><a class="footer-email" href="mailto:hello@brand.com">hello@brand.com</a><p class="footer-hours">평일 10:00 – 18:00</p></div><div class="footer-company"><h2>COMPANY</h2><p class="biz">상호: ○○○ · 대표자: ○○○<br />사업자등록번호: 000-00-00000 · 주소: ○○○</p></div></div>
+    <div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div>
+  </footer>
+
+  <script src="script.js?v=20260908-admin-hidden"></script>
+  <script>
+    const activityNames = { norigae: "노리개 만들기", shoes: "구두 꾸미기", keyring: "키링 만들기" };
+    const selectedActivity = new URLSearchParams(location.search).get("activity");
+    const workshopSelect = document.querySelector('[data-reservation-form="workshop"] select[name="service"]');
+    const minimumDate = new Date();
+    minimumDate.setMinutes(minimumDate.getMinutes() - minimumDate.getTimezoneOffset());
+    const todayKey = minimumDate.toISOString().slice(0, 10);
+    document.querySelectorAll('input[type="date"]').forEach((input) => { input.min = todayKey; });
+
+    function selectActivity(activity) {
+      document.querySelectorAll("[data-activity]").forEach((button) => button.classList.toggle("is-active", button.dataset.activity === activity));
+      if (activityNames[activity]) workshopSelect.value = activityNames[activity];
+    }
+    if (activityNames[selectedActivity]) selectActivity(selectedActivity);
+    document.querySelectorAll("[data-activity]").forEach((button) => button.addEventListener("click", () => {
+      selectActivity(button.dataset.activity);
+      workshopSelect.focus();
+    }));
+
+    // 기본 날짜 입력 대신 상품 대여 달력과 같은 모양의 하단 달력을 사용합니다.
+    const calendarDialog = document.getElementById("reservationDateDialog");
+    const calendarMonth = document.getElementById("reservationCalendarMonth");
+    const calendarDays = document.getElementById("reservationCalendarDays");
+    const calendarHint = document.getElementById("reservationCalendarHint");
+    const calendarConfirm = document.getElementById("reservationCalendarConfirm");
+    let activeDateInput = null;
+    let selectedDate = "";
+    let visibleMonth = new Date(minimumDate.getFullYear(), minimumDate.getMonth(), 1);
+
+    const formatSelectedDate = (key) => {
+      if (!key) return "";
+      const [year, month, day] = key.split("-");
+      return `${year}년 ${Number(month)}월 ${Number(day)}일`;
+    };
+
+    function renderReservationCalendar() {
+      const year = visibleMonth.getFullYear();
+      const month = visibleMonth.getMonth();
+      const firstWeekday = new Date(year, month, 1).getDay();
+      const monthDays = new Date(year, month + 1, 0).getDate();
+      const cellCount = Math.ceil((firstWeekday + monthDays) / 7) * 7;
+      calendarMonth.textContent = `${year}년 ${month + 1}월`;
+      calendarDays.innerHTML = Array.from({ length: cellCount }, (_, index) => {
+        const date = new Date(year, month, index - firstWeekday + 1);
+        date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+        const key = date.toISOString().slice(0, 10);
+        const outside = date.getMonth() !== month;
+        const past = key < todayKey;
+        const active = key === selectedDate;
+        const classes = ["rental-calendar-day", outside ? "is-outside" : "", past ? "is-past" : "", active ? "is-start is-end" : ""].filter(Boolean).join(" ");
+        return `<button class="${classes}" type="button" data-reservation-date="${key}" aria-label="${month + 1}월 ${date.getDate()}일" aria-selected="${active}"${outside || past ? " disabled" : ""}>${date.getDate()}</button>`;
+      }).join("");
+      calendarHint.textContent = selectedDate ? `${formatSelectedDate(selectedDate)}을 선택했습니다.` : "예약 날짜를 선택해주세요.";
+      calendarConfirm.textContent = selectedDate ? `${formatSelectedDate(selectedDate)} 선택` : "예약 날짜 선택";
+      calendarConfirm.disabled = !selectedDate;
+    }
+
+    document.querySelectorAll('input[type="date"]').forEach((input) => {
+      input.required = false;
+      input.classList.add("reservation-native-date");
+      const button = document.createElement("button");
+      button.className = "reservation-date-button";
+      button.type = "button";
+      button.textContent = "날짜를 선택해주세요";
+      button.addEventListener("click", () => {
+        activeDateInput = input;
+        selectedDate = input.value;
+        const focusDate = selectedDate ? new Date(`${selectedDate}T00:00:00`) : minimumDate;
+        visibleMonth = new Date(focusDate.getFullYear(), focusDate.getMonth(), 1);
+        renderReservationCalendar();
+        calendarDialog.showModal();
+      });
+      input.insertAdjacentElement("afterend", button);
+    });
+    calendarDays.addEventListener("click", (event) => {
+      const day = event.target.closest("[data-reservation-date]");
+      if (!day || day.disabled) return;
+      selectedDate = day.dataset.reservationDate;
+      renderReservationCalendar();
+    });
+    document.getElementById("reservationPreviousMonth").addEventListener("click", () => {
+      visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1);
+      renderReservationCalendar();
+    });
+    document.getElementById("reservationNextMonth").addEventListener("click", () => {
+      visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1);
+      renderReservationCalendar();
+    });
+    calendarConfirm.addEventListener("click", () => {
+      if (!activeDateInput || !selectedDate) return;
+      activeDateInput.value = selectedDate;
+      activeDateInput.nextElementSibling.textContent = formatSelectedDate(selectedDate);
+      calendarDialog.close();
+    });
+    calendarDialog.addEventListener("click", (event) => { if (event.target === calendarDialog) calendarDialog.close(); });
+
+    document.querySelectorAll("[data-reservation-form]").forEach((form) => form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      if (!data.get("date")) {
+        form.querySelector(".reservation-result").textContent = "예약 날짜를 먼저 선택해주세요.";
+        form.querySelector(".reservation-date-button")?.focus();
+        return;
+      }
+      form.querySelector(".reservation-result").textContent = `${data.get("service")} · ${data.get("date")} ${data.get("time")} 예약 내용이 확인되었습니다. 실제 예약 확정은 고객센터 연락 후 완료됩니다.`;
+    }));
+  </script>
+</body>
+</html>

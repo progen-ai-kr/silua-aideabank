@@ -6,6 +6,54 @@ const menuButton = document.querySelector(".menu-button");
 const toggles = document.querySelectorAll(".menu-button");
 const desktopHover = window.matchMedia("(min-width: 901px) and (hover: hover) and (pointer: fine)");
 
+// 메뉴마다 서로 다른 화면과 필터가 열리도록 링크를 한 곳에서 관리합니다.
+const menuDestinations = {
+  "SELF WEDDING": {
+    main: "products.html?collection=self-wedding",
+    children: ["products.html?collection=self-wedding&mode=rental", "products.html?collection=self-wedding&service=custom"]
+  },
+  "EVENING & PARTY": {
+    main: "products.html?collection=evening-party",
+    children: ["products.html?collection=evening-party&mode=rental", "products.html?collection=evening-party&service=custom"]
+  },
+  "WEDDING ATTIRE": {
+    main: "products.html?collection=wedding-attire",
+    children: [
+      "products.html?collection=wedding-attire&type=one-piece",
+      "products.html?collection=wedding-attire&type=two-piece",
+      "products.html?collection=wedding-attire&type=suit"
+    ]
+  },
+  "ACCESSORIES": {
+    main: "accessories.html",
+    children: ["accessories.html?type=shoes", "accessories.html?type=goods"]
+  },
+  "RESERVATION": {
+    main: "reservation.html",
+    children: [
+      "reservation.html?activity=norigae#workshop",
+      "reservation.html?activity=shoes#workshop",
+      "reservation.html?activity=keyring#workshop",
+      "reservation.html#personal-color"
+    ]
+  }
+};
+
+document.querySelectorAll(".gnb-category").forEach((category) => {
+  const mainLink = category.querySelector(":scope > a");
+  const destination = menuDestinations[mainLink?.textContent.trim().toUpperCase()];
+  if (!destination) return;
+  mainLink.href = destination.main;
+  category.querySelectorAll(".gnb-submenu a").forEach((link, index) => {
+    if (destination.children[index]) link.href = destination.children[index];
+  });
+});
+
+// 푸터의 예약 배너도 새 예약 화면의 해당 위치로 연결합니다.
+const footerBanners = document.querySelectorAll(".footer-banner");
+if (footerBanners[0]) footerBanners[0].href = "reservation.html#workshop";
+if (footerBanners[1]) footerBanners[1].href = "reservation.html#personal-color";
+
 if (menu && toggles.length) {
   const setMenuState = (isOpen) => {
     menu.classList.toggle("open", isOpen);
@@ -42,14 +90,216 @@ if (menu && toggles.length) {
     if (desktopHover.matches) setMenuState(true);
   });
 
-  // 영문 상위 메뉴는 페이지 이동 없이 하위 메뉴를 보여주는 역할만 합니다.
-  menu.querySelectorAll(":scope > .gnb-category > a").forEach((link) => link.addEventListener("click", (event) => {
-    event.preventDefault();
-  }));
-
   menu.querySelectorAll(".gnb-submenu a").forEach((link) => link.addEventListener("click", () => {
     setMenuState(false);
   }));
+}
+
+// 검은 헤더의 작은 SILUA를 8초 안에 10번 눌렀을 때만 관리자 로그인으로 이동합니다.
+const hiddenAdminTrigger = document.querySelector(".brand-links span");
+if (hiddenAdminTrigger) {
+  let adminClickCount = 0;
+  let adminClickStartedAt = 0;
+  let adminResetTimer = 0;
+  const resetAdminClicks = () => {
+    adminClickCount = 0;
+    adminClickStartedAt = 0;
+    window.clearTimeout(adminResetTimer);
+  };
+
+  hiddenAdminTrigger.setAttribute("role", "button");
+  hiddenAdminTrigger.setAttribute("tabindex", "0");
+  hiddenAdminTrigger.setAttribute("aria-label", "SILUA");
+  const countAdminClick = () => {
+    const now = Date.now();
+    if (!adminClickStartedAt || now - adminClickStartedAt > 10000) {
+      resetAdminClicks();
+      adminClickStartedAt = now;
+    }
+    adminClickCount += 1;
+    window.clearTimeout(adminResetTimer);
+    adminResetTimer = window.setTimeout(resetAdminClicks, 10000 - (now - adminClickStartedAt));
+    if (adminClickCount === 10) {
+      resetAdminClicks();
+      location.assign("admin.html");
+    }
+  };
+  hiddenAdminTrigger.addEventListener("click", countAdminClick);
+  hiddenAdminTrigger.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      countAdminClick();
+    }
+  });
+}
+
+// 사람 모양 아이콘은 더 이상 관리자 화면으로 바로 이동하지 않습니다.
+const userButton = document.querySelector(".user-button");
+userButton?.removeAttribute("href");
+userButton?.setAttribute("role", "button");
+userButton?.setAttribute("tabindex", "0");
+userButton?.addEventListener("click", (event) => {
+  event.preventDefault();
+  openMemberDialog();
+});
+
+function openMemberDialog() {
+  let dialog = document.getElementById("memberDialog");
+  if (!dialog) {
+    dialog = document.createElement("dialog");
+    dialog.id = "memberDialog";
+    dialog.className = "member-dialog";
+    dialog.innerHTML = `
+      <section class="member-dialog-card" aria-labelledby="memberDialogTitle">
+        <header class="member-dialog-header">
+          <div><p>SILUA MEMBER</p><h2 id="memberDialogTitle">로그인</h2></div>
+          <button class="member-dialog-close" type="button" aria-label="회원 창 닫기">×</button>
+        </header>
+        <div class="member-tabs" role="tablist" aria-label="회원 메뉴">
+          <button type="button" role="tab" aria-selected="true" data-member-tab="login">로그인</button>
+          <button type="button" role="tab" aria-selected="false" data-member-tab="join">회원가입</button>
+        </div>
+        <form class="member-form is-active" data-member-panel="login">
+          <label><span>이메일</span><input type="email" name="email" autocomplete="email" required /></label>
+          <label><span>비밀번호</span><input type="password" name="password" autocomplete="current-password" minlength="8" required /></label>
+          <button class="btn" type="submit">로그인</button>
+          <p class="member-form-status" aria-live="polite"></p>
+        </form>
+        <form class="member-form" data-member-panel="join" hidden>
+          <label><span>이름</span><input type="text" name="name" autocomplete="name" required /></label>
+          <label><span>이메일</span><input type="email" name="email" autocomplete="email" required /></label>
+          <label><span>비밀번호</span><input type="password" name="password" autocomplete="new-password" minlength="8" required /></label>
+          <label><span>비밀번호 확인</span><input type="password" name="passwordConfirm" autocomplete="new-password" minlength="8" required /></label>
+          <button class="btn" type="submit">회원가입</button>
+          <p class="member-form-status" aria-live="polite"></p>
+        </form>
+      </section>`;
+    document.body.append(dialog);
+
+    const title = dialog.querySelector("h2");
+    const tabs = dialog.querySelectorAll("[data-member-tab]");
+    const panels = dialog.querySelectorAll("[data-member-panel]");
+    const selectTab = (name) => {
+      tabs.forEach((tab) => tab.setAttribute("aria-selected", String(tab.dataset.memberTab === name)));
+      panels.forEach((panel) => {
+        const active = panel.dataset.memberPanel === name;
+        panel.hidden = !active;
+        panel.classList.toggle("is-active", active);
+      });
+      title.textContent = name === "join" ? "회원가입" : "로그인";
+      dialog.querySelector(`[data-member-panel="${name}"] input`)?.focus();
+    };
+    tabs.forEach((tab) => tab.addEventListener("click", () => selectTab(tab.dataset.memberTab)));
+    dialog.querySelector(".member-dialog-close").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+    panels.forEach((form) => form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const status = form.querySelector(".member-form-status");
+      if (form.dataset.memberPanel === "join") {
+        const data = new FormData(form);
+        if (data.get("password") !== data.get("passwordConfirm")) {
+          status.textContent = "비밀번호가 일치하지 않습니다.";
+          return;
+        }
+      }
+      status.textContent = "화면 구성이 완료되었습니다. 실제 회원 처리는 회원 서버 연결 후 사용할 수 있습니다.";
+    }));
+  }
+  if (!dialog.open) dialog.showModal();
+  window.setTimeout(() => dialog.querySelector(".member-form.is-active input")?.focus(), 0);
+}
+
+// 돋보기를 누르면 현재 페이지 위에 제품 검색창을 엽니다.
+const searchButton = document.querySelector(".search-button");
+if (searchButton) {
+  searchButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    openProductSearch();
+  });
+}
+
+function openProductSearch() {
+  let dialog = document.getElementById("siteSearchDialog");
+  if (!dialog) {
+    dialog = document.createElement("dialog");
+    dialog.id = "siteSearchDialog";
+    dialog.className = "search-dialog";
+    dialog.innerHTML = `
+      <section class="search-dialog-card" aria-labelledby="siteSearchTitle">
+        <header class="search-dialog-header">
+          <div><p>SEARCH</p><h2 id="siteSearchTitle">제품 검색</h2></div>
+          <button class="search-dialog-close" type="button" aria-label="검색 닫기">×</button>
+        </header>
+        <label class="search-field">
+          <span class="sr-only">검색어</span>
+          <input type="search" autocomplete="off" placeholder="제품명 또는 카테고리를 입력하세요" />
+          <span aria-hidden="true"></span>
+        </label>
+        <p class="search-status" aria-live="polite">검색어를 입력하면 제품을 찾아드립니다.</p>
+        <div class="search-results"></div>
+      </section>`;
+    document.body.append(dialog);
+
+    const input = dialog.querySelector("input");
+    const status = dialog.querySelector(".search-status");
+    const results = dialog.querySelector(".search-results");
+    let products = [];
+
+    const renderResults = () => {
+      const query = input.value.trim().toLocaleLowerCase();
+      results.replaceChildren();
+      if (!query) {
+        status.textContent = "검색어를 입력하면 제품을 찾아드립니다.";
+        return;
+      }
+      const matches = products.filter((product) => [
+        product.name, product.label, product.category, product.summary,
+        ...(Array.isArray(product.keywords) ? product.keywords : [])
+      ].join(" ").toLocaleLowerCase().includes(query));
+      status.textContent = matches.length ? `${matches.length}개의 제품을 찾았습니다.` : "검색 결과가 없습니다.";
+      matches.forEach((product) => {
+        const link = document.createElement("a");
+        link.className = "search-result";
+        link.href = `product.html?id=${encodeURIComponent(product.id)}`;
+        const image = document.createElement("span");
+        image.className = "search-result-image";
+        const source = String(product.images?.[0] || "");
+        if (/^(?:\.\/)?images\/[a-z0-9_./%+~-]+$/i.test(source) || /^\/images\/[a-z0-9_./%+~-]+$/i.test(source)) {
+          const img = document.createElement("img");
+          img.src = source;
+          img.alt = "";
+          image.append(img);
+        }
+        const copy = document.createElement("span");
+        copy.className = "search-result-copy";
+        const name = document.createElement("strong");
+        name.textContent = product.name || "이름 없는 제품";
+        const meta = document.createElement("span");
+        meta.textContent = product.price || product.label || product.category || "상세 보기";
+        copy.append(name, meta);
+        link.append(image, copy);
+        results.append(link);
+      });
+    };
+
+    input.addEventListener("input", renderResults);
+    dialog.querySelector(".search-dialog-close").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    fetch("products.json", { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) throw new Error("제품 데이터를 불러오지 못했습니다.");
+        return response.json();
+      })
+      .then((data) => {
+        products = (Array.isArray(data) ? data : data.products || []).filter((product) => product && product.published !== false);
+        renderResults();
+      })
+      .catch(() => { status.textContent = "제품 검색을 불러오지 못했습니다. 잠시 후 다시 시도해주세요."; });
+  }
+  if (!dialog.open) dialog.showModal();
+  window.setTimeout(() => dialog.querySelector("input")?.focus(), 0);
 }
 
 // 메인 이미지가 일정 간격으로 부드럽게 사라지고 다음 이미지로 교체됩니다.
@@ -116,7 +366,7 @@ const translations = {
       home: "홈으로 이동",
       menuOpen: "주요 메뉴 열기",
       menuClose: "주요 메뉴 닫기",
-      admin: "관리자 로그인",
+      admin: "마이페이지",
       search: "제품 검색",
       footer: "상호: ○○○ · 대표자: ○○○<br>사업자등록번호: 000-00-00000 · 주소: ○○○",
       footerTagline: "전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.",
@@ -130,7 +380,7 @@ const translations = {
       footerHours: "평일 10:00 – 18:00"
     },
     pages: {
-      "index.html": { title: "SILUA", heroTitle: "전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.", heroSub: "서브 카피 (40자 내) — 브랜드를 소개하는 짧은 문장을 적으세요.", action: "컬렉션 보기", categories: ["인생의 주인공이 되는 날", "화려하게 빛나는 순간", "특별한 날의 레디투웨어"], categoryMore: "자세히 보기 >", strengths: "우리 브랜드의 강점", strengthTitle: "강점 제목", strengthBody: "강점 설명을 적으세요.", looks: "인기 상품", editorialTitle: "신 제품" },
+      "index.html": { title: "SILUA", heroTitle: "전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.", heroSub: "서브 카피 (40자 내) — 브랜드를 소개하는 짧은 문장을 적으세요.", action: "컬렉션 보기", categoryTitles: ["Self Weading", "Evening & Party", "Wedding Attire"], categories: ["인생의 주인공이 되는 날", "화려하게 빛나는 순간", "특별한 날의 레디투웨어"], categoryMore: "자세히 보기 >", strengths: "우리 브랜드의 강점", strengthTitle: "강점 제목", strengthBody: "강점 설명을 적으세요.", looks: "인기 상품", editorialTitle: "신 제품" },
       "about.html": { title: "브랜드 소개 — SILUA", head: "브랜드 소개", intro: "브랜드 한 줄 소개를 여기에 적으세요.", story: "브랜드 스토리", storyText: "브랜드 스토리를 여기에 붙여넣으세요. 문단이 여러 개면 <p> 태그를 복사해서 나눠 넣으면 됩니다.", storySecond: "두 번째 문단 예시입니다.", keywords: "브랜드 키워드", keywordItems: ["키워드1", "키워드2", "키워드3", "키워드4", "키워드5"], philosophy: "브랜드 철학", philosophyText: "브랜드 철학 문구를 여기에 적으세요.", people: "만드는 사람들", photo: "사진 설명", strengths: "우리 브랜드의 강점", strengthTitle: "강점 제목", strengthBody: "강점 설명을 적으세요.", portfolio: "포트폴리오", portfolioLoading: "포트폴리오를 불러오는 중입니다.", visit: "매장 안내", hoursLabel: "영업시간", hoursValue: "평일 10:00 – 18:00", addressLabel: "주소", addressValue: "주소를 입력해주세요", emailLabel: "이메일" },
       "products.html": { title: "제품 — SILUA", head: "제품", intro: "취급 품목을 여기에 적으세요. (예: Dress / Jacket / Shirt / Skirt)" },
       "product.html": { title: "제품 상세 — SILUA", loading: "제품 정보를 불러오는 중…", purchase: "구매 안내", close: "구매 안내 닫기", confirm: "확인", back: "← 제품 목록으로" },
@@ -144,7 +394,7 @@ const translations = {
       home: "Go to home",
       menuOpen: "Open main menu",
       menuClose: "Close main menu",
-      admin: "Administrator login",
+      admin: "My page",
       search: "Search products",
       footer: "Company: ○○○ · Representative: ○○○<br>Business Registration No.: 000-00-00000 · Address: ○○○",
       footerTagline: "Not tradition reworn, but new lines made for who I am today.",
@@ -158,7 +408,7 @@ const translations = {
       footerHours: "Weekdays 10:00 – 18:00"
     },
     pages: {
-      "index.html": { title: "SILUA", heroTitle: "Not tradition reworn, but new lines made for who I am today.", heroSub: "Write a short sentence introducing the brand here.", action: "VIEW COLLECTION", categories: ["The day you become the main character", "A moment to shine brilliantly", "Ready-to-wear for your special day"], categoryMore: "VIEW MORE >", strengths: "WHY CHOOSE SILUA", strengthTitle: "STRENGTH TITLE", strengthBody: "Describe this strength here.", looks: "POPULAR PRODUCTS", editorialTitle: "NEW PRODUCTS" },
+      "index.html": { title: "SILUA", heroTitle: "Not tradition reworn, but new lines made for who I am today.", heroSub: "Write a short sentence introducing the brand here.", action: "VIEW COLLECTION", categoryTitles: ["Self Weading", "Evening & Party", "Wedding Attire"], categories: ["The day you become the main character", "A moment to shine brilliantly", "Ready-to-wear for your special day"], categoryMore: "VIEW MORE >", strengths: "WHY CHOOSE SILUA", strengthTitle: "STRENGTH TITLE", strengthBody: "Describe this strength here.", looks: "POPULAR PRODUCTS", editorialTitle: "NEW PRODUCTS" },
       "about.html": { title: "About — SILUA", head: "ABOUT SILUA", intro: "Write a one-line introduction to the brand here.", story: "BRAND STORY", storyText: "Paste the brand story here. Divide longer stories into separate paragraphs.", storySecond: "This is an example of a second paragraph.", keywords: "BRAND KEYWORDS", keywordItems: ["KEYWORD 1", "KEYWORD 2", "KEYWORD 3", "KEYWORD 4", "KEYWORD 5"], philosophy: "BRAND PHILOSOPHY", philosophyText: "Write the brand philosophy here.", people: "OUR PEOPLE", photo: "Photo description", strengths: "WHY CHOOSE SILUA", strengthTitle: "STRENGTH TITLE", strengthBody: "Describe this strength here.", portfolio: "PORTFOLIO", portfolioLoading: "Loading the portfolio…", visit: "VISIT & CONTACT", hoursLabel: "HOURS", hoursValue: "Weekdays 10:00 – 18:00", addressLabel: "ADDRESS", addressValue: "Enter the store address", emailLabel: "EMAIL" },
       "products.html": { title: "Products — SILUA", head: "PRODUCTS", intro: "Introduce the available categories here. (e.g. Dress / Jacket / Shirt / Skirt)" },
       "product.html": { title: "Product Details — SILUA", loading: "Loading product information…", purchase: "PURCHASE INFORMATION", close: "Close purchase information", confirm: "OK", back: "← BACK TO PRODUCTS" },
@@ -183,6 +433,7 @@ function applyPageTranslation(page, text) {
     setText(".hero-copy > p:not(.eyebrow)", text.heroSub);
     setText(".hero .btn", text.action);
     document.querySelectorAll(".home-category").forEach((category, index) => {
+      setText("h2", text.categoryTitles[index], category);
       setText("p", text.categories[index], category);
       setText("span", text.categoryMore, category);
     });
