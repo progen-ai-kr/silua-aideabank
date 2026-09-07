@@ -13,7 +13,7 @@
 
   <header class="site-header">
     <div class="top-header"><div class="brand-links"><span>SILUA</span></div><p class="top-notice">공지사항을 입력해주세요</p><div class="top-links"><a href="contact.html">NOTICE</a><button class="language-button" type="button" data-language="ko" aria-pressed="true">KR</button><span aria-hidden="true">|</span><button class="language-button" type="button" data-language="en" aria-pressed="false">EN</button></div></div>
-    <nav class="gnb" aria-label="주요 메뉴"><button class="logo logo-menu-button" type="button" aria-label="주요 메뉴 열기" aria-controls="primary-menu" aria-expanded="false">SILUA</button><ul class="gnb-menu" id="primary-menu"><li class="gnb-category"><a href="products.html">SELF WEDDING</a><ul class="gnb-submenu"><li><a href="products.html">대여</a></li><li><a href="products.html">맞춤</a></li></ul></li><li class="gnb-category"><a href="products.html">EVENING &amp; PARTY</a><ul class="gnb-submenu"><li><a href="products.html">대여</a></li><li><a href="products.html">맞춤</a></li></ul></li><li class="gnb-category"><a href="products.html">WEDDING ATTIRE</a><ul class="gnb-submenu"><li><a href="products.html">원피스</a></li><li><a href="products.html">투피스</a></li><li><a href="products.html">수트</a></li></ul></li><li class="gnb-category"><a href="products.html">ACCESSORIES</a><ul class="gnb-submenu"><li><a href="products.html">구두</a></li><li><a href="products.html">잡화</a></li></ul></li><li class="gnb-category reservation-menu"><a href="contact.html">RESERVATION</a><ul class="gnb-submenu reservation-submenu"><li class="gnb-submenu-section">공방 체험</li><li class="gnb-submenu-detail"><a href="contact.html">노리개 만들기</a></li><li class="gnb-submenu-detail"><a href="contact.html">구두 꾸미기</a></li><li class="gnb-submenu-detail"><a href="contact.html">키링 만들기</a></li><li class="gnb-submenu-section"><a href="contact.html">1:1 퍼스널진단</a></li></ul></li><li><a href="about.html">STORY</a></li></ul><div class="gnb-icons"><button class="icon-button menu-button" type="button" aria-label="메뉴 열기" aria-controls="primary-menu" aria-expanded="false"><span></span><span></span><span></span></button><a class="icon-button user-button" href="admin.html" aria-label="관리자 로그인"><span class="user-head"></span><span class="user-body"></span></a><a class="icon-button search-button" href="products.html" aria-label="제품 검색"><span></span></a></div></nav>
+    <nav class="gnb" aria-label="주요 메뉴"><button class="logo logo-menu-button" type="button" aria-label="주요 메뉴 열기" aria-controls="primary-menu" aria-expanded="false">SILUA</button><ul class="gnb-menu" id="primary-menu"><li class="gnb-category"><a href="products.html">SELF WEDDING</a><ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤</a></li></ul></li><li class="gnb-category"><a href="products.html">EVENING &amp; PARTY</a><ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤</a></li></ul></li><li class="gnb-category"><a href="products.html">WEDDING ATTIRE</a><ul class="gnb-submenu"><li><a href="products.html">원피스</a></li><li><a href="products.html">투피스</a></li><li><a href="products.html">수트</a></li></ul></li><li class="gnb-category"><a href="products.html">ACCESSORIES</a><ul class="gnb-submenu"><li><a href="products.html">구두</a></li><li><a href="products.html">잡화</a></li></ul></li><li class="gnb-category reservation-menu"><a href="contact.html">RESERVATION</a><ul class="gnb-submenu reservation-submenu"><li class="gnb-submenu-section">공방 체험</li><li class="gnb-submenu-detail"><a href="contact.html">노리개 만들기</a></li><li class="gnb-submenu-detail"><a href="contact.html">구두 꾸미기</a></li><li class="gnb-submenu-detail"><a href="contact.html">키링 만들기</a></li><li class="gnb-submenu-section"><a href="contact.html">1:1 퍼스널진단</a></li></ul></li><li><a href="about.html">STORY</a></li></ul><div class="gnb-icons"><button class="icon-button menu-button" type="button" aria-label="메뉴 열기" aria-controls="primary-menu" aria-expanded="false"><span></span><span></span><span></span></button><a class="icon-button user-button" href="admin.html" aria-label="관리자 로그인"><span class="user-head"></span><span class="user-body"></span></a><a class="icon-button search-button" href="products.html" aria-label="제품 검색"><span></span></a></div></nav>
   </header>
 
   <!-- 브랜드 담당자가 만든 제품 정보와 상세 내용이 자동으로 채워집니다. -->
@@ -37,6 +37,25 @@
       <form class="purchase-dialog-actions" method="dialog">
         <button class="btn" type="submit">확인</button>
       </form>
+    </section>
+  </dialog>
+
+  <!-- 대여 메뉴로 들어온 상품에서만 열리는 기간 선택 달력입니다. -->
+  <dialog id="rentalCalendarDialog" class="rental-calendar-dialog" aria-labelledby="rentalCalendarMonth">
+    <section class="rental-calendar-card">
+      <span class="rental-calendar-handle" aria-hidden="true"></span>
+      <form class="rental-calendar-close-form" method="dialog">
+        <button class="rental-calendar-close" type="submit" aria-label="달력 닫기">×</button>
+      </form>
+      <header class="rental-calendar-header">
+        <button class="rental-calendar-nav" id="rentalPreviousMonth" type="button" aria-label="이전 달">‹</button>
+        <h2 id="rentalCalendarMonth"></h2>
+        <button class="rental-calendar-nav" id="rentalNextMonth" type="button" aria-label="다음 달">›</button>
+      </header>
+      <div class="rental-calendar-weekdays" id="rentalCalendarWeekdays" aria-hidden="true"></div>
+      <div class="rental-calendar-days" id="rentalCalendarDays" role="grid"></div>
+      <p class="rental-calendar-hint" id="rentalCalendarHint">대여 시작일과 종료일을 선택해주세요.</p>
+      <button class="rental-calendar-confirm" id="rentalCalendarConfirm" type="button" disabled>대여 기간 선택</button>
     </section>
   </dialog>
 
@@ -76,7 +95,9 @@
   <script src="script.js"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
-    const productId = new URLSearchParams(location.search).get("id");
+    const productQuery = new URLSearchParams(location.search);
+    const productId = productQuery.get("id");
+    const isRentalMode = productQuery.get("mode") === "rental";
 
     function imageMarkup(source, alt, className, eager) {
       const safeSource = ProductCatalog.safeImageUrl(source);
@@ -187,6 +208,153 @@
       });
     }
 
+    function setupRentalCalendar(product) {
+      const trigger = document.querySelector("[data-rental-calendar]");
+      const dialog = document.getElementById("rentalCalendarDialog");
+      if (!isRentalMode || !trigger || !dialog) return;
+
+      const monthLabel = document.getElementById("rentalCalendarMonth");
+      const weekdays = document.getElementById("rentalCalendarWeekdays");
+      const days = document.getElementById("rentalCalendarDays");
+      const hint = document.getElementById("rentalCalendarHint");
+      const confirm = document.getElementById("rentalCalendarConfirm");
+      const previous = document.getElementById("rentalPreviousMonth");
+      const next = document.getElementById("rentalNextMonth");
+      const close = dialog.querySelector(".rental-calendar-close");
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      let visibleMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+      let selectedStart = null;
+      let selectedEnd = null;
+
+      const isEnglish = () => document.documentElement.lang === "en";
+      const dateKey = (date) => [
+        date.getFullYear(),
+        String(date.getMonth() + 1).padStart(2, "0"),
+        String(date.getDate()).padStart(2, "0")
+      ].join("-");
+      const dateFromKey = (key) => {
+        const [year, month, day] = key.split("-").map(Number);
+        return new Date(year, month - 1, day);
+      };
+      const formatDate = (date) => isEnglish()
+        ? new Intl.DateTimeFormat("en", { month: "short", day: "numeric" }).format(date)
+        : `${String(date.getMonth() + 1).padStart(2, "0")}월 ${String(date.getDate()).padStart(2, "0")}일`;
+
+      function renderCalendar() {
+        const english = isEnglish();
+        const year = visibleMonth.getFullYear();
+        const month = visibleMonth.getMonth();
+        const firstWeekday = new Date(year, month, 1).getDay();
+        const monthDays = new Date(year, month + 1, 0).getDate();
+        const cellCount = Math.ceil((firstWeekday + monthDays) / 7) * 7;
+        const weekdayLabels = english
+          ? ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+          : ["일", "월", "화", "수", "목", "금", "토"];
+
+        monthLabel.textContent = english
+          ? new Intl.DateTimeFormat("en", { month: "long", year: "numeric" }).format(visibleMonth).toUpperCase()
+          : `${year}년 ${month + 1}월`;
+        weekdays.innerHTML = weekdayLabels.map((label) => `<span>${label}</span>`).join("");
+
+        days.innerHTML = Array.from({ length: cellCount }, (_, index) => {
+          const date = new Date(year, month, index - firstWeekday + 1);
+          const time = date.getTime();
+          const outside = date.getMonth() !== month;
+          const unavailable = outside || time < today.getTime();
+          const start = selectedStart && time === selectedStart.getTime();
+          const end = selectedEnd && time === selectedEnd.getTime();
+          const inRange = selectedStart && selectedEnd && time > selectedStart.getTime() && time < selectedEnd.getTime();
+          const classes = [
+            "rental-calendar-day",
+            outside ? "is-outside" : "",
+            unavailable && !outside ? "is-past" : "",
+            start ? "is-start" : "",
+            end ? "is-end" : "",
+            inRange ? "is-in-range" : ""
+          ].filter(Boolean).join(" ");
+          const selected = start || end;
+          const label = english
+            ? new Intl.DateTimeFormat("en", { month: "long", day: "numeric" }).format(date)
+            : `${month + 1}월 ${date.getDate()}일`;
+          return `<button class="${classes}" type="button" role="gridcell" data-date="${dateKey(date)}" ` +
+            `aria-label="${label}" aria-selected="${selected}"${unavailable ? " disabled" : ""}>${date.getDate()}</button>`;
+        }).join("");
+
+        if (!selectedStart) {
+          hint.textContent = english ? "Select the rental start and end dates." : "대여 시작일과 종료일을 선택해주세요.";
+          confirm.textContent = english ? "SELECT RENTAL PERIOD" : "대여 기간 선택";
+          confirm.disabled = true;
+        } else if (!selectedEnd) {
+          hint.textContent = english
+            ? `Select an end date after ${formatDate(selectedStart)}.`
+            : `${formatDate(selectedStart)} 이후 종료일을 선택해주세요.`;
+          confirm.textContent = english ? "SELECT END DATE" : "종료일 선택";
+          confirm.disabled = true;
+        } else {
+          const range = `${formatDate(selectedStart)}~${formatDate(selectedEnd)}`;
+          hint.textContent = english ? "Your rental period is ready." : "선택한 대여 기간을 확인해주세요.";
+          confirm.textContent = english ? `CONFIRM ${formatDate(selectedStart)} – ${formatDate(selectedEnd)}` : `${range} 선택`;
+          confirm.disabled = false;
+        }
+
+        previous.setAttribute("aria-label", english ? "Previous month" : "이전 달");
+        next.setAttribute("aria-label", english ? "Next month" : "다음 달");
+        close.setAttribute("aria-label", english ? "Close calendar" : "달력 닫기");
+      }
+
+      days.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-date]");
+        if (!button || button.disabled) return;
+        const selected = dateFromKey(button.dataset.date);
+        if (!selectedStart || selectedEnd) {
+          selectedStart = selected;
+          selectedEnd = null;
+        } else if (selected.getTime() < selectedStart.getTime()) {
+          selectedStart = selected;
+        } else {
+          selectedEnd = selected;
+        }
+        renderCalendar();
+      });
+
+      previous.addEventListener("click", () => {
+        visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1);
+        renderCalendar();
+      });
+      next.addEventListener("click", () => {
+        visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1);
+        renderCalendar();
+      });
+      trigger.addEventListener("click", () => {
+        const focusDate = selectedStart || today;
+        visibleMonth = new Date(focusDate.getFullYear(), focusDate.getMonth(), 1);
+        renderCalendar();
+        dialog.showModal();
+      });
+      confirm.addEventListener("click", () => {
+        if (!selectedStart || !selectedEnd) return;
+        let summary = document.querySelector(".rental-selection-summary");
+        if (!summary) {
+          summary = document.createElement("p");
+          summary.className = "rental-selection-summary";
+          trigger.insertAdjacentElement("afterend", summary);
+        }
+        summary.textContent = isEnglish()
+          ? `Selected: ${formatDate(selectedStart)} – ${formatDate(selectedEnd)}`
+          : `선택 기간: ${formatDate(selectedStart)}~${formatDate(selectedEnd)}`;
+        dialog.close();
+      });
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) dialog.close();
+      });
+      document.addEventListener("silua:languagechange", renderCalendar);
+
+      const backLink = document.querySelector(".product-back a");
+      if (backLink) backLink.href = "products.html?mode=rental";
+      renderCalendar();
+    }
+
     function renderSection(section, product, index) {
       if (!section || !section.type) return "";
       const esc = ProductCatalog.escapeHtml;
@@ -245,13 +413,16 @@
         const price = product.price ? '<p class="product-price">' + esc(product.price) + "</p>" : "";
         const buyLink = ProductCatalog.safeExternalUrl(product.buyLink);
         const buyNotice = String(product.buyNotice || "").trim();
-        const buyButton = buyLink
-          ? '<a class="btn product-buy" href="' + esc(buyLink) + '" target="_blank" rel="noopener noreferrer">' +
-            esc(product.buyLabel || "구매하기") + " <span aria-hidden=\"true\">↗</span></a>"
-          : buyNotice
-            ? '<button class="btn product-buy" type="button" data-purchase-dialog aria-haspopup="dialog">' +
-              esc(product.buyLabel || "구매하기") + "</button>"
-            : "";
+        const buyButton = isRentalMode
+          ? '<button class="btn product-buy" type="button" data-rental-calendar aria-haspopup="dialog">' +
+            (document.documentElement.lang === "en" ? "SELECT RENTAL PERIOD" : "대여 기간 선택") + "</button>"
+          : buyLink
+            ? '<a class="btn product-buy" href="' + esc(buyLink) + '" target="_blank" rel="noopener noreferrer">' +
+              esc(product.buyLabel || "구매하기") + " <span aria-hidden=\"true\">↗</span></a>"
+            : buyNotice
+              ? '<button class="btn product-buy" type="button" data-purchase-dialog aria-haspopup="dialog">' +
+                esc(product.buyLabel || "구매하기") + "</button>"
+              : "";
 
         let sections = Array.isArray(product.sections)
           ? product.sections.map((section, index) => renderSection(section, product, index)).join("")
@@ -280,6 +451,7 @@
 
         setupProductCarousels();
         setupPurchaseDialog(product);
+        setupRentalCalendar(product);
       })
       .catch(() => {
         document.getElementById("product-detail").innerHTML =

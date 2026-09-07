@@ -12,7 +12,7 @@
 
   <header class="site-header">
     <div class="top-header"><div class="brand-links"><span>SILUA</span></div><p class="top-notice">공지사항을 입력해주세요</p><div class="top-links"><a href="contact.html">NOTICE</a><button class="language-button" type="button" data-language="ko" aria-pressed="true">KR</button><span aria-hidden="true">|</span><button class="language-button" type="button" data-language="en" aria-pressed="false">EN</button></div></div>
-    <nav class="gnb" aria-label="주요 메뉴"><button class="logo logo-menu-button" type="button" aria-label="주요 메뉴 열기" aria-controls="primary-menu" aria-expanded="false">SILUA</button><ul class="gnb-menu" id="primary-menu"><li class="gnb-category"><a href="products.html">SELF WEDDING</a><ul class="gnb-submenu"><li><a href="products.html">대여</a></li><li><a href="products.html">맞춤</a></li></ul></li><li class="gnb-category"><a href="products.html">EVENING &amp; PARTY</a><ul class="gnb-submenu"><li><a href="products.html">대여</a></li><li><a href="products.html">맞춤</a></li></ul></li><li class="gnb-category"><a href="products.html">WEDDING ATTIRE</a><ul class="gnb-submenu"><li><a href="products.html">원피스</a></li><li><a href="products.html">투피스</a></li><li><a href="products.html">수트</a></li></ul></li><li class="gnb-category"><a href="products.html">ACCESSORIES</a><ul class="gnb-submenu"><li><a href="products.html">구두</a></li><li><a href="products.html">잡화</a></li></ul></li><li class="gnb-category reservation-menu"><a href="contact.html">RESERVATION</a><ul class="gnb-submenu reservation-submenu"><li class="gnb-submenu-section">공방 체험</li><li class="gnb-submenu-detail"><a href="contact.html">노리개 만들기</a></li><li class="gnb-submenu-detail"><a href="contact.html">구두 꾸미기</a></li><li class="gnb-submenu-detail"><a href="contact.html">키링 만들기</a></li><li class="gnb-submenu-section"><a href="contact.html">1:1 퍼스널진단</a></li></ul></li><li><a href="about.html">STORY</a></li></ul><div class="gnb-icons"><button class="icon-button menu-button" type="button" aria-label="메뉴 열기" aria-controls="primary-menu" aria-expanded="false"><span></span><span></span><span></span></button><a class="icon-button user-button" href="admin.html" aria-label="관리자 로그인"><span class="user-head"></span><span class="user-body"></span></a><a class="icon-button search-button" href="products.html" aria-label="제품 검색"><span></span></a></div></nav>
+    <nav class="gnb" aria-label="주요 메뉴"><button class="logo logo-menu-button" type="button" aria-label="주요 메뉴 열기" aria-controls="primary-menu" aria-expanded="false">SILUA</button><ul class="gnb-menu" id="primary-menu"><li class="gnb-category"><a href="products.html">SELF WEDDING</a><ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤</a></li></ul></li><li class="gnb-category"><a href="products.html">EVENING &amp; PARTY</a><ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤</a></li></ul></li><li class="gnb-category"><a href="products.html">WEDDING ATTIRE</a><ul class="gnb-submenu"><li><a href="products.html">원피스</a></li><li><a href="products.html">투피스</a></li><li><a href="products.html">수트</a></li></ul></li><li class="gnb-category"><a href="products.html">ACCESSORIES</a><ul class="gnb-submenu"><li><a href="products.html">구두</a></li><li><a href="products.html">잡화</a></li></ul></li><li class="gnb-category reservation-menu"><a href="contact.html">RESERVATION</a><ul class="gnb-submenu reservation-submenu"><li class="gnb-submenu-section">공방 체험</li><li class="gnb-submenu-detail"><a href="contact.html">노리개 만들기</a></li><li class="gnb-submenu-detail"><a href="contact.html">구두 꾸미기</a></li><li class="gnb-submenu-detail"><a href="contact.html">키링 만들기</a></li><li class="gnb-submenu-section"><a href="contact.html">1:1 퍼스널진단</a></li></ul></li><li><a href="about.html">STORY</a></li></ul><div class="gnb-icons"><button class="icon-button menu-button" type="button" aria-label="메뉴 열기" aria-controls="primary-menu" aria-expanded="false"><span></span><span></span><span></span></button><a class="icon-button user-button" href="admin.html" aria-label="관리자 로그인"><span class="user-head"></span><span class="user-body"></span></a><a class="icon-button search-button" href="products.html" aria-label="제품 검색"><span></span></a></div></nav>
   </header>
 
   <!-- [작성서 05: 취급 품목] -->
@@ -62,6 +62,23 @@
   <script src="script.js"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
+    const productListParams = new URLSearchParams(location.search);
+    const isRentalMode = productListParams.get("mode") === "rental";
+
+    // 대여 메뉴에서 들어오면 목록 제목과 상세페이지 연결에 대여 상태를 유지합니다.
+    function applyProductListMode() {
+      if (!isRentalMode) return;
+      const isEnglish = document.documentElement.lang === "en";
+      document.body.classList.add("rental-mode");
+      document.querySelector(".page-head h1").textContent = isEnglish ? "RENTAL" : "대여 상품";
+      document.querySelector(".page-head p").textContent = isEnglish
+        ? "Select a product, then choose your rental period."
+        : "상품을 선택한 뒤 대여 기간을 지정할 수 있습니다.";
+    }
+
+    document.addEventListener("silua:languagechange", applyProductListMode);
+    applyProductListMode();
+
     // 공개된 products.json 제품을 카드로 그립니다. 학생은 CSS로 자유롭게 디자인할 수 있습니다.
     ProductCatalog.loadVisibleProducts()
       .then((products) => {
@@ -73,8 +90,9 @@
               ? '<img src="' + ProductCatalog.escapeHtml(image) + '" alt="' + ProductCatalog.escapeHtml(p.name) + '" onerror="this.remove()" />'
               : "";
             const price = p.price ? '<p class="price">' + ProductCatalog.escapeHtml(p.price) + "</p>" : "";
+            const rentalSuffix = isRentalMode ? "&amp;mode=rental" : "";
             return (
-              '<a class="card" href="product.html?id=' + encodeURIComponent(p.id) + '">' +
+              '<a class="card" href="product.html?id=' + encodeURIComponent(p.id) + rentalSuffix + '">' +
               '<div class="card-img">' + img + "</div>" +
               '<p class="k">' + ProductCatalog.escapeHtml(p.label || p.category || "") + "</p>" +
               "<h3>" + ProductCatalog.escapeHtml(p.name) + "</h3>" +

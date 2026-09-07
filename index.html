@@ -33,11 +33,11 @@
       <ul class="gnb-menu" id="primary-menu">
         <li class="gnb-category">
           <a href="products.html">SELF WEDDING</a>
-          <ul class="gnb-submenu"><li><a href="products.html">대여</a></li><li><a href="products.html">맞춤</a></li></ul>
+          <ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤</a></li></ul>
         </li>
         <li class="gnb-category">
           <a href="products.html">EVENING &amp; PARTY</a>
-          <ul class="gnb-submenu"><li><a href="products.html">대여</a></li><li><a href="products.html">맞춤</a></li></ul>
+          <ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤</a></li></ul>
         </li>
         <li class="gnb-category">
           <a href="products.html">WEDDING ATTIRE</a>
@@ -76,17 +76,17 @@
   </section>
 
   <!-- ===== 메인 카테고리: 전용 사진을 받으면 이미지 경로만 교체하세요. ===== -->
-  <section class="home-categories" aria-label="SILUA 카테고리">
-    <a class="home-category" href="products.html">
-      <figure><img src="images/main-01.jpg" alt="브라이덜 컬렉션" /></figure>
+  <section class="home-categories" id="themes" aria-label="SILUA 카테고리">
+    <a class="home-category" data-theme-category="BRIDAL" href="products.html">
+      <figure><img src="images/theme-bridal.png" alt="브라이덜 컬렉션" /></figure>
       <div class="home-category-copy"><h2>BRIDAL</h2><p>인생의 주인공이 되는 날</p><span>자세히 보기 &gt;</span></div>
     </a>
-    <a class="home-category" href="products.html">
-      <figure><img src="images/main-02.jpg" alt="이브닝 컬렉션" /></figure>
+    <a class="home-category" data-theme-category="EVENING" href="products.html">
+      <figure><img src="images/theme-evening.png" alt="이브닝 컬렉션" /></figure>
       <div class="home-category-copy"><h2>EVENING</h2><p>화려하게 빛나는 순간</p><span>자세히 보기 &gt;</span></div>
     </a>
-    <a class="home-category" href="products.html">
-      <figure><img src="images/main-03.jpg" alt="모던 컬렉션" /></figure>
+    <a class="home-category" data-theme-category="MODERN" href="products.html">
+      <figure><img src="images/theme-modern.png" alt="모던 컬렉션" /></figure>
       <div class="home-category-copy"><h2>MODERN</h2><p>특별한 날의 레디투웨어</p><span>자세히 보기 &gt;</span></div>
     </a>
   </section>
@@ -144,6 +144,17 @@
     // 공개 제품을 인기상품 카드로 보여주며 화면 크기에 맞춰 페이지를 나눕니다.
     ProductCatalog.loadVisibleProducts()
       .then((products) => {
+        // 관리자 제품의 카테고리를 BRIDAL·EVENING·MODERN으로 지정하면 대표 이미지가 테마 사진에 연결됩니다.
+        document.querySelectorAll("[data-theme-category]").forEach((card) => {
+          const theme = card.dataset.themeCategory;
+          const matchingProduct = products.find((product) => {
+            const source = `${product.category || ""} ${product.label || ""}`.toUpperCase();
+            return source.includes(theme);
+          });
+          const managedImage = ProductCatalog.safeImageUrl(matchingProduct && matchingProduct.images && matchingProduct.images[0]);
+          if (managedImage) card.querySelector("img").src = managedImage;
+        });
+
         const featured = products.filter((product) => product.featured);
         const homeProducts = featured.length ? featured : products;
         const grid = document.getElementById("home-looks");
