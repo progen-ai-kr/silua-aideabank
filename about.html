@@ -8,6 +8,43 @@
   <link rel="icon" href="images/favicon.png" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="rich-content.css?v=20260826-rich-editor-1" />
+  <!-- 이 페이지의 본문 글자에만 사용하는 스크롤 효과입니다. -->
+  <style>
+    /* 사진을 배경처럼 겹쳐도 본문의 원래 여백과 글자 위치는 유지합니다. */
+    .story-intro { position: relative; isolation: isolate; min-height: var(--story-section-height, 0px); }
+    /* 높이와 원래 오른쪽 경계를 유지하고 왼쪽 화면 끝까지 사진을 확장합니다. */
+    .story-intro-image { position: absolute; top: 28px; bottom: 28px; left: var(--story-image-left, calc(50% - 50vw)); width: var(--story-image-width, calc(50vw - 50% + 22px + (100% - 44px) / 3)); max-width: none; height: calc(100% - 56px); object-fit: cover; object-position: center 40%; opacity: .5; pointer-events: none; -webkit-mask-image: linear-gradient(to right, var(--ink) 0%, transparent 100%); mask-image: linear-gradient(to right, var(--ink) 0%, transparent 100%); }
+    .story-intro-copy { position: relative; z-index: 1; min-width: 0; }
+    /* 첫 사진과 같은 높이로 맞추고 각 섹션에 위아래 28px 여백을 확보합니다. */
+    .story-intro .story-intro-image { bottom: auto; height: var(--story-image-height, calc(100% - 56px)); }
+    /* 키워드 사진은 반대 방향으로 확장하고 왼쪽을 투명하게 만듭니다. */
+    .story-intro-image.keywords-image { -webkit-mask-image: linear-gradient(to right, transparent 0%, var(--ink) 100%); mask-image: linear-gradient(to right, transparent 0%, var(--ink) 100%); }
+    @media (min-width: 720px) {
+      .story-intro-image { width: var(--story-image-width, calc(50vw - 50% + 24px + (100% - 48px) / 3)); }
+    }
+    .about-text-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .5s cubic-bezier(.22, 1, .36, 1), transform .5s cubic-bezier(.22, 1, .36, 1);
+    }
+    .about-text-reveal.is-visible, .about-text-reveal:focus-within {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: var(--reveal-delay, 0s);
+    }
+    .story-intro-image.about-text-reveal { opacity: 0; transition-duration: .2s; transition-delay: 0s; }
+    .story-intro-image.about-text-reveal.is-visible { opacity: .5; transition-duration: .5s; }
+    /* 전환 순간에도 두 사진이 겹쳐 보이지 않도록 비활성 사진은 완전히 숨깁니다. */
+    .story-intro-image.about-text-reveal:not(.is-visible) { visibility: hidden; }
+    @media (prefers-reduced-motion: reduce) {
+      .about-text-reveal { opacity: 1; transform: none; transition: none; }
+      .story-intro-image.about-text-reveal { opacity: .5; transform: none; transition: none; }
+    }
+    @media print {
+      .about-text-reveal { opacity: 1; transform: none; }
+      .story-intro-image.about-text-reveal { opacity: .5; transform: none; }
+    }
+  </style>
 </head>
 <body>
 
@@ -27,13 +64,16 @@
   </header>
 
   <!-- [작성서 02: 한 줄 소개] -->
-  <section class="page-head">
-    <h1>브랜드 소개</h1>
-    <p>브랜드 한 줄 소개를 여기에 적으세요.</p>
+  <section class="page-head about-banner">
+    <img class="about-banner-image" src="images/about-banner.png" alt="꽃과 따뜻한 햇살 속에서 웨딩드레스를 입은 신부" width="2048" height="753" fetchpriority="high" />
+    <h1>SILUA</h1>
+    <p>한국의 자연과 전통 한복의 실루엣에서 영감을 받아 현대적인 웨딩드레스로 재해석하는 K-Wedding 브랜드.</p>
   </section>
 
   <!-- [작성서 02: 브랜드 스토리] 문단째 붙여넣으면 됩니다 -->
-  <section class="section">
+  <section class="section story-intro">
+    <img class="story-intro-image" src="images/about-story.png" alt="벚꽃과 호수가 보이는 창가에 서 있는 웨딩드레스 차림의 신부" width="1254" height="1254" loading="lazy" />
+    <div class="story-intro-copy">
     <p class="eyebrow">OUR STORY</p>
     <h2>브랜드 스토리</h2>
     <p class="lead">
@@ -43,22 +83,29 @@
     <p class="lead" style="margin-top:14px;">
       두 번째 문단 예시입니다.
     </p>
+    </div>
   </section>
 
   <!-- [작성서 02: 브랜드 키워드] -->
-  <section class="section">
+  <section class="section story-intro keywords-section">
+    <img class="story-intro-image keywords-image" src="images/about-keywords.png" alt="벚꽃이 핀 한옥에서 연보라색 한복 드레스를 입은 여성" width="1254" height="1254" loading="lazy" />
+    <div class="story-intro-copy">
     <p class="eyebrow">KEYWORDS</p>
     <h2>브랜드 키워드</h2>
     <div class="tags">
       <span>키워드1</span><span>키워드2</span><span>키워드3</span><span>키워드4</span><span>키워드5</span>
     </div>
+    </div>
   </section>
 
   <!-- [작성서 02: 브랜드 철학] -->
-  <section class="section">
-    <p class="eyebrow">PHILOSOPHY</p>
-    <h2>브랜드 철학</h2>
-    <p class="lead">브랜드 철학 문구를 여기에 적으세요.</p>
+  <section class="section story-intro philosophy-section">
+    <img class="story-intro-image" src="images/about-philosophy.png" alt="벚꽃이 핀 한옥에서 연한 민트색 드레스를 입은 여성" width="1254" height="1254" loading="lazy" />
+    <div class="story-intro-copy">
+      <p class="eyebrow">PHILOSOPHY</p>
+      <h2>브랜드 철학</h2>
+      <p class="lead">브랜드 철학 문구를 여기에 적으세요.</p>
+    </div>
   </section>
 
   <!-- [작성서 02: 사람·공간 사진] 대표·작업실·작업 과정 컷 -->
@@ -134,5 +181,102 @@
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script src="portfolio.js"></script>
   <script src="script.js?v=20260908-admin-hidden"></script>
+  <script>
+    (() => {
+      // 섹션의 왼쪽 여백만큼 확장하고 오른쪽은 원래 1/3 지점에 맞춥니다.
+      const storyImages = document.querySelectorAll('.story-intro-image');
+      const fitStoryImage = () => {
+        const firstSection = storyImages[0]?.closest('.story-intro');
+        if (!firstSection) return;
+        const sharedHeight = Math.max(0, firstSection.getBoundingClientRect().height - 56);
+        storyImages.forEach((storyImage) => {
+        const section = storyImage.closest('.story-intro');
+        storyImage.style.setProperty('--story-image-height', `${sharedHeight}px`);
+        if (section !== firstSection) section.style.setProperty('--story-section-height', `${sharedHeight + 56}px`);
+        const bounds = section.getBoundingClientRect();
+        const style = getComputedStyle(section);
+        const leftPadding = parseFloat(style.paddingLeft);
+        const rightPadding = parseFloat(style.paddingRight);
+        const contentWidth = bounds.width - leftPadding - rightPadding;
+        const isRightImage = storyImage.matches('.keywords-image');
+        const imageLeft = isRightImage ? leftPadding + contentWidth * 2 / 3 : -bounds.left;
+        const width = isRightImage
+          ? document.documentElement.clientWidth - bounds.left - imageLeft
+          : bounds.left + leftPadding + contentWidth / 3;
+        storyImage.style.setProperty('--story-image-left', `${imageLeft}px`);
+        storyImage.style.setProperty('--story-image-width', `${Math.max(0, width)}px`);
+        });
+      };
+      fitStoryImage();
+      window.addEventListener('resize', fitStoryImage, { passive: true });
+      window.addEventListener('load', fitStoryImage);
+      // 글꼴 로딩이나 언어 전환으로 첫 섹션 높이가 달라져도 함께 맞춥니다.
+      if ('ResizeObserver' in window && storyImages[0]) {
+        new ResizeObserver(fitStoryImage).observe(storyImages[0].closest('.story-intro'));
+      }
+      // 배너·헤더·푸터는 제외하고 본문 안의 글자만 관찰합니다.
+      if (!('IntersectionObserver' in window)) return;
+      const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const sections = document.querySelectorAll('body > section.section');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(({ target, isIntersecting }) => {
+          target.classList.toggle('is-visible', isIntersecting);
+        });
+      }, { rootMargin: '0px 0px -15% 0px', threshold: 0 });
+      // 화면 중앙 36% 안에서 중앙에 가장 가까운 사진 하나만 표시합니다.
+      // 움직이는 사진 대신 섹션의 중심을 측정해 판정이 흔들리지 않게 합니다.
+      storyImages.forEach((image) => image.classList.add('about-text-reveal'));
+      const updateCenterImage = () => {
+        const middle = window.innerHeight / 2;
+        let closestImage = null;
+        let closestDistance = window.innerHeight * .18;
+        storyImages.forEach((image) => {
+          const bounds = image.closest('.story-intro').getBoundingClientRect();
+          const distance = Math.abs((bounds.top + bounds.bottom) / 2 - middle);
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestImage = image;
+          }
+        });
+        storyImages.forEach((image) => image.classList.toggle('is-visible', image === closestImage));
+      };
+      let imageFramePending = false;
+      const scheduleCenterImage = () => {
+        if (imageFramePending) return;
+        imageFramePending = true;
+        requestAnimationFrame(() => {
+          imageFramePending = false;
+          updateCenterImage();
+        });
+      };
+      window.addEventListener('scroll', scheduleCenterImage, { passive: true });
+      window.addEventListener('resize', scheduleCenterImage, { passive: true });
+      window.addEventListener('load', scheduleCenterImage);
+      updateCenterImage();
+
+      const registerText = () => {
+        sections.forEach((section) => {
+          const texts = section.querySelectorAll('h2, h3, h4, h5, h6, p, .tags > span, li');
+          texts.forEach((element, index) => {
+            // 이미지나 영상이 들어 있는 문단은 움직이지 않습니다.
+            if (element.matches('.about-text-reveal') || !element.textContent.trim() ||
+                element.querySelector('img, video, iframe, p, li')) return;
+            element.style.setProperty('--reveal-delay', `${Math.min(index * .12, .48)}s`);
+            element.classList.add('about-text-reveal');
+            observer.observe(element);
+          });
+        });
+      };
+      if (!motionPreference.matches) registerText();
+      motionPreference.addEventListener('change', () => {
+        if (!motionPreference.matches) registerText();
+      });
+      // 관리자에서 늦게 불러온 포트폴리오 글자에도 같은 효과를 연결합니다.
+      const portfolio = document.getElementById('portfolioContent');
+      if (portfolio) new MutationObserver(() => {
+        if (!motionPreference.matches) registerText();
+      }).observe(portfolio, { childList: true, subtree: true });
+    })();
+  </script>
 </body>
 </html>
