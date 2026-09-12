@@ -36,22 +36,6 @@
       "buyLabel": "구매하기",
       "buyLink": "",
       "buyNotice": "",
-      "sections": []
-    },
-    {
-      "id": "a7bc77a7-f9a7-4e80-bc94-1849a58eb8a1",
-      "published": false,
-      "featured": false,
-      "label": "NEW",
-      "name": "새 제품",
-      "summary": "",
-      "category": "",
-      "price": "",
-      "keywords": [],
-      "images": [],
-      "buyLabel": "구매하기",
-      "buyLink": "",
-      "buyNotice": "",
       "sections": [
         {
           "type": "rich_text",
