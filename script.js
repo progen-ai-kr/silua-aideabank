@@ -5,6 +5,12 @@ const logoToggle = document.querySelector(".logo-menu-button");
 const menuButton = document.querySelector(".menu-button");
 const toggles = document.querySelectorAll(".menu-button");
 const desktopHover = window.matchMedia("(min-width: 901px) and (hover: hover) and (pointer: fine)");
+const currentPageName = location.pathname.split("/").pop() || "index.html";
+
+// 제품 카테고리 화면에서는 PC 메뉴를 계속 펼쳐 현재 분류를 바로 이동할 수 있게 합니다.
+if (["products.html", "product.html", "accessories.html"].includes(currentPageName)) {
+  document.body.classList.add("catalog-header-visible");
+}
 
 // 메뉴마다 서로 다른 화면과 필터가 열리도록 링크를 한 곳에서 관리합니다.
 const menuDestinations = {
@@ -34,7 +40,8 @@ const menuDestinations = {
       "reservation.html?activity=norigae#workshop",
       "reservation.html?activity=shoes#workshop",
       "reservation.html?activity=keyring#workshop",
-      "reservation.html#personal-color"
+      "reservation.html#personal-color",
+      "reservation.html#body-shape"
     ]
   }
 };
@@ -306,6 +313,22 @@ function openProductSearch() {
 const hero = document.querySelector(".hero");
 const heroSlides = [...document.querySelectorAll(".hero-slide")];
 const heroPagination = document.querySelector(".hero-pagination");
+const heroTitle = hero?.querySelector(".hero-copy h1");
+
+// 현재 언어에 맞는 이미지별 문구를 줄바꿈 표시(|)까지 안전하게 렌더링합니다.
+const updateHeroCopy = () => {
+  const activeSlide = heroSlides.find((slide) => slide.classList.contains("is-active"));
+  const title = document.documentElement.lang === "en" ? activeSlide?.dataset.titleEn : activeSlide?.dataset.titleKo;
+  if (!heroTitle || !title) return;
+  heroTitle.replaceChildren();
+  title.split("|").forEach((line, index) => {
+    if (index) heroTitle.append(document.createElement("br"));
+    heroTitle.append(document.createTextNode(line));
+  });
+  heroTitle.classList.remove("is-changing");
+  void heroTitle.offsetWidth;
+  heroTitle.classList.add("is-changing");
+};
 
 if (hero && heroSlides.length && heroPagination) {
   heroPagination.innerHTML = heroSlides.map((_, index) => (
@@ -327,6 +350,7 @@ if (hero && heroSlides.length && heroPagination) {
       indicator.classList.toggle("is-active", isCurrent);
       indicator.setAttribute("aria-current", String(isCurrent));
     });
+    updateHeroCopy();
   };
 
   const stopSlideshow = () => {
@@ -337,7 +361,7 @@ if (hero && heroSlides.length && heroPagination) {
   const startSlideshow = () => {
     stopSlideshow();
     if (!reducedMotion.matches && !document.hidden) {
-      slideTimer = setInterval(() => showSlide(currentSlide + 1), 5000);
+      slideTimer = setInterval(() => showSlide(currentSlide + 1), 7000);
     }
   };
 
@@ -381,7 +405,7 @@ const translations = {
     },
     pages: {
       "index.html": { title: "SILUA", heroTitle: "전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.", heroSub: "한복이 드레스가 되는 순간, 당신의 가장 빛나는 하루.", action: "컬렉션 보기", categoryTitles: ["Self Weading", "Evening & Party", "Wedding Attire"], categories: ["인생의 주인공이 되는 날", "화려하게 빛나는 순간", "특별한 날의 레디투웨어"], categoryMore: "자세히 보기 >", strengths: "우리 브랜드의 강점", strengthTitle: "강점 제목", strengthBody: "강점 설명을 적으세요.", looks: "인기 상품", editorialTitle: "신 제품" },
-      "about.html": { title: "브랜드 소개 — SILUA", head: "SILUA", intro: "한국의 자연과 전통 한복의 실루엣에서 영감을 받아 현대적인 웨딩드레스로 재해석하는 K-Wedding 브랜드.", story: "브랜드 스토리", storyParagraphs: ["예쁜 옷을 입는 일과, 나에게 어울리는 옷을 입는 일은 완전히 다른 문제다.", "그 문제를 풀기 위해 실루아는 1:1 퍼스널컬러·체형 진단, 1:1 스타일링 컨셉 제안에 이어", "드레스와 어울리는 커스텀 소품 공방까지 진행합니다.", "특별한 날 빛나야 할 순간, 고즈넉한 한국의 미를 담아낸 드레스와", "단 하나밖에 없는 나만의 커스텀 드레스 소품으로", "셀프웨딩 및 웨딩스냅, 패밀리/기념일, 이브닝&스페셜데이에", "가장 빛나는 순간을 완성합니다."], keywords: "브랜드 키워드", keywordItems: ["키워드1", "키워드2", "키워드3", "키워드4", "키워드5"], philosophy: "브랜드 철학", philosophyText: "브랜드 철학 문구를 여기에 적으세요.", people: "만드는 사람들", photo: "사진 설명", strengths: "우리 브랜드의 강점", strengthTitle: "강점 제목", strengthBody: "강점 설명을 적으세요.", portfolio: "포트폴리오", portfolioLoading: "포트폴리오를 불러오는 중입니다.", visit: "매장 안내", hoursLabel: "영업시간", hoursValue: "평일 10:00 – 18:00", addressLabel: "주소", addressValue: "대전시 중구 선화동 434번지 302호", phoneLabel: "전화", emailLabel: "이메일" },
+      "about.html": { title: "브랜드 소개 — SILUA", head: "SILUA", intro: "한국의 자연과 전통 한복의 실루엣에서 영감을 받아 현대적인 웨딩드레스로 재해석하는 K-Wedding 브랜드.", story: "브랜드 스토리", storyParagraphs: ["예쁜 옷을 입는 일과, 나에게 어울리는 옷을 입는 일은 완전히 다른 문제다.", "그 문제를 풀기 위해 실루아는 1:1 퍼스널컬러·체형 진단, 1:1 스타일링 컨셉 제안에 이어", "드레스와 어울리는 커스텀 소품 공방까지 진행합니다.", "특별한 날 빛나야 할 순간, 고즈넉한 한국의 미를 담아낸 드레스와", "단 하나밖에 없는 나만의 커스텀 드레스 소품으로", "셀프웨딩 및 웨딩스냅, 패밀리/기념일, 이브닝&스페셜데이에", "가장 빛나는 순간을 완성합니다."], keywords: "브랜드 키워드", keywordItems: ["키워드1", "키워드2", "키워드3", "키워드4", "키워드5"], philosophy: "브랜드 철학", philosophyText: "브랜드 철학 문구를 여기에 적으세요.", people: "만드는 사람들", photo: "사진 설명", strengths: "우리 브랜드의 강점", strengthItems: [{ title: "맞춤컬러&핏", body: "전문 진단을 통한 퍼스널 컬러 및 체형 분석, 최적의 드레스 큐레이션" }, { title: "Bespoque Atelier", body: "드레스와 조화를 이루는 구두, 악세서리(헤어장식, 파우치, 백 등)의 커스텀 디자인 가능" }], portfolio: "포트폴리오", portfolioLoading: "포트폴리오를 불러오는 중입니다.", visit: "매장 안내", hoursLabel: "영업시간", hoursValue: "평일 10:00 – 18:00", addressLabel: "주소", addressValue: "대전시 중구 선화동 434번지 302호", phoneLabel: "전화", emailLabel: "이메일" },
       "products.html": { title: "제품 — SILUA", head: "제품", intro: "취급 품목을 여기에 적으세요. (예: Dress / Jacket / Shirt / Skirt)" },
       "product.html": { title: "제품 상세 — SILUA", loading: "제품 정보를 불러오는 중…", purchase: "구매 안내", close: "구매 안내 닫기", confirm: "확인", back: "← 제품 목록으로" },
       "portfolio.html": { title: "포트폴리오 — SILUA", head: "포트폴리오", intro: "브랜드의 작업·프로젝트 사례를 소개합니다.", loading: "포트폴리오를 불러오는 중입니다." },
@@ -409,7 +433,7 @@ const translations = {
     },
     pages: {
       "index.html": { title: "SILUA", heroTitle: "Not tradition reworn, but new lines made for who I am today.", heroSub: "Write a short sentence introducing the brand here.", action: "VIEW COLLECTION", categoryTitles: ["Self Weading", "Evening & Party", "Wedding Attire"], categories: ["The day you become the main character", "A moment to shine brilliantly", "Ready-to-wear for your special day"], categoryMore: "VIEW MORE >", strengths: "WHY CHOOSE SILUA", strengthTitle: "STRENGTH TITLE", strengthBody: "Describe this strength here.", looks: "POPULAR PRODUCTS", editorialTitle: "NEW PRODUCTS" },
-      "about.html": { title: "About — SILUA", head: "SILUA", intro: "A K-Wedding brand inspired by Korea’s nature and traditional hanbok silhouettes, reinterpreted as contemporary wedding dresses.", story: "BRAND STORY", storyParagraphs: ["Wearing a beautiful outfit and wearing one that truly suits you are entirely different things.", "To solve that challenge, SILUA offers one-on-one personal color and body-shape consultations, followed by one-on-one styling concepts.", "We also host custom accessory workshops to create pieces that complement your dress.", "For the special moments when you deserve to shine, our dresses embody the serene beauty of Korea.", "Together with one-of-a-kind custom dress accessories made just for you,", "they complete your brightest moments—from self-weddings and wedding shoots to family celebrations, anniversaries, evenings, and special days.", "Complete your most radiant moment with SILUA."], keywords: "BRAND KEYWORDS", keywordItems: ["KEYWORD 1", "KEYWORD 2", "KEYWORD 3", "KEYWORD 4", "KEYWORD 5"], philosophy: "BRAND PHILOSOPHY", philosophyText: "Write the brand philosophy here.", people: "OUR PEOPLE", photo: "Photo description", strengths: "WHY CHOOSE SILUA", strengthTitle: "STRENGTH TITLE", strengthBody: "Describe this strength here.", portfolio: "PORTFOLIO", portfolioLoading: "Loading the portfolio…", visit: "VISIT & CONTACT", hoursLabel: "HOURS", hoursValue: "Weekdays 10:00 – 18:00", addressLabel: "ADDRESS", addressValue: "302, 434 Seonhwa-dong, Jung-gu, Daejeon", phoneLabel: "PHONE", emailLabel: "EMAIL" },
+      "about.html": { title: "About — SILUA", head: "SILUA", intro: "A K-Wedding brand inspired by Korea’s nature and traditional hanbok silhouettes, reinterpreted as contemporary wedding dresses.", story: "BRAND STORY", storyParagraphs: ["Wearing a beautiful outfit and wearing one that truly suits you are entirely different things.", "To solve that challenge, SILUA offers one-on-one personal color and body-shape consultations, followed by one-on-one styling concepts.", "We also host custom accessory workshops to create pieces that complement your dress.", "For the special moments when you deserve to shine, our dresses embody the serene beauty of Korea.", "Together with one-of-a-kind custom dress accessories made just for you,", "they complete your brightest moments—from self-weddings and wedding shoots to family celebrations, anniversaries, evenings, and special days.", "Complete your most radiant moment with SILUA."], keywords: "BRAND KEYWORDS", keywordItems: ["KEYWORD 1", "KEYWORD 2", "KEYWORD 3", "KEYWORD 4", "KEYWORD 5"], philosophy: "BRAND PHILOSOPHY", philosophyText: "Write the brand philosophy here.", people: "OUR PEOPLE", photo: "Photo description", strengths: "WHY CHOOSE SILUA", strengthItems: [{ title: "CUSTOM COLOR & FIT", body: "Expert personal color and body-shape analysis with an optimal dress curation." }, { title: "Bespoque Atelier", body: "Custom design for shoes and accessories—including hairpieces, pouches, and bags—to complement each dress." }], portfolio: "PORTFOLIO", portfolioLoading: "Loading the portfolio…", visit: "VISIT & CONTACT", hoursLabel: "HOURS", hoursValue: "Weekdays 10:00 – 18:00", addressLabel: "ADDRESS", addressValue: "302, 434 Seonhwa-dong, Jung-gu, Daejeon", phoneLabel: "PHONE", emailLabel: "EMAIL" },
       "products.html": { title: "Products — SILUA", head: "PRODUCTS", intro: "Introduce the available categories here. (e.g. Dress / Jacket / Shirt / Skirt)" },
       "product.html": { title: "Product Details — SILUA", loading: "Loading product information…", purchase: "PURCHASE INFORMATION", close: "Close purchase information", confirm: "OK", back: "← BACK TO PRODUCTS" },
       "portfolio.html": { title: "Portfolio — SILUA", head: "PORTFOLIO", intro: "Explore the brand’s work and projects.", loading: "Loading the portfolio…" },
@@ -429,7 +453,7 @@ function applyPageTranslation(page, text) {
   document.title = text.title;
 
   if (page === "index.html") {
-    setText(".hero h1", text.heroTitle);
+    updateHeroCopy();
     setText(".hero-copy > p:not(.eyebrow)", text.heroSub);
     setText(".hero .btn", text.action);
     document.querySelectorAll(".home-category").forEach((category, index) => {
@@ -471,8 +495,10 @@ function applyPageTranslation(page, text) {
     }
     setText(".story-strengths h2", text.strengths);
     document.querySelectorAll(".story-strengths .feature").forEach((feature) => {
-      setText("h3", text.strengthTitle, feature);
-      setText("p:last-child", text.strengthBody, feature);
+      const item = text.strengthItems?.[Number(feature.querySelector(".num")?.textContent) - 1];
+      if (!item) return;
+      setText("h3", item.title, feature);
+      setText("p:last-child", item.body, feature);
     });
     setText(".story-portfolio h2", text.portfolio);
     setText(".story-portfolio .portfolio-status", text.portfolioLoading);

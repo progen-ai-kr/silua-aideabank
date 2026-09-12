@@ -37,10 +37,14 @@ a { color: inherit; }
 .top-header { position: relative; height: 34px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: var(--header-dark); color: var(--header-light); font-size: 11px; letter-spacing: .3px; }
 .brand-links,
 .top-links { display: flex; align-items: center; }
+.brand-links { gap: 10px; }
 .brand-links,
 .top-links { position: relative; z-index: 1; }
 .top-notice { position: absolute; left: 50%; width: 34%; overflow: hidden; margin: 0; font-size: 9px; text-align: center; text-overflow: ellipsis; white-space: nowrap; transform: translateX(-50%); }
-.brand-links span { display: inline-flex; min-width: 64px; min-height: 34px; align-items: center; font-weight: 600; cursor: default; user-select: none; }
+.brand-links span,
+.brand-links a { display: inline-flex; min-height: 34px; align-items: center; font-weight: 600; }
+.brand-links span { cursor: default; user-select: none; }
+.brand-links a { font-size: 9px; letter-spacing: .8px; text-decoration: none; }
 .top-links { gap: 12px; }
 .top-links a,
 .language-button { transition: opacity .2s ease; }
@@ -130,6 +134,7 @@ a { color: inherit; }
 .hero-indicator:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 .hero .eyebrow { font-size: 12px; letter-spacing: 3px; color: var(--ink-soft); text-transform: uppercase; }
 .hero h1 { width: 100%; max-width: 100%; overflow-wrap: break-word; font-family: var(--font-display); font-size: clamp(23px, 4.5vw, 40px); line-height: 1.35; letter-spacing: 1px; word-break: keep-all; }
+.hero h1.is-changing { animation: hero-copy-reveal .7s ease both; }
 .hero p { width: 100%; max-width: 560px; overflow-wrap: anywhere; color: var(--ink-soft); }
 
 /* ===== 홈 카테고리: 이미지 + 제목 + 짧은 소개 ===== */
@@ -460,6 +465,7 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
   .editorial-product-card figure { aspect-ratio: 3 / 4; }
   .section { padding: 80px 24px; }
   .features { grid-template-columns: repeat(3, 1fr); }
+  .story-strengths .features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 22px; }
   .workshop-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .reservation-form { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 30px; }
@@ -497,6 +503,7 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
   .menu-button { display: none; }
   .gnb-menu { position: static; display: none; overflow: visible; margin-left: clamp(24px, 4vw, 70px); padding: 0; flex-direction: row; gap: clamp(14px, 2vw, 46px); background: transparent; border: 0; }
   .gnb-menu.open { display: flex; }
+  .catalog-header-visible .gnb-menu { display: flex; margin-left: clamp(18px, 3vw, 50px); gap: clamp(10px, 1.5vw, 30px); }
   .gnb-menu > li { position: relative; }
   .gnb-menu.open > li { opacity: 0; transform: translateX(-10px); animation: gnb-item-reveal .36s ease forwards; }
   .gnb-menu.open > li:nth-child(2) { animation-delay: .07s; }
@@ -521,6 +528,11 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 
 @keyframes gnb-item-reveal {
   to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes hero-copy-reveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (min-width: 1200px) {
