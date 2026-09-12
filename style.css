@@ -62,11 +62,8 @@ a { color: inherit; }
 .gnb-submenu-section { margin-top: 5px; color: var(--ink); font-size: 11px; font-weight: 600; }
 .gnb-submenu-section > a { color: var(--ink); font-weight: 600; }
 .gnb-submenu-detail a { min-height: 32px; padding-left: 12px; font-size: 10px; }
-.gnb-icons { flex-shrink: 0; margin-left: auto; display: flex; align-items: center; gap: 4px; }
+.gnb-icons { margin-left: auto; display: flex; align-items: center; gap: 4px; }
 .icon-button { position: relative; display: block; width: 44px; height: 44px; padding: 0; border: 0; background: transparent; color: var(--ink); cursor: pointer; }
-.search-button { order: 1; }
-.user-button { order: 2; }
-.menu-button { order: 3; }
 .menu-button { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; }
 .menu-button span { display: block; width: 27px; height: 1.5px; background: var(--ink); }
 .user-button::before { content: ""; position: absolute; inset: 4px; border-radius: 50%; background: var(--surface); opacity: 0; transform: scale(.72); transition: opacity .25s ease, transform .25s ease; }
@@ -133,15 +130,15 @@ a { color: inherit; }
 .hero p { width: 100%; max-width: 560px; overflow-wrap: anywhere; color: var(--ink-soft); }
 
 /* ===== 홈 카테고리: 이미지 + 제목 + 짧은 소개 ===== */
-.home-categories { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 10px; background: var(--bg); }
+.home-categories { display: grid; grid-template-columns: 1fr; padding-top: 10px; background: var(--bg); }
 .home-category { min-width: 0; color: var(--ink); text-align: center; text-decoration: none; }
 .home-category figure { aspect-ratio: 4 / 5; margin: 0; overflow: hidden; background: var(--surface); }
 .home-category img { width: 100%; height: 100%; object-fit: contain; transition: transform .6s ease; }
 .home-category:hover img { transform: scale(1.025); }
-.home-category-copy { padding: 14px 4px 26px; }
-.home-category h2 { margin: 0; overflow-wrap: anywhere; font-family: var(--font-display); font-size: clamp(12px, 3.8vw, 17px); font-weight: 400; line-height: 1.35; letter-spacing: 0; }
-.home-category p { margin-top: 5px; color: var(--ink-soft); font-size: 11px; line-height: 1.45; }
-.home-category span { display: inline-block; margin-top: 12px; font-size: 10px; }
+.home-category-copy { padding: 24px 18px 40px; }
+.home-category h2 { margin: 0; font-family: var(--font-display); font-size: clamp(25px, 7vw, 32px); font-weight: 400; letter-spacing: 1px; }
+.home-category p { margin-top: 5px; color: var(--ink-soft); font-size: 15px; }
+.home-category span { display: inline-block; margin-top: 19px; font-size: 13px; }
 
 /* ===== 홈 인기상품: 운영 제품 데이터를 페이지 단위로 표시 ===== */
 .popular-products { width: min(100%, 1480px); margin: 0 auto; padding: 58px 24px 68px; }
@@ -184,7 +181,6 @@ a { color: inherit; }
 .section h2 { font-family: var(--font-display); font-size: clamp(22px, 6vw, 32px); margin-bottom: 18px; }
 .section h3 { font-size: clamp(16px, 4.5vw, 20px); margin: 20px 0 8px; }
 .lead { font-size: clamp(15px, 4vw, 18px); color: var(--ink-soft); max-width: 640px; }
-.story-intro-copy .lead + .lead { margin-top: 14px; }
 
 /* ===== 페이지 머리(서브페이지 상단) ===== */
 .page-head { background: var(--surface); text-align: center; padding: 64px 22px 48px; }
@@ -440,8 +436,7 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 .footer-customer h2,
 .footer-company h2 { margin: 0 0 15px; font-size: 11px; font-weight: 600; letter-spacing: 2px; }
 .footer-customer-title { font-size: 19px; font-weight: 600; }
-.footer-phone,
-.footer-email { display: block; width: fit-content; margin-top: 4px; color: var(--header-light); }
+.footer-email { display: inline-block; margin-top: 4px; color: var(--header-light); }
 .footer-hours { margin-top: 12px; opacity: .68; }
 .footer .biz { margin: 0; line-height: 1.9; opacity: .68; }
 .footer-bottom { padding: 18px 22px 24px; border-top: 1px solid var(--ink-soft); font-size: 11px; opacity: .68; }
@@ -452,9 +447,6 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
   .home-categories { grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 14px; }
   .home-category figure { aspect-ratio: 3 / 4; }
   .home-category-copy { padding: 26px 18px 46px; }
-  .home-category h2 { font-size: clamp(25px, 4vw, 32px); letter-spacing: 1px; }
-  .home-category p { font-size: 15px; }
-  .home-category span { margin-top: 19px; font-size: 13px; }
   .popular-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .editorial-product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .editorial-product-card figure { aspect-ratio: 3 / 4; }
@@ -476,7 +468,7 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
   .product-gallery.columns-3 { grid-template-columns: repeat(3, 1fr); }
   .product-highlight { padding: 64px; }
   .contact-list { grid-template-columns: repeat(2, 1fr); }
-  .story-contact .contact-list { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .story-contact .contact-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .rental-calendar-dialog { margin: auto; border-radius: 26px; }
   .rental-calendar-card { padding: 16px 30px 28px; }
   .footer-banner { min-height: 158px; padding: 30px 38% 30px max(32px, 14vw); }
@@ -487,7 +479,7 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 }
 
 /* 데스크톱: 큰 SILUA에 커서를 올리면 메뉴가 왼쪽부터 차례로 나타납니다. */
-@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+@media (min-width: 901px) {
   .top-header { padding: 0 24px; }
   .gnb { height: 78px; padding: 0 24px; }
   .hero { margin-top: -78px; padding-inline: 7vw; }
