@@ -56,10 +56,11 @@ document.querySelectorAll(".gnb-category").forEach((category) => {
   });
 });
 
-// 푸터의 예약 배너도 새 예약 화면의 해당 위치로 연결합니다.
+// 푸터 배너를 브랜드 이야기 → 퍼스널 진단 → 공방 체험 순서로 연결합니다.
 const footerBanners = document.querySelectorAll(".footer-banner");
-if (footerBanners[0]) footerBanners[0].href = "reservation.html#workshop";
+if (footerBanners[0]) footerBanners[0].href = "about.html";
 if (footerBanners[1]) footerBanners[1].href = "reservation.html#personal-color";
+if (footerBanners[2]) footerBanners[2].href = "reservation.html#workshop";
 
 if (menu && toggles.length) {
   const setMenuState = (isOpen) => {
@@ -395,9 +396,9 @@ const translations = {
       footer: "상호명: 실루아 · 대표자: 안지혜<br>사업자등록: 570-27-01072 · 사업장주소: 대전시 중구 선화동 434번지 302호",
       footerTagline: "전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.",
       footerBanners: [
-        { title: "공방 체험 예약", copy: "노리개 · 구두 꾸미기 · 키링 만들기" },
+        { title: "브랜드 이야기", copy: "전통을 오늘의 새로운 선으로 풀어냅니다" },
         { title: "1:1 퍼스널진단", copy: "나에게 어울리는 스타일을 만나보세요" },
-        { title: "브랜드 이야기", copy: "전통을 오늘의 새로운 선으로 풀어냅니다" }
+        { title: "공방 체험 예약", copy: "노리개 · 구두 꾸미기 · 키링 만들기" }
       ],
       customer: "고객센터",
       emailInquiry: "문의",
@@ -423,9 +424,9 @@ const translations = {
       footer: "Company: SILUA · Representative: An Ji-hye<br>Business Registration No.: 570-27-01072 · Address: 302, 434 Seonhwa-dong, Jung-gu, Daejeon",
       footerTagline: "Not tradition reworn, but new lines made for who I am today.",
       footerBanners: [
-        { title: "WORKSHOP RESERVATION", copy: "Norigae · Shoe decoration · Keyring" },
+        { title: "OUR STORY", copy: "Tradition reimagined through new lines" },
         { title: "1:1 PERSONAL CONSULTATION", copy: "Discover the style that suits you" },
-        { title: "OUR STORY", copy: "Tradition reimagined through new lines" }
+        { title: "WORKSHOP RESERVATION", copy: "Norigae · Shoe decoration · Keyring" }
       ],
       customer: "CUSTOMER CENTER",
       emailInquiry: "CONTACT",
