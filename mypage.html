@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Page — SILUA</title>
+  <meta name="description" content="SILUA 회원의 최근 본 상품과 주문 내역" />
+  <link rel="icon" href="images/favicon.png" />
+  <link rel="stylesheet" href="style.css?v=20260913-customer-footer-1" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="top-header"><div class="brand-links"><span>SILUA</span><a href="https://smartstore.naver.com/silua" target="_blank" rel="noopener noreferrer">N-STORE</a></div><p class="top-notice">Silhouette of Beauty</p><div class="top-links"><a href="contact.html">NOTICE</a><button class="language-button" type="button" data-language="ko" aria-pressed="true">KR</button><span aria-hidden="true">|</span><button class="language-button" type="button" data-language="en" aria-pressed="false">EN</button></div></div>
+    <nav class="gnb" aria-label="주요 메뉴"><button class="logo logo-menu-button" type="button" aria-label="주요 메뉴 열기" aria-controls="primary-menu" aria-expanded="false">SILUA</button><ul class="gnb-menu" id="primary-menu"><li class="gnb-category"><a href="products.html">SELF WEDDING</a><ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤제작</a></li></ul></li><li class="gnb-category"><a href="products.html">EVENING &amp; PARTY</a><ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤제작</a></li></ul></li><li class="gnb-category"><a href="products.html">WEDDING ATTIRE</a><ul class="gnb-submenu"><li><a href="products.html">원피스</a></li><li><a href="products.html">투피스</a></li><li><a href="products.html">수트</a></li></ul></li><li class="gnb-category"><a href="accessories.html">ACCESSORIES</a><ul class="gnb-submenu"><li><a href="accessories.html?type=shoes">구두</a></li><li><a href="accessories.html?type=goods">잡화</a></li></ul></li><li class="gnb-category reservation-menu"><a href="reservation.html">RESERVATION</a><ul class="gnb-submenu reservation-submenu"><li class="gnb-submenu-section">공방 체험</li><li class="gnb-submenu-detail"><a href="reservation.html?activity=norigae#workshop">노리개 만들기</a></li><li class="gnb-submenu-detail"><a href="reservation.html?activity=shoes#workshop">구두 꾸미기</a></li><li class="gnb-submenu-detail"><a href="reservation.html?activity=keyring#workshop">키링 만들기</a></li><li class="gnb-submenu-section">1:1 퍼스널 진단</li><li class="gnb-submenu-detail"><a href="reservation.html#personal-color">퍼스널컬러</a></li><li class="gnb-submenu-detail"><a href="reservation.html#body-shape">체형진단</a></li></ul></li><li><a href="about.html">STORY</a></li></ul><div class="gnb-icons"><button class="icon-button menu-button" type="button" aria-label="메뉴 열기" aria-controls="primary-menu" aria-expanded="false"><span></span><span></span><span></span></button><button class="icon-button user-button" type="button" aria-label="로그인 및 회원가입"><span class="user-head"></span><span class="user-body"></span></button><button class="icon-button search-button" type="button" aria-label="제품 검색"><span></span></button></div></nav>
+  </header>
+
+  <main class="section mypage" id="myPage" hidden>
+    <div class="mypage-head"><div><p class="eyebrow">SILUA MEMBER</p><h1>My Page</h1><p id="memberGreeting"></p></div><button class="mypage-logout" id="memberLogout" type="button">로그아웃</button></div>
+    <div class="mypage-grid">
+      <section class="mypage-card"><h2>최근 본 상품</h2><div class="recent-products" id="recentProducts"></div><p class="mypage-empty" id="recentEmpty">아직 본 상품이 없습니다. 컬렉션에서 마음에 드는 상품을 둘러보세요.</p></section>
+      <section class="mypage-card"><h2>주문 내역</h2><p class="mypage-empty">네이버 스마트스토어에서 주문한 상품은 네이버 계정 로그인 후 주문·배송 상태를 확인할 수 있습니다.</p><a class="btn ghost" href="https://order.pay.naver.com/home" target="_blank" rel="noopener noreferrer">네이버 주문 내역 보기 ↗</a></section>
+    </div>
+  </main>
+
+  <footer class="footer" id="site-footer"><div class="footer-main"><div class="footer-brand"><p class="logo">SILUA</p><p class="footer-tagline">전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.</p><div class="footer-socials"></div></div><div class="footer-customer"><h2>고객센터</h2><p class="footer-customer-title">문의</p><a class="footer-phone" href="tel:07045719545">070-4571-9545</a><a class="footer-email" href="mailto:siluadress@naver.com">siluadress@naver.com</a><p class="footer-hours">평일 10:00 – 18:00</p></div><div class="footer-company"><h2>COMPANY</h2><p class="biz"></p></div></div><div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div></footer>
+
+  <script src="script.js?v=20260913-customer-footer-1"></script>
+  <script>
+    // 회원 서버가 연결되기 전에는 비밀번호를 저장하지 않고 이 기기의 로그인 상태만 사용합니다.
+    let memberSession = null;
+    try { memberSession = JSON.parse(localStorage.getItem("silua-member-session") || "null"); } catch (_) {}
+    if (!memberSession?.email) {
+      openMemberDialog("mypage.html");
+    } else {
+      document.getElementById("myPage").hidden = false;
+      document.getElementById("memberGreeting").textContent = `${memberSession.name || "SILUA 회원"}님, 반갑습니다.`;
+      let recentItems = [];
+      try { recentItems = JSON.parse(localStorage.getItem("silua-recent-products") || "[]"); } catch (_) {}
+      const recentContainer = document.getElementById("recentProducts");
+      recentItems.slice(0, 8).forEach((item) => {
+        const link = document.createElement("a");
+        link.className = "recent-product";
+        link.href = `product.html?id=${encodeURIComponent(String(item.id || ""))}`;
+        const figure = document.createElement("figure");
+        if (item.image) {
+          const image = document.createElement("img");
+          image.src = item.image;
+          image.alt = "";
+          image.loading = "lazy";
+          figure.append(image);
+        }
+        const name = document.createElement("strong");
+        name.textContent = item.name || "SILUA 상품";
+        link.append(figure, name);
+        recentContainer.append(link);
+      });
+      document.getElementById("recentEmpty").hidden = recentItems.length > 0;
+    }
+    document.getElementById("memberLogout").addEventListener("click", () => {
+      try { localStorage.removeItem("silua-member-session"); } catch (_) {}
+      location.reload();
+    });
+  </script>
+</body>
+</html>

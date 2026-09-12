@@ -6,6 +6,47 @@ const menuButton = document.querySelector(".menu-button");
 const toggles = document.querySelectorAll(".menu-button");
 const desktopHover = window.matchMedia("(min-width: 901px) and (hover: hover) and (pointer: fine)");
 const currentPageName = location.pathname.split("/").pop() || "index.html";
+const naverStoreUrl = "https://smartstore.naver.com/silua?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQMxMDAAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGnv1MFuXjtQTcyL1PA4nfN-EuYGHiJiQA5nOwWwHYXm5M75KVDRZ5vL_VDS7k_aem_1hpZ7Qv7sLsdz2Af72ynQQ";
+
+// 공통 헤더와 푸터 링크는 모든 공개 페이지에서 같은 주소와 디자인을 사용합니다.
+document.querySelectorAll(".brand-links a").forEach((link) => {
+  link.href = naverStoreUrl;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+});
+
+document.querySelectorAll(".footer-socials").forEach((socials) => {
+  socials.innerHTML = `
+    <a href="https://www.instagram.com/siluadress_official/" target="_blank" rel="noopener noreferrer" aria-label="SILUA Instagram">
+      <span class="footer-social-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.6" cy="6.6" r=".8" fill="currentColor" stroke="none"></circle></svg></span><span>@siluadress_official</span>
+    </a>
+    <a href="${naverStoreUrl}" target="_blank" rel="noopener noreferrer" aria-label="SILUA Naver Store">
+      <span class="footer-social-icon is-naver" aria-hidden="true">N</span><span>Naver Store</span>
+    </a>
+    <a href="contact.html" aria-label="SILUA KakaoTalk 문의">
+      <span class="footer-social-icon is-kakao" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4C6.9 4 3 7.2 3 11.1c0 2.5 1.6 4.7 4.1 6l-.8 3 3.5-2.1c.7.1 1.4.2 2.2.2 5.1 0 9-3.2 9-7.1S17.1 4 12 4Z"></path></svg></span><span>KakaoTalk</span>
+    </a>`;
+});
+
+document.querySelectorAll(".footer-customer").forEach((customer) => {
+  let links = customer.querySelector(".footer-customer-links");
+  if (!links) {
+    links = document.createElement("nav");
+    links.className = "footer-customer-links";
+    links.setAttribute("aria-label", "회원 및 고객지원");
+    links.innerHTML = '<a href="mypage.html">My Page</a><a href="customer.html?tab=qna">Q&amp;A</a><a href="customer.html?tab=faq">FAQ</a>';
+    customer.append(links);
+  }
+});
+
+document.querySelectorAll(".footer .biz").forEach((business) => {
+  business.innerHTML = "<span>상호명: 실루아 · 대표자: 안지혜</span><span>사업자등록: 570-27-01072</span><span>사업장주소: 대전시 중구 선화동 434번지 302호</span>";
+});
+
+document.querySelectorAll(".footer").forEach((footer) => {
+  if (footer.querySelector(".footer-banners")) return;
+  footer.insertAdjacentHTML("afterbegin", '<nav class="footer-banners" aria-label="빠른 안내"><a class="footer-banner" href="about.html"><span class="footer-banner-label">SILUA STORY</span><strong>브랜드 이야기</strong><span class="footer-banner-copy">전통을 오늘의 새로운 선으로 풀어냅니다</span></a><a class="footer-banner" href="reservation.html#personal-color"><span class="footer-banner-label">PERSONAL SERVICE</span><strong>1:1 퍼스널진단</strong><span class="footer-banner-copy">나에게 어울리는 스타일을 만나보세요</span></a><a class="footer-banner" href="reservation.html#workshop"><span class="footer-banner-label">RESERVATION</span><strong>공방 체험 예약</strong><span class="footer-banner-copy">노리개 · 구두 꾸미기 · 키링 만들기</span></a></nav>');
+});
 
 // 제품 카테고리 화면에서는 PC 메뉴를 계속 펼쳐 현재 분류를 바로 이동할 수 있게 합니다.
 if (["products.html", "product.html", "accessories.html"].includes(currentPageName)) {
@@ -151,7 +192,7 @@ userButton?.addEventListener("click", (event) => {
   openMemberDialog();
 });
 
-function openMemberDialog() {
+function openMemberDialog(returnTo = "") {
   let dialog = document.getElementById("memberDialog");
   if (!dialog) {
     dialog = document.createElement("dialog");
@@ -203,16 +244,28 @@ function openMemberDialog() {
     panels.forEach((form) => form.addEventListener("submit", (event) => {
       event.preventDefault();
       const status = form.querySelector(".member-form-status");
+      const data = new FormData(form);
       if (form.dataset.memberPanel === "join") {
-        const data = new FormData(form);
         if (data.get("password") !== data.get("passwordConfirm")) {
           status.textContent = "비밀번호가 일치하지 않습니다.";
           return;
         }
       }
-      status.textContent = "화면 구성이 완료되었습니다. 실제 회원 처리는 회원 서버 연결 후 사용할 수 있습니다.";
+      const email = String(data.get("email") || "").trim();
+      const savedName = form.dataset.memberPanel === "join"
+        ? String(data.get("name") || "").trim()
+        : email.split("@")[0];
+      try {
+        localStorage.setItem("silua-member-session", JSON.stringify({ name: savedName || "SILUA 회원", email }));
+      } catch (_) { /* 저장이 막힌 환경에서도 안내 문구는 보여줍니다. */ }
+      status.textContent = "로그인되었습니다.";
+      window.setTimeout(() => {
+        dialog.close();
+        if (dialog.dataset.returnTo) location.href = dialog.dataset.returnTo;
+      }, 350);
     }));
   }
+  dialog.dataset.returnTo = returnTo;
   if (!dialog.open) dialog.showModal();
   window.setTimeout(() => dialog.querySelector(".member-form.is-active input")?.focus(), 0);
 }
@@ -393,7 +446,7 @@ const translations = {
       menuClose: "주요 메뉴 닫기",
       admin: "마이페이지",
       search: "제품 검색",
-      footer: "상호명: 실루아 · 대표자: 안지혜<br>사업자등록: 570-27-01072 · 사업장주소: 대전시 중구 선화동 434번지 302호",
+      footer: "<span>상호명: 실루아 · 대표자: 안지혜</span><span>사업자등록: 570-27-01072</span><span>사업장주소: 대전시 중구 선화동 434번지 302호</span>",
       footerTagline: "전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.",
       footerBanners: [
         { title: "브랜드 이야기", copy: "전통을 오늘의 새로운 선으로 풀어냅니다" },
@@ -421,7 +474,7 @@ const translations = {
       menuClose: "Close main menu",
       admin: "My page",
       search: "Search products",
-      footer: "Company: SILUA · Representative: An Ji-hye<br>Business Registration No.: 570-27-01072 · Address: 302, 434 Seonhwa-dong, Jung-gu, Daejeon",
+      footer: "<span>Company: SILUA · Representative: An Ji-hye</span><span>Business Registration No.: 570-27-01072</span><span>Address: 302, 434 Seonhwa-dong, Jung-gu, Daejeon</span>",
       footerTagline: "Not tradition reworn, but new lines made for who I am today.",
       footerBanners: [
         { title: "OUR STORY", copy: "Tradition reimagined through new lines" },

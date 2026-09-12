@@ -6,7 +6,7 @@
   <title>제품 상세 — SILUA</title>
   <meta name="description" content="제품 상세 정보" />
   <link rel="icon" href="images/favicon.png" />
-  <link rel="stylesheet" href="style.css?v=20260907-rental-checkout" />
+  <link rel="stylesheet" href="style.css?v=20260913-customer-footer-1" />
   <link rel="stylesheet" href="rich-content.css?v=20260826-rich-editor-1" />
 </head>
 <body>
@@ -88,7 +88,7 @@
     <div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div>
   </footer>
 
-  <script src="script.js?v=20260908-admin-hidden"></script>
+  <script src="script.js?v=20260913-customer-footer-1"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
     const productQuery = new URLSearchParams(location.search);
@@ -503,6 +503,20 @@
             "</div>" +
           "</section>" +
           (sections ? '<div class="product-story">' + sections + "</div>" : "");
+
+        // 마이페이지의 최근 본 상품에는 최대 8개만 이 기기에 기록합니다.
+        try {
+          const recentKey = "silua-recent-products";
+          const saved = JSON.parse(localStorage.getItem(recentKey) || "[]");
+          const image = (Array.isArray(product.images) ? product.images : [])
+            .map((source) => ProductCatalog.safeImageUrl(source))
+            .find(Boolean) || "";
+          const recent = [
+            { id: product.id, name: product.name, image },
+            ...saved.filter((item) => item && item.id !== product.id)
+          ].slice(0, 8);
+          localStorage.setItem(recentKey, JSON.stringify(recent));
+        } catch (_) { /* 저장이 제한된 브라우저에서는 최근 본 상품 기록을 생략합니다. */ }
 
         setupProductCarousels();
         setupPurchaseDialog(product);
