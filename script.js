@@ -4,7 +4,7 @@ const gnb = document.querySelector(".gnb");
 const logoToggle = document.querySelector(".logo-menu-button");
 const menuButton = document.querySelector(".menu-button");
 const toggles = document.querySelectorAll(".menu-button");
-const desktopHover = window.matchMedia("(min-width: 901px) and (hover: hover) and (pointer: fine)");
+const desktopLayout = window.matchMedia("(min-width: 901px)");
 const currentPageName = location.pathname.split("/").pop() || "index.html";
 const naverStoreUrl = "https://smartstore.naver.com/silua?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQMxMDAAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGnv1MFuXjtQTcyL1PA4nfN-EuYGHiJiQA5nOwWwHYXm5M75KVDRZ5vL_VDS7k_aem_1hpZ7Qv7sLsdz2Af72ynQQ";
 
@@ -34,7 +34,7 @@ document.querySelectorAll(".footer-customer").forEach((customer) => {
     links = document.createElement("nav");
     links.className = "footer-customer-links";
     links.setAttribute("aria-label", "회원 및 고객지원");
-    links.innerHTML = '<a href="mypage.html">My Page</a><a href="customer.html?tab=qna">Q&amp;A</a><a href="customer.html?tab=faq">FAQ</a>';
+    links.innerHTML = '<a href="mypage.html">My Page</a><a href="customer.html?tab=faq">FAQ</a><a href="customer.html?tab=qna">Q&amp;A</a>';
     customer.append(links);
   }
 });
@@ -106,6 +106,7 @@ if (footerBanners[2]) footerBanners[2].href = "reservation.html#workshop";
 if (menu && toggles.length) {
   const setMenuState = (isOpen) => {
     menu.classList.toggle("open", isOpen);
+    gnb?.classList.toggle("is-menu-open", isOpen);
     const isEnglish = document.documentElement.lang === "en";
     toggles.forEach((toggle) => {
       toggle.setAttribute("aria-expanded", String(isOpen));
@@ -116,6 +117,10 @@ if (menu && toggles.length) {
   };
 
   logoToggle?.addEventListener("click", () => {
+    if (desktopLayout.matches) {
+      setMenuState(!menu.classList.contains("open"));
+      return;
+    }
     location.href = "index.html";
   });
 
@@ -124,19 +129,19 @@ if (menu && toggles.length) {
   });
 
   logoToggle?.addEventListener("pointerenter", () => {
-    if (desktopHover.matches) setMenuState(true);
+    if (desktopLayout.matches) setMenuState(true);
   });
 
   gnb?.addEventListener("pointerleave", () => {
-    if (desktopHover.matches) setMenuState(false);
+    if (desktopLayout.matches) setMenuState(false);
   });
 
   gnb?.addEventListener("focusout", (event) => {
-    if (desktopHover.matches && !gnb.contains(event.relatedTarget)) setMenuState(false);
+    if (desktopLayout.matches && !gnb.contains(event.relatedTarget)) setMenuState(false);
   });
 
   logoToggle?.addEventListener("focus", () => {
-    if (desktopHover.matches) setMenuState(true);
+    if (desktopLayout.matches) setMenuState(true);
   });
 
   menu.querySelectorAll(".gnb-submenu a").forEach((link) => link.addEventListener("click", () => {
@@ -189,7 +194,13 @@ userButton?.setAttribute("role", "button");
 userButton?.setAttribute("tabindex", "0");
 userButton?.addEventListener("click", (event) => {
   event.preventDefault();
-  openMemberDialog();
+  let memberSession = null;
+  try { memberSession = JSON.parse(localStorage.getItem("silua-member-session") || "null"); } catch (_) {}
+  if (memberSession?.email) {
+    location.href = "mypage.html";
+    return;
+  }
+  openMemberDialog("mypage.html");
 });
 
 function openMemberDialog(returnTo = "") {
@@ -261,7 +272,7 @@ function openMemberDialog(returnTo = "") {
       status.textContent = "로그인되었습니다.";
       window.setTimeout(() => {
         dialog.close();
-        if (dialog.dataset.returnTo) location.href = dialog.dataset.returnTo;
+        location.href = dialog.dataset.returnTo || "mypage.html";
       }, 350);
     }));
   }

@@ -6,7 +6,7 @@
   <title>고객지원 — SILUA</title>
   <meta name="description" content="SILUA Q&A와 자주 묻는 질문" />
   <link rel="icon" href="images/favicon.png" />
-  <link rel="stylesheet" href="style.css?v=20260913-customer-footer-1" />
+  <link rel="stylesheet" href="style.css?v=20260913-member-header-2" />
 </head>
 <body>
   <header class="site-header">
@@ -18,15 +18,11 @@
     <p class="eyebrow">CUSTOMER SERVICE</p>
     <h1>고객지원</h1>
     <div class="customer-tabs" role="tablist" aria-label="고객지원 메뉴">
-      <button class="customer-tab" type="button" role="tab" aria-selected="true" aria-controls="qnaPanel" data-customer-tab="qna">Q&amp;A</button>
+      <button class="customer-tab" type="button" role="tab" aria-selected="true" aria-controls="faqPanel qnaPanel" data-customer-tab="all">전체</button>
       <button class="customer-tab" type="button" role="tab" aria-selected="false" aria-controls="faqPanel" data-customer-tab="faq">FAQ</button>
+      <button class="customer-tab" type="button" role="tab" aria-selected="false" aria-controls="qnaPanel" data-customer-tab="qna">Q&amp;A</button>
     </div>
-    <section class="customer-panel" id="qnaPanel" role="tabpanel" data-customer-panel="qna">
-      <h2>Q&amp;A</h2>
-      <p class="customer-panel-lead">제품, 대여, 맞춤제작 및 예약에 관해 궁금한 내용을 남겨주세요.</p>
-      <div class="qna-card"><p>이메일 문의는 확인 후 영업시간 내 순서대로 답변드립니다.<br />전화 070-4571-9545 · 평일 10:00–18:00</p><a class="btn" href="mailto:siluadress@naver.com?subject=SILUA%20문의">이메일로 문의하기</a></div>
-    </section>
-    <section class="customer-panel" id="faqPanel" role="tabpanel" data-customer-panel="faq" hidden>
+    <section class="customer-panel" id="faqPanel" role="tabpanel" data-customer-panel="faq">
       <h2>FAQ</h2>
       <p class="customer-panel-lead">자주 묻는 질문을 모았습니다.</p>
       <div class="faq-list">
@@ -36,19 +32,24 @@
         <details><summary>방문 전 예약이 필요한가요?</summary><p>원활한 상담과 체험을 위해 방문 전 예약을 권장합니다.</p></details>
       </div>
     </section>
+    <section class="customer-panel" id="qnaPanel" role="tabpanel" data-customer-panel="qna">
+      <h2>Q&amp;A</h2>
+      <p class="customer-panel-lead">제품, 대여, 맞춤제작 및 예약에 관해 궁금한 내용을 남겨주세요.</p>
+      <div class="qna-card"><p>이메일 문의는 확인 후 영업시간 내 순서대로 답변드립니다.<br />전화 070-4571-9545 · 평일 10:00–18:00</p><a class="btn" href="mailto:siluadress@naver.com?subject=SILUA%20문의">이메일로 문의하기</a></div>
+    </section>
   </main>
 
   <footer class="footer" id="site-footer"><div class="footer-main"><div class="footer-brand"><p class="logo">SILUA</p><p class="footer-tagline">전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.</p><div class="footer-socials"></div></div><div class="footer-customer"><h2>고객센터</h2><p class="footer-customer-title">문의</p><a class="footer-phone" href="tel:07045719545">070-4571-9545</a><a class="footer-email" href="mailto:siluadress@naver.com">siluadress@naver.com</a><p class="footer-hours">평일 10:00 – 18:00</p></div><div class="footer-company"><h2>COMPANY</h2><p class="biz"></p></div></div><div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div></footer>
 
-  <script src="script.js?v=20260913-customer-footer-1"></script>
+  <script src="script.js?v=20260913-member-header-2"></script>
   <script>
     // Q&A와 FAQ를 같은 화면에서 탭처럼 전환합니다.
     const customerTabs = document.querySelectorAll("[data-customer-tab]");
     const customerPanels = document.querySelectorAll("[data-customer-panel]");
     function showCustomerTab(name, updateAddress = true) {
-      const selected = name === "faq" ? "faq" : "qna";
+      const selected = ["faq", "qna"].includes(name) ? name : "all";
       customerTabs.forEach((tab) => tab.setAttribute("aria-selected", String(tab.dataset.customerTab === selected)));
-      customerPanels.forEach((panel) => { panel.hidden = panel.dataset.customerPanel !== selected; });
+      customerPanels.forEach((panel) => { panel.hidden = selected !== "all" && panel.dataset.customerPanel !== selected; });
       if (updateAddress) history.replaceState(null, "", `customer.html?tab=${selected}`);
     }
     customerTabs.forEach((tab) => tab.addEventListener("click", () => showCustomerTab(tab.dataset.customerTab)));
