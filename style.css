@@ -548,6 +548,12 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
   .recent-products { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
+/* PC는 브라우저 확대나 터치 지원 여부와 관계없이 삼선 메뉴를 사용하지 않습니다. */
+html.desktop-device .menu-button { display: none; }
+html.desktop-device .gnb { background: transparent; transition: background-color .22s ease, backdrop-filter .22s ease; }
+html.desktop-device .gnb.is-menu-open,
+html.desktop-device .catalog-header-visible .gnb { background: rgba(245, 242, 236, .94); backdrop-filter: blur(12px); }
+
 /* 데스크톱: 큰 SILUA에 커서를 올리면 메뉴가 왼쪽부터 차례로 나타납니다. */
 @media (min-width: 901px) {
   .top-header { padding: 0 24px; }

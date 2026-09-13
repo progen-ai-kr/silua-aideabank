@@ -5,6 +5,12 @@ const logoToggle = document.querySelector(".logo-menu-button");
 const menuButton = document.querySelector(".menu-button");
 const toggles = document.querySelectorAll(".menu-button");
 const desktopLayout = window.matchMedia("(min-width: 901px)");
+const deviceUserAgent = navigator.userAgent || "";
+const isIPadDevice = /iPad/i.test(deviceUserAgent) || (/Macintosh/i.test(deviceUserAgent) && navigator.maxTouchPoints > 1);
+const isMobileDevice = isIPadDevice || /Android|iPhone|iPod|Mobile/i.test(deviceUserAgent);
+const isDesktopDevice = !isMobileDevice;
+const usesDesktopHeader = () => desktopLayout.matches || isDesktopDevice;
+document.documentElement.classList.toggle("desktop-device", isDesktopDevice);
 const currentPageName = location.pathname.split("/").pop() || "index.html";
 const naverStoreUrl = "https://smartstore.naver.com/silua?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQMxMDAAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGnv1MFuXjtQTcyL1PA4nfN-EuYGHiJiQA5nOwWwHYXm5M75KVDRZ5vL_VDS7k_aem_1hpZ7Qv7sLsdz2Af72ynQQ";
 
@@ -117,7 +123,7 @@ if (menu && toggles.length) {
   };
 
   logoToggle?.addEventListener("click", () => {
-    if (desktopLayout.matches) {
+    if (usesDesktopHeader()) {
       // 터치 PC에서는 focus가 click보다 먼저 발생하므로 다시 닫지 않고 열린 상태를 유지합니다.
       setMenuState(true);
       return;
@@ -130,28 +136,28 @@ if (menu && toggles.length) {
   });
 
   logoToggle?.addEventListener("pointerenter", () => {
-    if (desktopLayout.matches) setMenuState(true);
+    if (usesDesktopHeader()) setMenuState(true);
   });
 
   gnb?.addEventListener("pointerleave", () => {
-    if (desktopLayout.matches) setMenuState(false);
+    if (usesDesktopHeader()) setMenuState(false);
   });
 
   gnb?.addEventListener("focusout", (event) => {
-    if (desktopLayout.matches && !gnb.contains(event.relatedTarget)) setMenuState(false);
+    if (usesDesktopHeader() && !gnb.contains(event.relatedTarget)) setMenuState(false);
   });
 
   logoToggle?.addEventListener("focus", () => {
-    if (desktopLayout.matches) setMenuState(true);
+    if (usesDesktopHeader()) setMenuState(true);
   });
 
   // 터치 PC는 hover가 없으므로 헤더 밖을 누르면 메뉴를 닫을 수 있게 합니다.
   document.addEventListener("pointerdown", (event) => {
-    if (desktopLayout.matches && !gnb.contains(event.target)) setMenuState(false);
+    if (usesDesktopHeader() && !gnb.contains(event.target)) setMenuState(false);
   });
 
   desktopLayout.addEventListener("change", (event) => {
-    if (!event.matches) setMenuState(false);
+    if (!usesDesktopHeader()) setMenuState(false);
   });
 
   menu.querySelectorAll(".gnb-submenu a").forEach((link) => link.addEventListener("click", () => {
