@@ -439,26 +439,36 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 .footer-banner-label { color: var(--ink-soft); font-size: 10px; letter-spacing: 2px; }
 .footer-banner strong { margin-top: 8px; font-family: var(--font-display); font-size: 23px; font-weight: 500; }
 .footer-banner-copy { margin-top: 5px; color: var(--ink-soft); font-size: 12px; }
-.footer-main { display: grid; grid-template-columns: 1fr; gap: 36px; padding: 42px 22px; }
+.footer-main { display: grid; grid-template-columns: 1fr; gap: 0; padding: 18px 22px; }
+.footer-main > * { min-width: 0; padding: 26px 0; }
+.footer-main > * + * { border-top: 1px solid var(--ink-soft); }
 .footer .logo { color: var(--header-light); font-family: var(--font-display); font-size: 25px; font-weight: 500; letter-spacing: 4px; }
 .footer-tagline { max-width: 460px; margin-top: 13px; line-height: 1.8; opacity: .68; }
-.footer-socials { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 22px; }
-.footer-socials a { display: inline-flex; min-height: 44px; align-items: center; gap: 9px; color: var(--header-light); text-decoration: none; }
+.footer-socials { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin-top: 2px; }
+.footer-socials a { display: inline-flex; min-height: 42px; align-items: center; gap: 10px; color: var(--header-light); text-decoration: none; opacity: .76; transition: opacity .2s ease; }
+.footer-socials a:hover,
+.footer-socials a:focus-visible { opacity: 1; }
 .footer-social-icon { display: grid; width: 32px; height: 32px; flex: 0 0 32px; border: 1px solid currentColor; border-radius: 50%; place-items: center; }
 .footer-social-icon svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.6; }
 .footer-social-icon.is-naver { font-size: 12px; font-weight: 800; }
 .footer-social-icon.is-kakao svg { fill: currentColor; stroke: none; }
+.footer-channels h2,
 .footer-customer h2,
 .footer-company h2 { margin: 0 0 15px; font-size: 11px; font-weight: 600; letter-spacing: 2px; }
-.footer-customer-title { font-size: 19px; font-weight: 600; }
+.footer-customer-title { margin-bottom: 7px; font-size: 12px; font-weight: 600; letter-spacing: 1px; opacity: .68; }
 .footer-phone,
-.footer-email { display: block; width: fit-content; margin-top: 4px; color: var(--header-light); }
-.footer-hours { margin-top: 12px; opacity: .68; }
-.footer-customer-links { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--ink-soft); }
-.footer-customer-links a { min-height: 28px; color: var(--header-light); font-size: 12px; letter-spacing: .4px; text-decoration: none; opacity: .76; }
+.footer-email { display: block; width: fit-content; max-width: 100%; margin-top: 5px; color: var(--header-light); overflow-wrap: anywhere; text-decoration: none; }
+.footer-phone { font-size: 18px; letter-spacing: .4px; }
+.footer-hours { margin-top: 11px; font-size: 12px; opacity: .68; }
+.footer-menu-title { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--ink-soft); font-size: 11px; font-weight: 600; letter-spacing: 2px; }
+.footer-customer-links { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; margin-top: 10px; }
+.footer-customer-links a { display: inline-flex; min-height: 34px; align-items: center; color: var(--header-light); font-size: 13px; letter-spacing: .3px; text-decoration: none; opacity: .72; }
 .footer-customer-links a:hover,
 .footer-customer-links a:focus-visible { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
-.footer .biz { display: flex; margin: 0; flex-direction: column; gap: 3px; line-height: 1.75; opacity: .68; }
+.footer .biz { display: flex; margin: 0; flex-direction: column; gap: 11px; line-height: 1.55; }
+.footer .biz > span { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 10px; }
+.footer .biz strong { font-size: 11px; font-weight: 500; letter-spacing: .2px; opacity: .52; }
+.footer .biz > span > span { min-width: 0; overflow-wrap: anywhere; opacity: .78; }
 .footer-bottom { padding: 18px 22px 24px; border-top: 1px solid var(--ink-soft); font-size: 11px; opacity: .68; }
 
 /* ===== 고객센터 · 마이페이지 ===== */
@@ -554,10 +564,20 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
   .footer-banner { min-height: 158px; padding: 30px 38% 30px max(32px, 14vw); }
   .footer-banner::before { right: max(32px, 5vw); font-size: 42px; }
   .footer-banner::after { right: 12%; width: 26%; }
-  .footer-main { grid-template-columns: minmax(0, 1.35fr) minmax(210px, .72fr) minmax(260px, .9fr); gap: 60px; padding: 58px max(32px, 7vw); }
+  .footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 54px; padding: 34px max(32px, 7vw); }
+  .footer-main > * { padding: 28px 0; }
+  .footer-brand { grid-column: 1 / -1; }
+  .footer-main > .footer-channels { border-top: 1px solid var(--ink-soft); }
   .footer-bottom { padding: 18px max(32px, 7vw) 24px; }
   .mypage-grid { grid-template-columns: minmax(0, 1.6fr) minmax(260px, .8fr); }
   .recent-products { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1100px) {
+  .footer-main { grid-template-columns: minmax(230px, 1.15fr) minmax(160px, .62fr) minmax(200px, .72fr) minmax(270px, 1fr); gap: clamp(34px, 4.5vw, 76px); padding-top: 58px; padding-bottom: 58px; }
+  .footer-main > * { padding: 0; border-top: 0; }
+  .footer-brand { grid-column: auto; }
+  .footer-main > .footer-channels { border-top: 0; }
 }
 
 /* PC는 브라우저 확대나 터치 지원 여부와 관계없이 삼선 메뉴를 사용하지 않습니다. */

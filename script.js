@@ -34,6 +34,16 @@ document.querySelectorAll(".footer-socials").forEach((socials) => {
     <a href="contact.html" aria-label="SILUA KakaoTalk 문의">
       <span class="footer-social-icon is-kakao" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4C6.9 4 3 7.2 3 11.1c0 2.5 1.6 4.7 4.1 6l-.8 3 3.5-2.1c.7.1 1.4.2 2.2.2 5.1 0 9-3.2 9-7.1S17.1 4 12 4Z"></path></svg></span><span>KakaoTalk</span>
     </a>`;
+
+  // SNS 채널을 브랜드 소개와 분리해 푸터 정보를 빠르게 찾을 수 있게 합니다.
+  const footerMain = socials.closest(".footer-main");
+  if (footerMain && !footerMain.querySelector(".footer-channels")) {
+    const channels = document.createElement("section");
+    channels.className = "footer-channels";
+    channels.innerHTML = "<h2>SOCIAL</h2>";
+    channels.append(socials);
+    footerMain.insertBefore(channels, footerMain.querySelector(".footer-customer"));
+  }
 });
 
 document.querySelectorAll(".footer-customer").forEach((customer) => {
@@ -42,13 +52,16 @@ document.querySelectorAll(".footer-customer").forEach((customer) => {
     links = document.createElement("nav");
     links.className = "footer-customer-links";
     links.setAttribute("aria-label", "회원 및 고객지원");
-    links.innerHTML = '<a href="mypage.html">My Page</a><a href="customer.html#faq">FAQ</a><a href="customer.html#qna">Q&amp;A</a>';
-    customer.append(links);
+    links.innerHTML = '<a href="contact.html">Notice</a><a href="mypage.html">My Page</a><a href="customer.html#faq">FAQ</a><a href="customer.html#qna">Q&amp;A</a>';
+    const menuTitle = document.createElement("p");
+    menuTitle.className = "footer-menu-title";
+    menuTitle.textContent = "SHOP MENU";
+    customer.append(menuTitle, links);
   }
 });
 
 document.querySelectorAll(".footer .biz").forEach((business) => {
-  business.innerHTML = "<span>상호명: 실루아 · 대표자: 안지혜</span><span>사업자등록: 570-27-01072</span><span>사업장주소: 대전시 중구 선화동 434번지 302호</span>";
+  business.innerHTML = '<span><strong>상호명</strong><span>실루아</span></span><span><strong>대표자</strong><span>안지혜</span></span><span><strong>사업자등록</strong><span>570-27-01072</span></span><span><strong>사업장주소</strong><span>대전시 중구 선화동 434번지 302호</span></span>';
 });
 
 document.querySelectorAll(".footer").forEach((footer) => {
@@ -471,7 +484,7 @@ const translations = {
       menuClose: "주요 메뉴 닫기",
       admin: "마이페이지",
       search: "제품 검색",
-      footer: "<span>상호명: 실루아 · 대표자: 안지혜</span><span>사업자등록: 570-27-01072</span><span>사업장주소: 대전시 중구 선화동 434번지 302호</span>",
+      footer: '<span><strong>상호명</strong><span>실루아</span></span><span><strong>대표자</strong><span>안지혜</span></span><span><strong>사업자등록</strong><span>570-27-01072</span></span><span><strong>사업장주소</strong><span>대전시 중구 선화동 434번지 302호</span></span>',
       footerTagline: "전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.",
       footerBanners: [
         { title: "브랜드 이야기", copy: "전통을 오늘의 새로운 선으로 풀어냅니다" },
@@ -499,7 +512,7 @@ const translations = {
       menuClose: "Close main menu",
       admin: "My page",
       search: "Search products",
-      footer: "<span>Company: SILUA · Representative: An Ji-hye</span><span>Business Registration No.: 570-27-01072</span><span>Address: 302, 434 Seonhwa-dong, Jung-gu, Daejeon</span>",
+      footer: '<span><strong>Company</strong><span>SILUA</span></span><span><strong>Representative</strong><span>An Ji-hye</span></span><span><strong>Registration No.</strong><span>570-27-01072</span></span><span><strong>Address</strong><span>302, 434 Seonhwa-dong, Jung-gu, Daejeon</span></span>',
       footerTagline: "Not tradition reworn, but new lines made for who I am today.",
       footerBanners: [
         { title: "OUR STORY", copy: "Tradition reimagined through new lines" },
