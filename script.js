@@ -42,7 +42,7 @@ document.querySelectorAll(".footer-customer").forEach((customer) => {
     links = document.createElement("nav");
     links.className = "footer-customer-links";
     links.setAttribute("aria-label", "회원 및 고객지원");
-    links.innerHTML = '<a href="mypage.html">My Page</a><a href="customer.html?tab=faq">FAQ</a><a href="customer.html?tab=qna">Q&amp;A</a>';
+    links.innerHTML = '<a href="mypage.html">My Page</a><a href="customer.html#faq">FAQ</a><a href="customer.html#qna">Q&amp;A</a>';
     customer.append(links);
   }
 });

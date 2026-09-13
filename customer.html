@@ -20,12 +20,12 @@
       <h1>고객지원</h1>
       <p>자주 묻는 질문을 확인하거나 궁금한 내용을 문의해 주세요.</p>
       <div class="customer-tabs" role="tablist" aria-label="고객지원 메뉴">
-        <button class="customer-tab" type="button" role="tab" aria-selected="true" aria-controls="faqPanel qnaPanel" data-customer-tab="all">전체</button>
-        <button class="customer-tab" type="button" role="tab" aria-selected="false" aria-controls="faqPanel" data-customer-tab="faq">FAQ</button>
-        <button class="customer-tab" type="button" role="tab" aria-selected="false" aria-controls="qnaPanel" data-customer-tab="qna">Q&amp;A</button>
+        <button class="customer-tab" type="button" role="tab" aria-selected="true" aria-controls="faq qna" data-customer-tab="all">전체</button>
+        <button class="customer-tab" type="button" role="tab" aria-selected="false" aria-controls="faq" data-customer-tab="faq">FAQ</button>
+        <button class="customer-tab" type="button" role="tab" aria-selected="false" aria-controls="qna" data-customer-tab="qna">Q&amp;A</button>
       </div>
     </section>
-    <section class="customer-panel customer-section" id="faqPanel" role="tabpanel" data-customer-panel="faq">
+    <section class="customer-panel customer-section" id="faq" role="tabpanel" data-customer-panel="faq">
       <div class="reservation-intro"><p class="eyebrow">FREQUENTLY ASKED QUESTIONS</p><h2>FAQ</h2><p>자주 묻는 질문을 모았습니다.</p></div>
       <div class="faq-list customer-content">
         <details><summary>대여 가능 기간은 어떻게 확인하나요?</summary><p>대여 상품 상세 화면에서 ‘대여하기’를 누르면 달력에서 가능한 기간을 확인하고 선택할 수 있습니다.</p></details>
@@ -34,7 +34,7 @@
         <details><summary>방문 전 예약이 필요한가요?</summary><p>원활한 상담과 체험을 위해 방문 전 예약을 권장합니다.</p></details>
       </div>
     </section>
-    <section class="customer-panel customer-section" id="qnaPanel" role="tabpanel" data-customer-panel="qna">
+    <section class="customer-panel customer-section" id="qna" role="tabpanel" data-customer-panel="qna">
       <div class="reservation-intro"><p class="eyebrow">ONE-TO-ONE QUESTION</p><h2>Q&amp;A</h2><p>제품, 대여, 맞춤제작 및 예약에 관해 궁금한 내용을 남겨주세요.</p></div>
       <form class="customer-form" id="customerQuestionForm">
         <label><span>문의 유형</span><select name="category" required><option value="">선택해주세요</option><option>제품 문의</option><option>대여 문의</option><option>맞춤제작 문의</option><option>예약 문의</option><option>기타 문의</option></select></label>
@@ -49,34 +49,47 @@
 
   <footer class="footer" id="site-footer"><div class="footer-main"><div class="footer-brand"><p class="logo">SILUA</p><p class="footer-tagline">전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.</p><div class="footer-socials"></div></div><div class="footer-customer"><h2>고객센터</h2><p class="footer-customer-title">문의</p><a class="footer-phone" href="tel:07045719545">070-4571-9545</a><a class="footer-email" href="mailto:siluadress@naver.com">siluadress@naver.com</a><p class="footer-hours">평일 10:00 – 18:00</p></div><div class="footer-company"><h2>COMPANY</h2><p class="biz"></p></div></div><div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div></footer>
 
-  <script src="script.js?v=20260913-header-behavior-8"></script>
+  <script src="script.js?v=20260913-customer-anchor-9"></script>
   <script>
-    // Q&A와 FAQ를 같은 화면에서 탭처럼 전환합니다.
+    // 예약 페이지처럼 FAQ와 Q&A를 위아래로 이어 보여주고, 선택한 섹션으로 이동합니다.
     const customerTabs = document.querySelectorAll("[data-customer-tab]");
     const customerPanels = document.querySelectorAll("[data-customer-panel]");
+
+    function moveToCustomerSection(selected, smooth = true) {
+      const target = selected === "all" ? document.querySelector(".customer-head") : document.getElementById(selected);
+      if (!target) return;
+      const headerHeight = document.querySelector(".site-header")?.offsetHeight || 0;
+      const targetTop = target.getBoundingClientRect().top + window.scrollY - headerHeight - 12;
+      const animatedSections = selected === "all" ? customerPanels : [target];
+
+      animatedSections.forEach((panel) => {
+        panel.classList.remove("is-revealing");
+        void panel.offsetWidth;
+        panel.classList.add("is-revealing");
+      });
+      window.requestAnimationFrame(() => {
+        window.scrollTo({ top: Math.max(0, targetTop), behavior: smooth ? "smooth" : "auto" });
+      });
+    }
+
     function showCustomerTab(name, updateAddress = true, moveToSection = false) {
       const selected = ["faq", "qna"].includes(name) ? name : "all";
       customerTabs.forEach((tab) => tab.setAttribute("aria-selected", String(tab.dataset.customerTab === selected)));
-      customerPanels.forEach((panel) => { panel.hidden = selected !== "all" && panel.dataset.customerPanel !== selected; });
-      if (updateAddress) history.replaceState(null, "", `customer.html?tab=${selected}`);
-      if (moveToSection) {
-        const target = selected === "all" ? document.querySelector(".customer-head") : document.querySelector(`[data-customer-panel="${selected}"]`);
-        const visiblePanels = selected === "all" ? customerPanels : [target];
-        const headerHeight = document.querySelector(".site-header")?.offsetHeight || 0;
-        const targetTop = target ? target.getBoundingClientRect().top + window.scrollY - headerHeight - 12 : 0;
-        visiblePanels.forEach((panel) => {
-          panel?.classList.remove("is-revealing");
-          if (panel) void panel.offsetWidth;
-          panel?.classList.add("is-revealing");
-        });
-        window.requestAnimationFrame(() => {
-          if (!target) return;
-          window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
-        });
-      }
+      customerPanels.forEach((panel) => { panel.hidden = false; });
+      if (updateAddress) history.replaceState(null, "", selected === "all" ? "customer.html" : `customer.html#${selected}`);
+      if (moveToSection) moveToCustomerSection(selected);
     }
     customerTabs.forEach((tab) => tab.addEventListener("click", () => showCustomerTab(tab.dataset.customerTab, true, true)));
-    showCustomerTab(new URLSearchParams(location.search).get("tab"), false);
+    const hashSection = location.hash.slice(1);
+    const legacySection = new URLSearchParams(location.search).get("tab");
+    const initialSection = ["faq", "qna"].includes(hashSection) ? hashSection : legacySection;
+    showCustomerTab(initialSection, false);
+    if (["faq", "qna"].includes(initialSection)) {
+      window.requestAnimationFrame(() => window.requestAnimationFrame(() => moveToCustomerSection(initialSection, false)));
+    }
+    window.addEventListener("hashchange", () => {
+      showCustomerTab(location.hash.slice(1), false, true);
+    });
 
     // 정적 사이트에서도 작성 내용을 잃지 않고 이메일 문의로 이어지게 합니다.
     document.getElementById("customerQuestionForm").addEventListener("submit", (event) => {
