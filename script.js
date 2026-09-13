@@ -64,6 +64,14 @@ document.querySelectorAll(".footer .biz").forEach((business) => {
   business.innerHTML = '<span><strong>상호명</strong><span>실루아</span></span><span><strong>대표자</strong><span>안지혜</span></span><span><strong>사업자등록</strong><span>570-27-01072</span></span><span><strong>사업장주소</strong><span>대전시 중구 선화동 434번지 302호</span></span>';
 });
 
+// 브랜드 소개 다음에 회사 정보 → 소셜 채널 → 고객센터 순서로 배치합니다.
+document.querySelectorAll(".footer-main").forEach((footerMain) => {
+  const company = footerMain.querySelector(".footer-company");
+  const channels = footerMain.querySelector(".footer-channels");
+  const customer = footerMain.querySelector(".footer-customer");
+  if (company && channels && customer) footerMain.append(company, channels, customer);
+});
+
 document.querySelectorAll(".footer").forEach((footer) => {
   if (footer.querySelector(".footer-banners")) return;
   footer.insertAdjacentHTML("afterbegin", '<nav class="footer-banners" aria-label="빠른 안내"><a class="footer-banner" href="about.html"><span class="footer-banner-label">SILUA STORY</span><strong>브랜드 이야기</strong><span class="footer-banner-copy">전통을 오늘의 새로운 선으로 풀어냅니다</span></a><a class="footer-banner" href="reservation.html#personal-color"><span class="footer-banner-label">PERSONAL SERVICE</span><strong>1:1 퍼스널진단</strong><span class="footer-banner-copy">나에게 어울리는 스타일을 만나보세요</span></a><a class="footer-banner" href="reservation.html#workshop"><span class="footer-banner-label">RESERVATION</span><strong>공방 체험 예약</strong><span class="footer-banner-copy">노리개 · 구두 꾸미기 · 키링 만들기</span></a></nav>');
