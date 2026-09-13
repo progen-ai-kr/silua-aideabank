@@ -577,7 +577,7 @@ html.desktop-device .catalog-header-visible .gnb { background: rgba(245, 242, 23
   .popular-product-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
   .logo { font-size: 27px; }
   .menu-button { display: none; }
-  .gnb-menu { position: static; display: none; overflow: visible; margin-left: clamp(34px, 4.5vw, 76px); padding: 0; flex-direction: row; gap: clamp(22px, 2.6vw, 52px); background: transparent; border: 0; }
+  .gnb-menu { position: static; display: none; overflow: visible; margin-left: clamp(38px, 5vw, 84px); padding: 0; flex-direction: row; gap: clamp(26px, 3.5vw, 58px); background: transparent; border: 0; }
   .gnb-menu.open { display: flex; }
   .catalog-header-visible .gnb-menu { display: flex; }
   .gnb-menu > li { position: relative; }
