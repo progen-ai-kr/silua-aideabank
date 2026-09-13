@@ -26,7 +26,7 @@ document.querySelectorAll(".brand-links a").forEach((link) => {
 document.querySelectorAll(".footer-socials").forEach((socials) => {
   socials.innerHTML = `
     <a href="https://www.instagram.com/siluadress_official/" target="_blank" rel="noopener noreferrer" aria-label="SILUA Instagram">
-      <span class="footer-social-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.6" cy="6.6" r=".8" fill="currentColor" stroke="none"></circle></svg></span><span>@siluadress_official</span>
+      <span class="footer-social-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.6" cy="6.6" r=".8" fill="currentColor" stroke="none"></circle></svg></span><span>Instagram</span>
     </a>
     <a href="${naverStoreUrl}" target="_blank" rel="noopener noreferrer" aria-label="SILUA Naver Store">
       <span class="footer-social-icon is-naver" aria-hidden="true">N</span><span>Naver Store</span>
@@ -53,10 +53,7 @@ document.querySelectorAll(".footer-customer").forEach((customer) => {
     links.className = "footer-customer-links";
     links.setAttribute("aria-label", "회원 및 고객지원");
     links.innerHTML = '<a href="contact.html">Notice</a><a href="mypage.html">My Page</a><a href="customer.html#faq">FAQ</a><a href="customer.html#qna">Q&amp;A</a>';
-    const menuTitle = document.createElement("p");
-    menuTitle.className = "footer-menu-title";
-    menuTitle.textContent = "SHOP MENU";
-    customer.append(menuTitle, links);
+    customer.append(links);
   }
 });
 
@@ -69,7 +66,10 @@ document.querySelectorAll(".footer-main").forEach((footerMain) => {
   const company = footerMain.querySelector(".footer-company");
   const channels = footerMain.querySelector(".footer-channels");
   const customer = footerMain.querySelector(".footer-customer");
+  const footerBottom = footerMain.closest(".footer")?.querySelector(".footer-bottom");
+  const customerLinks = customer?.querySelector(".footer-customer-links");
   if (company && channels && customer) footerMain.append(company, channels, customer);
+  if (footerBottom && customerLinks) footerBottom.prepend(customerLinks);
 });
 
 document.querySelectorAll(".footer").forEach((footer) => {
@@ -493,7 +493,7 @@ const translations = {
       admin: "마이페이지",
       search: "제품 검색",
       footer: '<span><strong>상호명</strong><span>실루아</span></span><span><strong>대표자</strong><span>안지혜</span></span><span><strong>사업자등록</strong><span>570-27-01072</span></span><span><strong>사업장주소</strong><span>대전시 중구 선화동 434번지 302호</span></span>',
-      footerTagline: ["전통을 다시 입는 것이 아니라,", "오늘의 나를 위한 새로운 선으로 입는다."],
+      footerTagline: ["전통을 다시", "입는 것이 아니라,", "오늘의 나를 위한", "새로운 선으로", "입습니다."],
       footerBanners: [
         { title: "브랜드 이야기", copy: "전통을 오늘의 새로운 선으로 풀어냅니다" },
         { title: "1:1 퍼스널진단", copy: "나에게 어울리는 스타일을 만나보세요" },
