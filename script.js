@@ -118,7 +118,8 @@ if (menu && toggles.length) {
 
   logoToggle?.addEventListener("click", () => {
     if (desktopLayout.matches) {
-      setMenuState(!menu.classList.contains("open"));
+      // 터치 PC에서는 focus가 click보다 먼저 발생하므로 다시 닫지 않고 열린 상태를 유지합니다.
+      setMenuState(true);
       return;
     }
     location.href = "index.html";
@@ -142,6 +143,15 @@ if (menu && toggles.length) {
 
   logoToggle?.addEventListener("focus", () => {
     if (desktopLayout.matches) setMenuState(true);
+  });
+
+  // 터치 PC는 hover가 없으므로 헤더 밖을 누르면 메뉴를 닫을 수 있게 합니다.
+  document.addEventListener("pointerdown", (event) => {
+    if (desktopLayout.matches && !gnb.contains(event.target)) setMenuState(false);
+  });
+
+  desktopLayout.addEventListener("change", (event) => {
+    if (!event.matches) setMenuState(false);
   });
 
   menu.querySelectorAll(".gnb-submenu a").forEach((link) => link.addEventListener("click", () => {
