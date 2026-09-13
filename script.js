@@ -56,8 +56,8 @@ document.querySelectorAll(".footer").forEach((footer) => {
   footer.insertAdjacentHTML("afterbegin", '<nav class="footer-banners" aria-label="빠른 안내"><a class="footer-banner" href="about.html"><span class="footer-banner-label">SILUA STORY</span><strong>브랜드 이야기</strong><span class="footer-banner-copy">전통을 오늘의 새로운 선으로 풀어냅니다</span></a><a class="footer-banner" href="reservation.html#personal-color"><span class="footer-banner-label">PERSONAL SERVICE</span><strong>1:1 퍼스널진단</strong><span class="footer-banner-copy">나에게 어울리는 스타일을 만나보세요</span></a><a class="footer-banner" href="reservation.html#workshop"><span class="footer-banner-label">RESERVATION</span><strong>공방 체험 예약</strong><span class="footer-banner-copy">노리개 · 구두 꾸미기 · 키링 만들기</span></a></nav>');
 });
 
-// 제품 카테고리 화면에서는 PC 메뉴를 계속 펼쳐 현재 분류를 바로 이동할 수 있게 합니다.
-if (["products.html", "product.html", "accessories.html"].includes(currentPageName)) {
+// 메인을 제외한 모든 화면에서는 PC 카테고리를 계속 펼쳐 바로 이동할 수 있게 합니다.
+if (currentPageName !== "index.html") {
   document.body.classList.add("catalog-header-visible");
 }
 
@@ -134,11 +134,6 @@ if (menu && toggles.length) {
   });
 
   logoToggle?.addEventListener("pointerenter", () => {
-    if (usesDesktopHeader()) setMenuState(true);
-  });
-
-  // 기존 PC 방식처럼 로고가 놓인 헤더 영역 전체에서도 카테고리를 펼칩니다.
-  gnb?.addEventListener("pointerenter", () => {
     if (usesDesktopHeader()) setMenuState(true);
   });
 
