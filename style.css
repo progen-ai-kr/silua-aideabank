@@ -555,7 +555,7 @@ html.desktop-device .gnb.is-menu-open,
 html.desktop-device .catalog-header-visible .gnb { background: rgba(245, 242, 236, .94); backdrop-filter: blur(12px); }
 
 /* 데스크톱: 큰 SILUA에 커서를 올리면 메뉴가 왼쪽부터 차례로 나타납니다. */
-@media (min-width: 901px) {
+@media (min-width: 901px), (min-width: 720px) and (hover: hover) and (pointer: fine) {
   .top-header { padding: 0 24px; }
   .gnb { height: 78px; padding: 0 24px; background: transparent; transition: background-color .22s ease, backdrop-filter .22s ease; }
   .gnb.is-menu-open,
@@ -602,6 +602,16 @@ html.desktop-device .catalog-header-visible .gnb { background: rgba(245, 242, 23
 @media (min-width: 1200px) {
   .top-header,
   .gnb { padding-right: 42px; padding-left: 42px; }
+}
+
+/* 브라우저 확대 때문에 폭이 좁아진 PC에서도 카테고리를 한 줄로 유지합니다. */
+@media (min-width: 720px) and (max-width: 900px) and (hover: hover) and (pointer: fine) {
+  .gnb { padding-right: 12px; padding-left: 12px; }
+  .logo { font-size: 22px; }
+  .gnb-menu { margin-left: 12px; gap: 8px; }
+  .gnb-menu > li > a { font-size: 9px; letter-spacing: .5px; }
+  .gnb-icons { gap: 0; }
+  .icon-button { width: 36px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

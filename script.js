@@ -4,13 +4,15 @@ const gnb = document.querySelector(".gnb");
 const logoToggle = document.querySelector(".logo-menu-button");
 const menuButton = document.querySelector(".menu-button");
 const toggles = document.querySelectorAll(".menu-button");
-const desktopLayout = window.matchMedia("(min-width: 901px)");
+const desktopLayout = window.matchMedia("(min-width: 901px), (min-width: 720px) and (hover: hover) and (pointer: fine)");
 const deviceUserAgent = navigator.userAgent || "";
 const isIPadDevice = /iPad/i.test(deviceUserAgent) || (/Macintosh/i.test(deviceUserAgent) && navigator.maxTouchPoints > 1);
 const isMobileDevice = isIPadDevice || /Android|iPhone|iPod|Mobile/i.test(deviceUserAgent);
 const isDesktopDevice = !isMobileDevice;
 const usesDesktopHeader = () => desktopLayout.matches || isDesktopDevice;
 document.documentElement.classList.toggle("desktop-device", isDesktopDevice);
+// PC로 확인된 환경에서는 CSS 화면 폭 판정과 별개로 삼선 아이콘을 확실히 숨깁니다.
+if (isDesktopDevice && menuButton) menuButton.style.display = "none";
 const currentPageName = location.pathname.split("/").pop() || "index.html";
 const naverStoreUrl = "https://smartstore.naver.com/silua?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQMxMDAAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGnv1MFuXjtQTcyL1PA4nfN-EuYGHiJiQA5nOwWwHYXm5M75KVDRZ5vL_VDS7k_aem_1hpZ7Qv7sLsdz2Af72ynQQ";
 
@@ -136,6 +138,11 @@ if (menu && toggles.length) {
   });
 
   logoToggle?.addEventListener("pointerenter", () => {
+    if (usesDesktopHeader()) setMenuState(true);
+  });
+
+  // 기존 PC 방식처럼 로고가 놓인 헤더 영역 전체에서도 카테고리를 펼칩니다.
+  gnb?.addEventListener("pointerenter", () => {
     if (usesDesktopHeader()) setMenuState(true);
   });
 
