@@ -461,7 +461,7 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 .footer-phone { font-size: 18px; letter-spacing: .4px; }
 .footer-hours { margin-top: 11px; font-size: 12px; opacity: .68; }
 .footer-customer-links { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; margin: 0; }
-.footer-customer-links a { display: inline-flex; min-height: 32px; align-items: center; color: var(--header-light); font-size: 11px; font-weight: 600; letter-spacing: 1px; text-decoration: none; text-transform: uppercase; opacity: .74; }
+.footer-customer-links a { display: inline-flex; min-height: 34px; align-items: center; color: var(--header-light); font-size: 13px; font-weight: 600; letter-spacing: 1px; text-decoration: none; text-transform: uppercase; opacity: .78; }
 .footer-customer-links a:hover,
 .footer-customer-links a:focus-visible { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
 .footer .biz { display: flex; margin: 0; flex-direction: column; gap: 11px; line-height: 1.55; }
