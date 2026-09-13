@@ -485,7 +485,7 @@ const translations = {
       admin: "마이페이지",
       search: "제품 검색",
       footer: '<span><strong>상호명</strong><span>실루아</span></span><span><strong>대표자</strong><span>안지혜</span></span><span><strong>사업자등록</strong><span>570-27-01072</span></span><span><strong>사업장주소</strong><span>대전시 중구 선화동 434번지 302호</span></span>',
-      footerTagline: "전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.",
+      footerTagline: ["전통을 다시 입는 것이 아니라,", "오늘의 나를 위한 새로운 선으로 입는다."],
       footerBanners: [
         { title: "브랜드 이야기", copy: "전통을 오늘의 새로운 선으로 풀어냅니다" },
         { title: "1:1 퍼스널진단", copy: "나에게 어울리는 스타일을 만나보세요" },
@@ -513,7 +513,7 @@ const translations = {
       admin: "My page",
       search: "Search products",
       footer: '<span><strong>Company</strong><span>SILUA</span></span><span><strong>Representative</strong><span>An Ji-hye</span></span><span><strong>Registration No.</strong><span>570-27-01072</span></span><span><strong>Address</strong><span>302, 434 Seonhwa-dong, Jung-gu, Daejeon</span></span>',
-      footerTagline: "Not tradition reworn, but new lines made for who I am today.",
+      footerTagline: ["Not tradition reworn,", "but new lines made for who I am today."],
       footerBanners: [
         { title: "OUR STORY", copy: "Tradition reimagined through new lines" },
         { title: "1:1 PERSONAL CONSULTATION", copy: "Discover the style that suits you" },
@@ -537,6 +537,17 @@ const translations = {
 function setText(selector, value, root = document) {
   const element = root.querySelector(selector);
   if (element && value !== undefined) element.textContent = value;
+}
+
+// 푸터의 브랜드 문구는 지정한 위치에서만 줄을 바꿉니다.
+function setFooterTagline(lines) {
+  const tagline = document.querySelector(".footer-tagline");
+  if (!tagline || !Array.isArray(lines)) return;
+  tagline.replaceChildren();
+  lines.forEach((line, index) => {
+    if (index) tagline.append(document.createElement("br"));
+    tagline.append(document.createTextNode(line));
+  });
 }
 
 function applyPageTranslation(page, text) {
@@ -645,7 +656,7 @@ function applyLanguage(language, remember = true) {
   document.querySelector(".search-button")?.setAttribute("aria-label", dictionary.common.search);
   const footerBusiness = document.querySelector(".footer .biz");
   if (footerBusiness) footerBusiness.innerHTML = dictionary.common.footer;
-  setText(".footer-tagline", dictionary.common.footerTagline);
+  setFooterTagline(dictionary.common.footerTagline);
   document.querySelectorAll(".footer-banner").forEach((banner, index) => {
     const bannerText = dictionary.common.footerBanners[index];
     if (!bannerText) return;
