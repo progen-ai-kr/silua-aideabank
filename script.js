@@ -125,11 +125,7 @@ if (menu && toggles.length) {
   };
 
   logoToggle?.addEventListener("click", () => {
-    if (usesDesktopHeader()) {
-      // 터치 PC에서는 focus가 click보다 먼저 발생하므로 다시 닫지 않고 열린 상태를 유지합니다.
-      setMenuState(true);
-      return;
-    }
+    // 큰 SILUA는 모든 화면에서 브랜드 홈으로 돌아가는 링크 역할을 합니다.
     location.href = "index.html";
   });
 

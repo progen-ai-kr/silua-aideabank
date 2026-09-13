@@ -6,7 +6,7 @@
   <title>고객지원 — SILUA</title>
   <meta name="description" content="SILUA Q&A와 자주 묻는 질문" />
   <link rel="icon" href="images/favicon.png" />
-  <link rel="stylesheet" href="style.css?v=20260913-customer-layout-6" />
+  <link rel="stylesheet" href="style.css?v=20260913-header-scroll-7" />
 </head>
 <body>
   <header class="site-header">
@@ -49,18 +49,28 @@
 
   <footer class="footer" id="site-footer"><div class="footer-main"><div class="footer-brand"><p class="logo">SILUA</p><p class="footer-tagline">전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.</p><div class="footer-socials"></div></div><div class="footer-customer"><h2>고객센터</h2><p class="footer-customer-title">문의</p><a class="footer-phone" href="tel:07045719545">070-4571-9545</a><a class="footer-email" href="mailto:siluadress@naver.com">siluadress@naver.com</a><p class="footer-hours">평일 10:00 – 18:00</p></div><div class="footer-company"><h2>COMPANY</h2><p class="biz"></p></div></div><div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div></footer>
 
-  <script src="script.js?v=20260913-pc-header-5"></script>
+  <script src="script.js?v=20260913-header-scroll-7"></script>
   <script>
     // Q&A와 FAQ를 같은 화면에서 탭처럼 전환합니다.
     const customerTabs = document.querySelectorAll("[data-customer-tab]");
     const customerPanels = document.querySelectorAll("[data-customer-panel]");
-    function showCustomerTab(name, updateAddress = true) {
+    function showCustomerTab(name, updateAddress = true, moveToSection = false) {
       const selected = ["faq", "qna"].includes(name) ? name : "all";
       customerTabs.forEach((tab) => tab.setAttribute("aria-selected", String(tab.dataset.customerTab === selected)));
       customerPanels.forEach((panel) => { panel.hidden = selected !== "all" && panel.dataset.customerPanel !== selected; });
       if (updateAddress) history.replaceState(null, "", `customer.html?tab=${selected}`);
+      if (moveToSection) {
+        const target = selected === "all" ? document.querySelector(".customer-head") : document.querySelector(`[data-customer-panel="${selected}"]`);
+        const visiblePanels = selected === "all" ? customerPanels : [target];
+        visiblePanels.forEach((panel) => {
+          panel?.classList.remove("is-revealing");
+          if (panel) void panel.offsetWidth;
+          panel?.classList.add("is-revealing");
+        });
+        window.requestAnimationFrame(() => target?.scrollIntoView({ behavior: "smooth", block: "start" }));
+      }
     }
-    customerTabs.forEach((tab) => tab.addEventListener("click", () => showCustomerTab(tab.dataset.customerTab)));
+    customerTabs.forEach((tab) => tab.addEventListener("click", () => showCustomerTab(tab.dataset.customerTab, true, true)));
     showCustomerTab(new URLSearchParams(location.search).get("tab"), false);
 
     // 정적 사이트에서도 작성 내용을 잃지 않고 이메일 문의로 이어지게 합니다.

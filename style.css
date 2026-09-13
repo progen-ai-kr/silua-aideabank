@@ -469,6 +469,7 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 .customer-tab { display: inline-flex; min-height: 44px; align-items: center; padding: 0 20px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--ink-soft); font: inherit; font-size: 13px; cursor: pointer; }
 .customer-tab[aria-selected="true"] { border-color: var(--ink); background: var(--ink); color: var(--bg); font-weight: 700; }
 .customer-section { padding: 68px 22px; scroll-margin-top: 104px; }
+.customer-section.is-revealing { animation: customer-section-reveal .48s ease both; }
 .customer-section + .customer-section { border-top: 1px solid var(--line); background: var(--surface); }
 .customer-content,
 .customer-form { max-width: var(--maxw); margin-right: auto; margin-left: auto; }
@@ -598,11 +599,16 @@ html.desktop-device .catalog-header-visible .gnb { background: rgba(245, 242, 23
   .gnb-submenu a { min-height: 34px; border: 0; font-size: 11px; transition: color .2s ease; }
   .gnb-submenu a:hover,
   .gnb-submenu a:focus-visible { color: var(--header-hover); }
-  .gnb-icons { gap: clamp(12px, 1.5vw, 28px); }
+  .gnb-icons { gap: clamp(20px, 2vw, 36px); }
 }
 
 @keyframes gnb-item-reveal {
   to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes customer-section-reveal {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes hero-copy-reveal {
@@ -621,7 +627,7 @@ html.desktop-device .catalog-header-visible .gnb { background: rgba(245, 242, 23
   .logo { font-size: 22px; }
   .gnb-menu { margin-left: 14px; gap: 12px; }
   .gnb-menu > li > a { font-size: 9px; letter-spacing: .5px; }
-  .gnb-icons { gap: 12px; }
+  .gnb-icons { gap: 18px; }
   .icon-button { width: 38px; }
 }
 
@@ -630,4 +636,5 @@ html.desktop-device .catalog-header-visible .gnb { background: rgba(245, 242, 23
   .hero-slide,
   .home-category img { transition: none; }
   .gnb-menu.open > li { opacity: 1; transform: none; animation: none; }
+  .customer-section.is-revealing { animation: none; }
 }
