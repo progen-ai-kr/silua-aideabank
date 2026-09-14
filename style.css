@@ -140,7 +140,7 @@ a { color: inherit; }
 .hero p { width: 100%; max-width: 560px; overflow-wrap: anywhere; color: var(--ink-soft); }
 
 /* ===== 홈 카테고리: 이미지 + 제목 + 짧은 소개 ===== */
-.home-categories { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 10px; background: var(--bg); }
+.home-categories { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 28px; background: var(--bg); }
 .home-category { min-width: 0; color: var(--ink); text-align: center; text-decoration: none; }
 .home-category figure { aspect-ratio: 4 / 5; margin: 0; overflow: hidden; background: var(--surface); }
 .home-category img { width: 100%; height: 100%; object-fit: contain; transition: transform .6s ease; }
@@ -380,6 +380,19 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 .product-gallery img { width: 100%; height: 100%; max-height: 760px; object-fit: cover; }
 .product-highlight { background: var(--surface); padding: 38px 24px; border-radius: var(--radius); text-align: center; }
 .product-highlight > :last-child { margin-bottom: 0; }
+.product-detail-switcher { padding: 12px 0 64px; }
+.product-detail-tabs { display: grid; width: min(calc(100% - 44px), var(--maxw)); margin: 0 auto; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.product-detail-tab { min-height: 56px; padding: 0 14px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--ink-soft); font: inherit; font-size: 13px; cursor: pointer; }
+.product-detail-tab[aria-selected="true"] { border-bottom-color: var(--ink); color: var(--ink); font-weight: 700; }
+.product-detail-tab:hover,
+.product-detail-tab:focus-visible { color: var(--ink); }
+.product-detail-panel[hidden] { display: none; }
+.product-review-empty,
+.product-description-empty { width: min(calc(100% - 44px), 760px); margin: 0 auto; padding: 72px 20px; text-align: center; }
+.product-review-empty .eyebrow { color: var(--ink-soft); font-size: 10px; letter-spacing: 2px; }
+.product-review-empty h2 { margin-top: 10px; font-family: var(--font-display); font-size: clamp(25px, 7vw, 38px); font-weight: 500; }
+.product-review-empty p,
+.product-description-empty { color: var(--ink-soft); line-height: 1.8; }
 .product-back { text-align: center; padding-top: 0; }
 
 /* ===== 포트폴리오 =====
@@ -523,7 +536,7 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 /* ===== 큰 화면(태블릿/PC) — 720px 이상 ===== */
 @media (min-width: 720px) {
   .top-notice { width: 50%; font-size: 11px; }
-  .home-categories { grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 14px; }
+  .home-categories { grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 52px; }
   .home-category figure { aspect-ratio: 3 / 4; }
   .home-category-copy { padding: 26px 18px 46px; }
   .home-category h2 { font-size: clamp(25px, 4vw, 32px); letter-spacing: 1px; }
@@ -574,7 +587,7 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 }
 
 @media (min-width: 1100px) {
-  .footer-main { grid-template-columns: minmax(220px, 1fr) minmax(270px, 1.08fr) minmax(180px, .72fr) minmax(230px, .9fr); gap: clamp(34px, 4vw, 68px); padding-top: 58px; padding-bottom: 58px; }
+  .footer-main { grid-template-columns: minmax(250px, 1fr) minmax(230px, 270px) minmax(150px, 180px) minmax(210px, 230px); gap: clamp(22px, 2.5vw, 38px); padding-top: 58px; padding-bottom: 58px; }
   .footer-main > * { padding: 0; border-top: 0; }
   .footer-brand { grid-column: auto; }
   .footer-main > .footer-channels { border-top: 0; }

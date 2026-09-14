@@ -6,7 +6,7 @@
   <title>제품 상세 — SILUA</title>
   <meta name="description" content="제품 상세 정보" />
   <link rel="icon" href="images/favicon.png" />
-  <link rel="stylesheet" href="style.css?v=20260913-footer-menu-15" />
+  <link rel="stylesheet" href="style.css?v=20260914-home-product-16" />
   <link rel="stylesheet" href="rich-content.css?v=20260826-rich-editor-1" />
 </head>
 <body>
@@ -449,6 +449,50 @@
       return "";
     }
 
+    // 제품 설명과 고객 리뷰를 한 자리에서 전환해 확인할 수 있게 합니다.
+    function setupProductDetailTabs() {
+      const tabs = [...document.querySelectorAll("[data-product-detail-tab]")];
+      const panels = [...document.querySelectorAll("[data-product-detail-panel]")];
+      const selectTab = (name) => {
+        tabs.forEach((tab) => {
+          const selected = tab.dataset.productDetailTab === name;
+          tab.setAttribute("aria-selected", String(selected));
+          tab.tabIndex = selected ? 0 : -1;
+        });
+        panels.forEach((panel) => { panel.hidden = panel.dataset.productDetailPanel !== name; });
+      };
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => selectTab(tab.dataset.productDetailTab));
+        tab.addEventListener("keydown", (event) => {
+          if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+          event.preventDefault();
+          const direction = event.key === 'ArrowRight' ? 1 : -1;
+          const nextTab = tabs[(index + direction + tabs.length) % tabs.length];
+          selectTab(nextTab.dataset.productDetailTab);
+          nextTab.focus();
+        });
+      });
+      selectTab("description");
+    }
+
+    function updateProductDetailCopy() {
+      const isEnglish = document.documentElement.lang === "en";
+      const copy = isEnglish
+        ? { description: "DESCRIPTION", review: "CUSTOMER REVIEWS", reviewTitle: "Customer Reviews", empty: "There are no customer reviews yet." }
+        : { description: "제품 설명", review: "고객 리뷰", reviewTitle: "고객 리뷰", empty: "아직 등록된 고객 리뷰가 없습니다." };
+      const descriptionTab = document.querySelector('[data-product-detail-tab="description"]');
+      const reviewTab = document.querySelector('[data-product-detail-tab="reviews"]');
+      if (descriptionTab) descriptionTab.textContent = copy.description;
+      if (reviewTab) reviewTab.textContent = copy.review;
+      const reviewTitle = document.querySelector(".product-review-empty h2");
+      const reviewEmpty = document.querySelector(".product-review-empty > p:last-child");
+      if (reviewTitle) reviewTitle.textContent = copy.reviewTitle;
+      if (reviewEmpty) reviewEmpty.textContent = copy.empty;
+    }
+
+    document.addEventListener("silua:languagechange", updateProductDetailCopy);
+
     ProductCatalog.loadVisibleProducts()
       .then((products) => {
         const product = products.find((item) => item.id === productId);
@@ -490,6 +534,10 @@
           sections = '<section class="product-block product-rich-text">' + paragraphs + "</section>";
         }
 
+        const descriptionPanel = sections
+          ? '<div class="product-story">' + sections + '</div>'
+          : '<p class="product-description-empty">등록된 제품 설명이 없습니다.</p>';
+
         document.getElementById("product-detail").innerHTML =
           '<section class="section product-hero">' +
             '<div class="product-hero-gallery">' + gallery + "</div>" +
@@ -502,7 +550,16 @@
               '<div class="product-actions">' + actionButtons + "</div>" +
             "</div>" +
           "</section>" +
-          (sections ? '<div class="product-story">' + sections + "</div>" : "");
+          '<section class="product-detail-switcher">' +
+            '<div class="product-detail-tabs" role="tablist" aria-label="제품 상세 정보">' +
+              '<button class="product-detail-tab" id="productDescriptionTab" type="button" role="tab" aria-selected="true" aria-controls="productDescriptionPanel" data-product-detail-tab="description">제품 설명</button>' +
+              '<button class="product-detail-tab" id="productReviewsTab" type="button" role="tab" aria-selected="false" aria-controls="productReviewsPanel" data-product-detail-tab="reviews">고객 리뷰</button>' +
+            '</div>' +
+            '<div class="product-detail-panel" id="productDescriptionPanel" role="tabpanel" aria-labelledby="productDescriptionTab" data-product-detail-panel="description">' + descriptionPanel + '</div>' +
+            '<div class="product-detail-panel" id="productReviewsPanel" role="tabpanel" aria-labelledby="productReviewsTab" data-product-detail-panel="reviews" hidden>' +
+              '<div class="product-review-empty"><p class="eyebrow">REVIEW</p><h2>고객 리뷰</h2><p>아직 등록된 고객 리뷰가 없습니다.</p></div>' +
+            '</div>' +
+          '</section>';
 
         // 마이페이지의 최근 본 상품에는 최대 8개만 이 기기에 기록합니다.
         try {
@@ -521,6 +578,8 @@
         setupProductCarousels();
         setupPurchaseDialog(product);
         setupRentalCalendar(product);
+        setupProductDetailTabs();
+        updateProductDetailCopy();
       })
       .catch(() => {
         document.getElementById("product-detail").innerHTML =
