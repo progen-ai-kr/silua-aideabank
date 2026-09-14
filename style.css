@@ -136,11 +136,13 @@ a { color: inherit; }
 .hero-indicator:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 .hero .eyebrow { font-size: 12px; letter-spacing: 3px; color: var(--ink-soft); text-transform: uppercase; }
 .hero h1 { width: 100%; max-width: 100%; overflow-wrap: break-word; font-family: var(--font-display); font-size: clamp(23px, 4.5vw, 40px); line-height: 1.35; letter-spacing: 1px; word-break: keep-all; }
+.hero-title-line { display: block; }
+.hero-title-line + .hero-title-line { margin-top: 7px; }
 .hero h1.is-changing { animation: hero-copy-reveal .7s ease both; }
 .hero p { width: 100%; max-width: 560px; overflow-wrap: anywhere; color: var(--ink-soft); }
 
 /* ===== 홈 카테고리: 이미지 + 제목 + 짧은 소개 ===== */
-.home-categories { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 28px; background: var(--bg); }
+.home-categories { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 72px; background: var(--bg); }
 .home-category { min-width: 0; color: var(--ink); text-align: center; text-decoration: none; }
 .home-category figure { aspect-ratio: 4 / 5; margin: 0; overflow: hidden; background: var(--surface); }
 .home-category img { width: 100%; height: 100%; object-fit: contain; transition: transform .6s ease; }
@@ -536,7 +538,7 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 /* ===== 큰 화면(태블릿/PC) — 720px 이상 ===== */
 @media (min-width: 720px) {
   .top-notice { width: 50%; font-size: 11px; }
-  .home-categories { grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 52px; }
+  .home-categories { grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 120px; }
   .home-category figure { aspect-ratio: 3 / 4; }
   .home-category-copy { padding: 26px 18px 46px; }
   .home-category h2 { font-size: clamp(25px, 4vw, 32px); letter-spacing: 1px; }

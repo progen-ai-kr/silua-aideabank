@@ -421,9 +421,11 @@ const updateHeroCopy = () => {
   const title = document.documentElement.lang === "en" ? activeSlide?.dataset.titleEn : activeSlide?.dataset.titleKo;
   if (!heroTitle || !title) return;
   heroTitle.replaceChildren();
-  title.split("|").forEach((line, index) => {
-    if (index) heroTitle.append(document.createElement("br"));
-    heroTitle.append(document.createTextNode(line));
+  title.split("|").forEach((line) => {
+    const lineElement = document.createElement("span");
+    lineElement.className = "hero-title-line";
+    lineElement.textContent = line;
+    heroTitle.append(lineElement);
   });
   heroTitle.classList.remove("is-changing");
   void heroTitle.offsetWidth;
