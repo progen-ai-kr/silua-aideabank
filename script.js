@@ -4,7 +4,83 @@ const gnb = document.querySelector(".gnb");
 const logoToggle = document.querySelector(".logo-menu-button");
 const menuButton = document.querySelector(".menu-button");
 const toggles = document.querySelectorAll(".menu-button");
-const desktopHover = window.matchMedia("(min-width: 901px) and (hover: hover) and (pointer: fine)");
+const desktopLayout = window.matchMedia("(min-width: 901px), (min-width: 720px) and (hover: hover) and (pointer: fine)");
+const deviceUserAgent = navigator.userAgent || "";
+const isIPadDevice = /iPad/i.test(deviceUserAgent) || (/Macintosh/i.test(deviceUserAgent) && navigator.maxTouchPoints > 1);
+const isMobileDevice = isIPadDevice || /Android|iPhone|iPod|Mobile/i.test(deviceUserAgent);
+const isDesktopDevice = !isMobileDevice;
+const usesDesktopHeader = () => desktopLayout.matches || isDesktopDevice;
+document.documentElement.classList.toggle("desktop-device", isDesktopDevice);
+// PC로 확인된 환경에서는 CSS 화면 폭 판정과 별개로 삼선 아이콘을 확실히 숨깁니다.
+if (isDesktopDevice && menuButton) menuButton.style.display = "none";
+const currentPageName = location.pathname.split("/").pop() || "index.html";
+const naverStoreUrl = "https://smartstore.naver.com/silua?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQMxMDAAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGnv1MFuXjtQTcyL1PA4nfN-EuYGHiJiQA5nOwWwHYXm5M75KVDRZ5vL_VDS7k_aem_1hpZ7Qv7sLsdz2Af72ynQQ";
+
+// 공통 헤더와 푸터 링크는 모든 공개 페이지에서 같은 주소와 디자인을 사용합니다.
+document.querySelectorAll(".brand-links a").forEach((link) => {
+  link.href = naverStoreUrl;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+});
+
+document.querySelectorAll(".footer-socials").forEach((socials) => {
+  socials.innerHTML = `
+    <a href="https://www.instagram.com/siluadress_official/" target="_blank" rel="noopener noreferrer" aria-label="SILUA Instagram">
+      <span class="footer-social-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.6" cy="6.6" r=".8" fill="currentColor" stroke="none"></circle></svg></span><span>Instagram</span>
+    </a>
+    <a href="${naverStoreUrl}" target="_blank" rel="noopener noreferrer" aria-label="SILUA Naver Store">
+      <span class="footer-social-icon is-naver" aria-hidden="true">N</span><span>Naver Store</span>
+    </a>
+    <a href="contact.html" aria-label="SILUA KakaoTalk 문의">
+      <span class="footer-social-icon is-kakao" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4C6.9 4 3 7.2 3 11.1c0 2.5 1.6 4.7 4.1 6l-.8 3 3.5-2.1c.7.1 1.4.2 2.2.2 5.1 0 9-3.2 9-7.1S17.1 4 12 4Z"></path></svg></span><span>KakaoTalk</span>
+    </a>`;
+
+  // SNS 채널을 브랜드 소개와 분리해 푸터 정보를 빠르게 찾을 수 있게 합니다.
+  const footerMain = socials.closest(".footer-main");
+  if (footerMain && !footerMain.querySelector(".footer-channels")) {
+    const channels = document.createElement("section");
+    channels.className = "footer-channels";
+    channels.innerHTML = "<h2>SOCIAL</h2>";
+    channels.append(socials);
+    footerMain.insertBefore(channels, footerMain.querySelector(".footer-customer"));
+  }
+});
+
+document.querySelectorAll(".footer-customer").forEach((customer) => {
+  let links = customer.querySelector(".footer-customer-links");
+  if (!links) {
+    links = document.createElement("nav");
+    links.className = "footer-customer-links";
+    links.setAttribute("aria-label", "회원 및 고객지원");
+    links.innerHTML = '<a href="contact.html">Notice</a><a href="mypage.html">My Page</a><a href="customer.html#faq">FAQ</a><a href="customer.html#qna">Q&amp;A</a>';
+    customer.append(links);
+  }
+});
+
+document.querySelectorAll(".footer .biz").forEach((business) => {
+  business.innerHTML = '<span><strong>상호명</strong><span>실루아</span></span><span><strong>대표자</strong><span>안지혜</span></span><span><strong>사업자등록</strong><span>570-27-01072</span></span><span><strong>사업장주소</strong><span>대전시 중구 선화동 434번지 302호</span></span>';
+});
+
+// 브랜드 소개 다음에 회사 정보 → 소셜 채널 → 고객센터 순서로 배치합니다.
+document.querySelectorAll(".footer-main").forEach((footerMain) => {
+  const company = footerMain.querySelector(".footer-company");
+  const channels = footerMain.querySelector(".footer-channels");
+  const customer = footerMain.querySelector(".footer-customer");
+  const footerBottom = footerMain.closest(".footer")?.querySelector(".footer-bottom");
+  const customerLinks = customer?.querySelector(".footer-customer-links");
+  if (company && channels && customer) footerMain.append(company, channels, customer);
+  if (footerBottom && customerLinks) footerBottom.prepend(customerLinks);
+});
+
+document.querySelectorAll(".footer").forEach((footer) => {
+  if (footer.querySelector(".footer-banners")) return;
+  footer.insertAdjacentHTML("afterbegin", '<nav class="footer-banners" aria-label="빠른 안내"><a class="footer-banner" href="about.html"><span class="footer-banner-label">SILUA STORY</span><strong>브랜드 이야기</strong><span class="footer-banner-copy">전통을 오늘의 새로운 선으로 풀어냅니다</span></a><a class="footer-banner" href="reservation.html#personal-color"><span class="footer-banner-label">PERSONAL SERVICE</span><strong>1:1 퍼스널진단</strong><span class="footer-banner-copy">나에게 어울리는 스타일을 만나보세요</span></a><a class="footer-banner" href="reservation.html#workshop"><span class="footer-banner-label">RESERVATION</span><strong>공방 체험 예약</strong><span class="footer-banner-copy">노리개 · 구두 꾸미기 · 키링 만들기</span></a></nav>');
+});
+
+// 메인을 제외한 모든 화면에서는 PC 카테고리를 계속 펼쳐 바로 이동할 수 있게 합니다.
+if (currentPageName !== "index.html") {
+  document.body.classList.add("catalog-header-visible");
+}
 
 // 메뉴마다 서로 다른 화면과 필터가 열리도록 링크를 한 곳에서 관리합니다.
 const menuDestinations = {
@@ -34,7 +110,8 @@ const menuDestinations = {
       "reservation.html?activity=norigae#workshop",
       "reservation.html?activity=shoes#workshop",
       "reservation.html?activity=keyring#workshop",
-      "reservation.html#personal-color"
+      "reservation.html#personal-color",
+      "reservation.html#body-shape"
     ]
   }
 };
@@ -49,14 +126,16 @@ document.querySelectorAll(".gnb-category").forEach((category) => {
   });
 });
 
-// 푸터의 예약 배너도 새 예약 화면의 해당 위치로 연결합니다.
+// 푸터 배너를 브랜드 이야기 → 퍼스널 진단 → 공방 체험 순서로 연결합니다.
 const footerBanners = document.querySelectorAll(".footer-banner");
-if (footerBanners[0]) footerBanners[0].href = "reservation.html#workshop";
+if (footerBanners[0]) footerBanners[0].href = "about.html";
 if (footerBanners[1]) footerBanners[1].href = "reservation.html#personal-color";
+if (footerBanners[2]) footerBanners[2].href = "reservation.html#workshop";
 
 if (menu && toggles.length) {
   const setMenuState = (isOpen) => {
     menu.classList.toggle("open", isOpen);
+    gnb?.classList.toggle("is-menu-open", isOpen);
     const isEnglish = document.documentElement.lang === "en";
     toggles.forEach((toggle) => {
       toggle.setAttribute("aria-expanded", String(isOpen));
@@ -67,6 +146,7 @@ if (menu && toggles.length) {
   };
 
   logoToggle?.addEventListener("click", () => {
+    // 큰 SILUA는 모든 화면에서 브랜드 홈으로 돌아가는 링크 역할을 합니다.
     location.href = "index.html";
   });
 
@@ -75,19 +155,28 @@ if (menu && toggles.length) {
   });
 
   logoToggle?.addEventListener("pointerenter", () => {
-    if (desktopHover.matches) setMenuState(true);
+    if (usesDesktopHeader()) setMenuState(true);
   });
 
   gnb?.addEventListener("pointerleave", () => {
-    if (desktopHover.matches) setMenuState(false);
+    if (usesDesktopHeader()) setMenuState(false);
   });
 
   gnb?.addEventListener("focusout", (event) => {
-    if (desktopHover.matches && !gnb.contains(event.relatedTarget)) setMenuState(false);
+    if (usesDesktopHeader() && !gnb.contains(event.relatedTarget)) setMenuState(false);
   });
 
   logoToggle?.addEventListener("focus", () => {
-    if (desktopHover.matches) setMenuState(true);
+    if (usesDesktopHeader()) setMenuState(true);
+  });
+
+  // 터치 PC는 hover가 없으므로 헤더 밖을 누르면 메뉴를 닫을 수 있게 합니다.
+  document.addEventListener("pointerdown", (event) => {
+    if (usesDesktopHeader() && !gnb.contains(event.target)) setMenuState(false);
+  });
+
+  desktopLayout.addEventListener("change", (event) => {
+    if (!usesDesktopHeader()) setMenuState(false);
   });
 
   menu.querySelectorAll(".gnb-submenu a").forEach((link) => link.addEventListener("click", () => {
@@ -140,10 +229,16 @@ userButton?.setAttribute("role", "button");
 userButton?.setAttribute("tabindex", "0");
 userButton?.addEventListener("click", (event) => {
   event.preventDefault();
-  openMemberDialog();
+  let memberSession = null;
+  try { memberSession = JSON.parse(localStorage.getItem("silua-member-session") || "null"); } catch (_) {}
+  if (memberSession?.email) {
+    location.href = "mypage.html";
+    return;
+  }
+  openMemberDialog("mypage.html");
 });
 
-function openMemberDialog() {
+function openMemberDialog(returnTo = "") {
   let dialog = document.getElementById("memberDialog");
   if (!dialog) {
     dialog = document.createElement("dialog");
@@ -195,16 +290,28 @@ function openMemberDialog() {
     panels.forEach((form) => form.addEventListener("submit", (event) => {
       event.preventDefault();
       const status = form.querySelector(".member-form-status");
+      const data = new FormData(form);
       if (form.dataset.memberPanel === "join") {
-        const data = new FormData(form);
         if (data.get("password") !== data.get("passwordConfirm")) {
           status.textContent = "비밀번호가 일치하지 않습니다.";
           return;
         }
       }
-      status.textContent = "화면 구성이 완료되었습니다. 실제 회원 처리는 회원 서버 연결 후 사용할 수 있습니다.";
+      const email = String(data.get("email") || "").trim();
+      const savedName = form.dataset.memberPanel === "join"
+        ? String(data.get("name") || "").trim()
+        : email.split("@")[0];
+      try {
+        localStorage.setItem("silua-member-session", JSON.stringify({ name: savedName || "SILUA 회원", email }));
+      } catch (_) { /* 저장이 막힌 환경에서도 안내 문구는 보여줍니다. */ }
+      status.textContent = "로그인되었습니다.";
+      window.setTimeout(() => {
+        dialog.close();
+        location.href = dialog.dataset.returnTo || "mypage.html";
+      }, 350);
     }));
   }
+  dialog.dataset.returnTo = returnTo;
   if (!dialog.open) dialog.showModal();
   window.setTimeout(() => dialog.querySelector(".member-form.is-active input")?.focus(), 0);
 }
@@ -306,6 +413,24 @@ function openProductSearch() {
 const hero = document.querySelector(".hero");
 const heroSlides = [...document.querySelectorAll(".hero-slide")];
 const heroPagination = document.querySelector(".hero-pagination");
+const heroTitle = hero?.querySelector(".hero-copy h1");
+
+// 현재 언어에 맞는 이미지별 문구를 줄바꿈 표시(|)까지 안전하게 렌더링합니다.
+const updateHeroCopy = () => {
+  const activeSlide = heroSlides.find((slide) => slide.classList.contains("is-active"));
+  const title = document.documentElement.lang === "en" ? activeSlide?.dataset.titleEn : activeSlide?.dataset.titleKo;
+  if (!heroTitle || !title) return;
+  heroTitle.replaceChildren();
+  title.split("|").forEach((line) => {
+    const lineElement = document.createElement("span");
+    lineElement.className = "hero-title-line";
+    lineElement.textContent = line;
+    heroTitle.append(lineElement);
+  });
+  heroTitle.classList.remove("is-changing");
+  void heroTitle.offsetWidth;
+  heroTitle.classList.add("is-changing");
+};
 
 if (hero && heroSlides.length && heroPagination) {
   heroPagination.innerHTML = heroSlides.map((_, index) => (
@@ -327,6 +452,7 @@ if (hero && heroSlides.length && heroPagination) {
       indicator.classList.toggle("is-active", isCurrent);
       indicator.setAttribute("aria-current", String(isCurrent));
     });
+    updateHeroCopy();
   };
 
   const stopSlideshow = () => {
@@ -337,7 +463,7 @@ if (hero && heroSlides.length && heroPagination) {
   const startSlideshow = () => {
     stopSlideshow();
     if (!reducedMotion.matches && !document.hidden) {
-      slideTimer = setInterval(() => showSlide(currentSlide + 1), 5000);
+      slideTimer = setInterval(() => showSlide(currentSlide + 1), 7000);
     }
   };
 
@@ -368,20 +494,20 @@ const translations = {
       menuClose: "주요 메뉴 닫기",
       admin: "마이페이지",
       search: "제품 검색",
-      footer: "상호: ○○○ · 대표자: ○○○<br>사업자등록번호: 000-00-00000 · 주소: ○○○",
-      footerTagline: "전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.",
+      footer: '<span><strong>상호명</strong><span>실루아</span></span><span><strong>대표자</strong><span>안지혜</span></span><span><strong>사업자등록</strong><span>570-27-01072</span></span><span><strong>사업장주소</strong><span>대전시 중구 선화동 434번지 302호</span></span>',
+      footerTagline: ["전통을 다시", "입는 것이 아니라,", "오늘의 나를 위한", "새로운 선으로", "입습니다."],
       footerBanners: [
-        { title: "공방 체험 예약", copy: "노리개 · 구두 꾸미기 · 키링 만들기" },
+        { title: "브랜드 이야기", copy: "전통을 오늘의 새로운 선으로 풀어냅니다" },
         { title: "1:1 퍼스널진단", copy: "나에게 어울리는 스타일을 만나보세요" },
-        { title: "브랜드 이야기", copy: "전통을 오늘의 새로운 선으로 풀어냅니다" }
+        { title: "공방 체험 예약", copy: "노리개 · 구두 꾸미기 · 키링 만들기" }
       ],
       customer: "고객센터",
-      emailInquiry: "이메일 문의",
+      emailInquiry: "문의",
       footerHours: "평일 10:00 – 18:00"
     },
     pages: {
       "index.html": { title: "SILUA", heroTitle: "전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.", heroSub: "한복이 드레스가 되는 순간, 당신의 가장 빛나는 하루.", action: "컬렉션 보기", categoryTitles: ["Self Weading", "Evening & Party", "Wedding Attire"], categories: ["인생의 주인공이 되는 날", "화려하게 빛나는 순간", "특별한 날의 레디투웨어"], categoryMore: "자세히 보기 >", strengths: "우리 브랜드의 강점", strengthTitle: "강점 제목", strengthBody: "강점 설명을 적으세요.", looks: "인기 상품", editorialTitle: "신 제품" },
-      "about.html": { title: "브랜드 소개 — SILUA", head: "SILUA", intro: "한국의 자연과 전통 한복의 실루엣에서 영감을 받아 현대적인 웨딩드레스로 재해석하는 K-Wedding 브랜드.", story: "브랜드 스토리", storyText: "브랜드 스토리를 여기에 붙여넣으세요. 문단이 여러 개면 <p> 태그를 복사해서 나눠 넣으면 됩니다.", storySecond: "두 번째 문단 예시입니다.", keywords: "브랜드 키워드", keywordItems: ["키워드1", "키워드2", "키워드3", "키워드4", "키워드5"], philosophy: "브랜드 철학", philosophyText: "브랜드 철학 문구를 여기에 적으세요.", people: "만드는 사람들", photo: "사진 설명", strengths: "우리 브랜드의 강점", strengthTitle: "강점 제목", strengthBody: "강점 설명을 적으세요.", portfolio: "포트폴리오", portfolioLoading: "포트폴리오를 불러오는 중입니다.", visit: "매장 안내", hoursLabel: "영업시간", hoursValue: "평일 10:00 – 18:00", addressLabel: "주소", addressValue: "주소를 입력해주세요", emailLabel: "이메일" },
+      "about.html": { title: "브랜드 소개 — SILUA", head: "SILUA", intro: "한국의 자연과 전통 한복의 실루엣에서 영감을 받아 현대적인 웨딩드레스로 재해석하는 K-Wedding 브랜드.", story: "브랜드 스토리", storyParagraphs: ["예쁜 옷을 입는 일과, 나에게 어울리는 옷을 입는 일은 완전히 다른 문제다.", "그 문제를 풀기 위해 실루아는 1:1 퍼스널컬러·체형 진단, 1:1 스타일링 컨셉 제안에 이어", "드레스와 어울리는 커스텀 소품 공방까지 진행합니다.", "특별한 날 빛나야 할 순간, 고즈넉한 한국의 미를 담아낸 드레스와", "단 하나밖에 없는 나만의 커스텀 드레스 소품으로", "셀프웨딩 및 웨딩스냅, 패밀리/기념일, 이브닝&스페셜데이에", "가장 빛나는 순간을 완성합니다."], keywords: "브랜드 키워드", keywordItems: ["키워드1", "키워드2", "키워드3", "키워드4", "키워드5"], philosophy: "브랜드 철학", philosophyText: "브랜드 철학 문구를 여기에 적으세요.", people: "만드는 사람들", photo: "사진 설명", strengths: "우리 브랜드의 강점", strengthItems: [{ title: "맞춤컬러&핏", body: "전문 진단을 통한 퍼스널 컬러 및 체형 분석, 최적의 드레스 큐레이션" }, { title: "Bespoque Atelier", body: "드레스와 조화를 이루는 구두, 악세서리(헤어장식, 파우치, 백 등)의 커스텀 디자인 가능" }], portfolio: "포트폴리오", portfolioLoading: "포트폴리오를 불러오는 중입니다.", visit: "매장 안내", hoursLabel: "영업시간", hoursValue: "평일 10:00 – 18:00", addressLabel: "주소", addressValue: "대전시 중구 선화동 434번지 302호", phoneLabel: "전화", emailLabel: "이메일" },
       "products.html": { title: "제품 — SILUA", head: "제품", intro: "취급 품목을 여기에 적으세요. (예: Dress / Jacket / Shirt / Skirt)" },
       "product.html": { title: "제품 상세 — SILUA", loading: "제품 정보를 불러오는 중…", purchase: "구매 안내", close: "구매 안내 닫기", confirm: "확인", back: "← 제품 목록으로" },
       "portfolio.html": { title: "포트폴리오 — SILUA", head: "포트폴리오", intro: "브랜드의 작업·프로젝트 사례를 소개합니다.", loading: "포트폴리오를 불러오는 중입니다." },
@@ -396,20 +522,20 @@ const translations = {
       menuClose: "Close main menu",
       admin: "My page",
       search: "Search products",
-      footer: "Company: ○○○ · Representative: ○○○<br>Business Registration No.: 000-00-00000 · Address: ○○○",
-      footerTagline: "Not tradition reworn, but new lines made for who I am today.",
+      footer: '<span><strong>Company</strong><span>SILUA</span></span><span><strong>Representative</strong><span>An Ji-hye</span></span><span><strong>Registration No.</strong><span>570-27-01072</span></span><span><strong>Address</strong><span>302, 434 Seonhwa-dong, Jung-gu, Daejeon</span></span>',
+      footerTagline: ["Not tradition reworn,", "but new lines made for who I am today."],
       footerBanners: [
-        { title: "WORKSHOP RESERVATION", copy: "Norigae · Shoe decoration · Keyring" },
+        { title: "OUR STORY", copy: "Tradition reimagined through new lines" },
         { title: "1:1 PERSONAL CONSULTATION", copy: "Discover the style that suits you" },
-        { title: "OUR STORY", copy: "Tradition reimagined through new lines" }
+        { title: "WORKSHOP RESERVATION", copy: "Norigae · Shoe decoration · Keyring" }
       ],
       customer: "CUSTOMER CENTER",
-      emailInquiry: "EMAIL INQUIRY",
+      emailInquiry: "CONTACT",
       footerHours: "Weekdays 10:00 – 18:00"
     },
     pages: {
       "index.html": { title: "SILUA", heroTitle: "Not tradition reworn, but new lines made for who I am today.", heroSub: "Write a short sentence introducing the brand here.", action: "VIEW COLLECTION", categoryTitles: ["Self Weading", "Evening & Party", "Wedding Attire"], categories: ["The day you become the main character", "A moment to shine brilliantly", "Ready-to-wear for your special day"], categoryMore: "VIEW MORE >", strengths: "WHY CHOOSE SILUA", strengthTitle: "STRENGTH TITLE", strengthBody: "Describe this strength here.", looks: "POPULAR PRODUCTS", editorialTitle: "NEW PRODUCTS" },
-      "about.html": { title: "About — SILUA", head: "SILUA", intro: "Write a one-line introduction to the brand here.", story: "BRAND STORY", storyText: "Paste the brand story here. Divide longer stories into separate paragraphs.", storySecond: "This is an example of a second paragraph.", keywords: "BRAND KEYWORDS", keywordItems: ["KEYWORD 1", "KEYWORD 2", "KEYWORD 3", "KEYWORD 4", "KEYWORD 5"], philosophy: "BRAND PHILOSOPHY", philosophyText: "Write the brand philosophy here.", people: "OUR PEOPLE", photo: "Photo description", strengths: "WHY CHOOSE SILUA", strengthTitle: "STRENGTH TITLE", strengthBody: "Describe this strength here.", portfolio: "PORTFOLIO", portfolioLoading: "Loading the portfolio…", visit: "VISIT & CONTACT", hoursLabel: "HOURS", hoursValue: "Weekdays 10:00 – 18:00", addressLabel: "ADDRESS", addressValue: "Enter the store address", emailLabel: "EMAIL" },
+      "about.html": { title: "About — SILUA", head: "SILUA", intro: "A K-Wedding brand inspired by Korea’s nature and traditional hanbok silhouettes, reinterpreted as contemporary wedding dresses.", story: "BRAND STORY", storyParagraphs: ["Wearing a beautiful outfit and wearing one that truly suits you are entirely different things.", "To solve that challenge, SILUA offers one-on-one personal color and body-shape consultations, followed by one-on-one styling concepts.", "We also host custom accessory workshops to create pieces that complement your dress.", "For the special moments when you deserve to shine, our dresses embody the serene beauty of Korea.", "Together with one-of-a-kind custom dress accessories made just for you,", "they complete your brightest moments—from self-weddings and wedding shoots to family celebrations, anniversaries, evenings, and special days.", "Complete your most radiant moment with SILUA."], keywords: "BRAND KEYWORDS", keywordItems: ["KEYWORD 1", "KEYWORD 2", "KEYWORD 3", "KEYWORD 4", "KEYWORD 5"], philosophy: "BRAND PHILOSOPHY", philosophyText: "Write the brand philosophy here.", people: "OUR PEOPLE", photo: "Photo description", strengths: "WHY CHOOSE SILUA", strengthItems: [{ title: "CUSTOM COLOR & FIT", body: "Expert personal color and body-shape analysis with an optimal dress curation." }, { title: "Bespoque Atelier", body: "Custom design for shoes and accessories—including hairpieces, pouches, and bags—to complement each dress." }], portfolio: "PORTFOLIO", portfolioLoading: "Loading the portfolio…", visit: "VISIT & CONTACT", hoursLabel: "HOURS", hoursValue: "Weekdays 10:00 – 18:00", addressLabel: "ADDRESS", addressValue: "302, 434 Seonhwa-dong, Jung-gu, Daejeon", phoneLabel: "PHONE", emailLabel: "EMAIL" },
       "products.html": { title: "Products — SILUA", head: "PRODUCTS", intro: "Introduce the available categories here. (e.g. Dress / Jacket / Shirt / Skirt)" },
       "product.html": { title: "Product Details — SILUA", loading: "Loading product information…", purchase: "PURCHASE INFORMATION", close: "Close purchase information", confirm: "OK", back: "← BACK TO PRODUCTS" },
       "portfolio.html": { title: "Portfolio — SILUA", head: "PORTFOLIO", intro: "Explore the brand’s work and projects.", loading: "Loading the portfolio…" },
@@ -423,13 +549,24 @@ function setText(selector, value, root = document) {
   if (element && value !== undefined) element.textContent = value;
 }
 
+// 푸터의 브랜드 문구는 지정한 위치에서만 줄을 바꿉니다.
+function setFooterTagline(lines) {
+  const tagline = document.querySelector(".footer-tagline");
+  if (!tagline || !Array.isArray(lines)) return;
+  tagline.replaceChildren();
+  lines.forEach((line, index) => {
+    if (index) tagline.append(document.createElement("br"));
+    tagline.append(document.createTextNode(line));
+  });
+}
+
 function applyPageTranslation(page, text) {
   if (!text) return;
   const sections = document.querySelectorAll("body > .section");
   document.title = text.title;
 
   if (page === "index.html") {
-    setText(".hero h1", text.heroTitle);
+    updateHeroCopy();
     setText(".hero-copy > p:not(.eyebrow)", text.heroSub);
     setText(".hero .btn", text.action);
     document.querySelectorAll(".home-category").forEach((category, index) => {
@@ -451,9 +588,14 @@ function applyPageTranslation(page, text) {
     setText(".page-head p", text.intro);
     if (sections[0]) {
       setText("h2", text.story, sections[0]);
-      const leads = sections[0].querySelectorAll(".lead");
-      if (leads[0]) leads[0].textContent = text.storyText;
-      if (leads[1]) leads[1].textContent = text.storySecond;
+      const storyCopy = sections[0].querySelector(".story-intro-copy");
+      const leads = storyCopy?.querySelectorAll(".lead") || [];
+      (text.storyParagraphs || []).forEach((paragraph, index) => {
+        const lead = leads[index] || Object.assign(document.createElement("p"), { className: "lead" });
+        lead.textContent = paragraph;
+        if (!leads[index]) storyCopy.append(lead);
+      });
+      Array.from(leads).slice((text.storyParagraphs || []).length).forEach((lead) => lead.remove());
     }
     if (sections[1]) {
       setText("h2", text.keywords, sections[1]);
@@ -466,8 +608,10 @@ function applyPageTranslation(page, text) {
     }
     setText(".story-strengths h2", text.strengths);
     document.querySelectorAll(".story-strengths .feature").forEach((feature) => {
-      setText("h3", text.strengthTitle, feature);
-      setText("p:last-child", text.strengthBody, feature);
+      const item = text.strengthItems?.[Number(feature.querySelector(".num")?.textContent) - 1];
+      if (!item) return;
+      setText("h3", item.title, feature);
+      setText("p:last-child", item.body, feature);
     });
     setText(".story-portfolio h2", text.portfolio);
     setText(".story-portfolio .portfolio-status", text.portfolioLoading);
@@ -476,6 +620,7 @@ function applyPageTranslation(page, text) {
     setText(".story-hours .value", text.hoursValue);
     setText(".story-address .label", text.addressLabel);
     setText(".story-address .value", text.addressValue);
+    setText(".story-phone .label", text.phoneLabel);
     setText(".story-email .label", text.emailLabel);
   } else if (page === "products.html") {
     setText(".page-head h1", text.head);
@@ -496,9 +641,8 @@ function applyPageTranslation(page, text) {
   } else if (page === "contact.html") {
     setText(".page-head h1", text.head);
     setText(".page-head p", text.intro);
-    const items = document.querySelectorAll(".contact-item");
-    if (items[2]) setText(".value a", text.kakao, items[2]);
-    if (items[3]) { setText(".label", text.hours, items[3]); setText(".value", text.hoursValue, items[3]); }
+    const hours = document.querySelector(".contact-hours");
+    if (hours) { setText(".label", text.hours, hours); setText(".value", text.hoursValue, hours); }
   }
 }
 
@@ -522,7 +666,7 @@ function applyLanguage(language, remember = true) {
   document.querySelector(".search-button")?.setAttribute("aria-label", dictionary.common.search);
   const footerBusiness = document.querySelector(".footer .biz");
   if (footerBusiness) footerBusiness.innerHTML = dictionary.common.footer;
-  setText(".footer-tagline", dictionary.common.footerTagline);
+  setFooterTagline(dictionary.common.footerTagline);
   document.querySelectorAll(".footer-banner").forEach((banner, index) => {
     const bannerText = dictionary.common.footerBanners[index];
     if (!bannerText) return;
