@@ -142,7 +142,7 @@ a { color: inherit; }
 .hero p { width: 100%; max-width: 560px; overflow-wrap: anywhere; color: var(--ink-soft); }
 
 /* ===== 홈 카테고리: 이미지 + 제목 + 짧은 소개 ===== */
-.home-transition { display: grid; min-height: 144px; padding: 0 22px; grid-template-columns: minmax(24px, 1fr) auto minmax(24px, 1fr); align-items: center; gap: 20px; background: var(--bg); }
+.home-transition { display: grid; min-height: 180px; padding: 0 22px; grid-template-columns: minmax(24px, 1fr) auto minmax(24px, 1fr); align-items: center; gap: 20px; background: var(--bg); }
 .home-transition::before,
 .home-transition::after { content: ""; width: 100%; max-width: 240px; border-top: 1px solid var(--line); }
 .home-transition::before { justify-self: end; }
@@ -544,7 +544,7 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 /* ===== 큰 화면(태블릿/PC) — 720px 이상 ===== */
 @media (min-width: 720px) {
   .top-notice { width: 50%; font-size: 11px; }
-  .home-transition { min-height: 240px; padding-right: max(32px, 7vw); padding-left: max(32px, 7vw); gap: 34px; }
+  .home-transition { min-height: 300px; padding-right: max(32px, 7vw); padding-left: max(32px, 7vw); gap: 34px; }
   .home-categories { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .home-category figure { aspect-ratio: 3 / 4; }
   .home-category-copy { padding: 26px 18px 46px; }
