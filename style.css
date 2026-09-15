@@ -147,7 +147,7 @@ a { color: inherit; }
 .home-transition::after { content: ""; width: 100%; max-width: 240px; border-top: 1px solid var(--line); }
 .home-transition::before { justify-self: end; }
 .home-transition::after { justify-self: start; }
-.home-transition p { margin: 0; font-family: var(--font-display); font-size: clamp(25px, 7vw, 36px); font-weight: 500; letter-spacing: 7px; line-height: 1; text-align: center; }
+.home-transition p { margin: 0; font-family: var(--font-display); font-size: clamp(37.5px, 10.5vw, 54px); font-weight: 500; letter-spacing: 7px; line-height: 1; text-align: center; }
 .home-categories { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: var(--bg); }
 .home-category { min-width: 0; color: var(--ink); text-align: center; text-decoration: none; }
 .home-category figure { aspect-ratio: 4 / 5; margin: 0; overflow: hidden; background: var(--surface); }
