@@ -368,7 +368,7 @@ function openProductSearch() {
     let products = [];
 
     const renderResults = () => {
-      const query = input.value.trim().toLocaleLowerCase();
+      const query = input.value.trim().normalize("NFC").toLocaleLowerCase();
       results.replaceChildren();
       if (!query) {
         status.textContent = "검색어를 입력하면 제품을 찾아드립니다.";
@@ -377,7 +377,7 @@ function openProductSearch() {
       const matches = products.filter((product) => [
         product.name, product.label, product.category, product.summary,
         ...(Array.isArray(product.keywords) ? product.keywords : [])
-      ].join(" ").toLocaleLowerCase().includes(query));
+      ].join(" ").normalize("NFC").toLocaleLowerCase().includes(query));
       status.textContent = matches.length ? `${matches.length}개의 제품을 찾았습니다.` : "검색 결과가 없습니다.";
       matches.forEach((product) => {
         const link = document.createElement("a");

@@ -15,7 +15,7 @@
 
   <!-- 탭 아이콘 (images/favicon.png 넣으면 표시됨) -->
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="style.css?v=20260917-brand-renewal-2" />
+  <link rel="stylesheet" href="style.css?v=20260917-brand-renewal-3" />
 </head>
 <body>
 
@@ -52,11 +52,11 @@
       <div class="hero-actions"><a href="products.html" class="btn">컬렉션 보기</a><a href="reservation.html#personal-color" class="btn ghost">1:1 진단 예약</a></div>
     </div>
     <!-- 이미지 수를 기준으로 전환 막대가 자동 생성됩니다. -->
-    <div class="hero-pagination" aria-label="메인 이미지 선택"></div>
+    <div class="hero-pagination" role="group" aria-label="메인 이미지 선택"></div>
   </section>
 
   <!-- 회전 이미지와 컬렉션 사이의 브랜드 전환 영역입니다. -->
-  <div class="home-transition" aria-label="SILUA 컬렉션">
+  <div class="home-transition" aria-hidden="true">
     <p>SILUA</p>
   </div>
 
@@ -70,15 +70,15 @@
   <!-- ===== 메인 카테고리: 전용 사진을 받으면 이미지 경로만 교체하세요. ===== -->
   <section class="home-categories" id="themes" aria-label="SILUA 카테고리">
     <a class="home-category" data-theme-category="self-wedding" href="products.html?collection=self-wedding">
-      <figure><img src="images/theme-bridal.png" alt="브라이덜 컬렉션" /></figure>
+      <figure><img src="images/theme-bridal.webp" alt="브라이덜 컬렉션" width="250" height="571" /></figure>
       <div class="home-category-copy"><p class="category-index">01</p><h2>Self Wedding</h2><p>나답게 기록하는 웨딩의 순간</p><span>컬렉션 보기 ↗</span></div>
     </a>
     <a class="home-category" data-theme-category="evening-party" href="products.html?collection=evening-party">
-      <figure><img src="images/theme-evening.png" alt="이브닝 컬렉션" /></figure>
+      <figure><img src="images/theme-evening.webp" alt="이브닝 컬렉션" width="216" height="654" /></figure>
       <div class="home-category-copy"><p class="category-index">02</p><h2>Evening &amp; Party</h2><p>격식과 개성을 함께 담는 드레스</p><span>컬렉션 보기 ↗</span></div>
     </a>
     <a class="home-category" data-theme-category="wedding-attire" href="products.html?collection=wedding-attire">
-      <figure><img src="images/theme-modern.png" alt="모던 컬렉션" /></figure>
+      <figure><img src="images/theme-modern.webp" alt="모던 컬렉션" width="207" height="601" /></figure>
       <div class="home-category-copy"><p class="category-index">03</p><h2>Wedding Attire</h2><p>특별한 날을 위한 현대적 예복</p><span>컬렉션 보기 ↗</span></div>
     </a>
   </section>
@@ -100,7 +100,7 @@
   <section class="popular-products" id="popular-products">
     <div class="section-heading inline-heading"><div><p class="eyebrow">CURATED FOR YOU</p><h2>Selected Looks</h2></div><a class="line-link" href="products.html">전체 컬렉션 ↗</a></div>
     <div class="popular-product-grid" id="home-looks" aria-live="polite"></div>
-    <div class="popular-pagination" aria-label="인기상품 페이지 이동">
+    <div class="popular-pagination" role="group" aria-label="인기상품 페이지 이동">
       <button class="popular-page-button" id="popularPrevious" type="button" aria-label="이전 상품">‹</button>
       <p><strong id="popularCurrent">1</strong> / <span id="popularTotal">1</span></p>
       <button class="popular-page-button" id="popularNext" type="button" aria-label="다음 상품">›</button>
@@ -144,7 +144,7 @@
     <div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div>
   </footer>
 
-  <script src="script.js?v=20260917-brand-renewal-2"></script>
+  <script src="script.js?v=20260917-brand-renewal-3"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
     // 공개 제품을 인기상품 카드로 보여주며 화면 크기에 맞춰 페이지를 나눕니다.
