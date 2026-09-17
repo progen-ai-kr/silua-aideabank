@@ -6,7 +6,7 @@
   <title>문의 — SILUA</title>
   <meta name="description" content="SILUA 드레스 구매·대여, 1:1 진단과 공방 체험 문의 안내." />
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="style-renewal.css?v=20260917-brand-renewal-6" />
+  <link rel="stylesheet" href="style-renewal.css?v=20260917-brand-renewal-7" />
 </head>
 <body class="contact-page">
   <header class="site-header">
@@ -21,7 +21,7 @@
     </section>
 
     <section class="contact-layout">
-      <div class="contact-intro"><p class="eyebrow">DIRECT CONTACT</p><h2>가장 편한 방법으로<br />문의해 주세요</h2><p>운영 시간 중 순서대로 답변드립니다. 상담과 방문이 필요한 서비스는 예약 페이지에서 희망 일정을 먼저 남겨주세요.</p><a class="btn" href="reservation.html">상담 및 체험 예약</a></div>
+      <div class="contact-intro"><div class="selected-product-inquiry" id="selectedProductInquiry" hidden><p>SELECTED PRODUCT</p><strong id="selectedProductName"></strong><span>상품명과 희망 대여 일정을 알려주시면 재고와 이용 방법을 안내해 드립니다.</span></div><p class="eyebrow">DIRECT CONTACT</p><h2>가장 편한 방법으로<br />문의해 주세요</h2><p>운영 시간 중 순서대로 답변드립니다. 상담과 방문이 필요한 서비스는 예약 페이지에서 희망 일정을 먼저 남겨주세요.</p><a class="btn" href="reservation.html">상담 및 체험 예약</a></div>
       <div class="contact-list">
         <a class="contact-item" href="https://www.instagram.com/siluadress_official/" target="_blank" rel="noopener noreferrer"><p class="label">Instagram</p><p class="value">@siluadress_official</p><span>↗</span></a>
         <a class="contact-item" href="mailto:siluadress@naver.com"><p class="label">Email</p><p class="value">siluadress@naver.com</p><span>↗</span></a>
@@ -43,5 +43,21 @@
     <div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div>
   </footer>
   <script src="script-renewal.js?v=20260917-brand-renewal-5"></script>
+  <script>
+    // 컬렉션에서 선택한 상품명을 문의 화면에 표시하고 이메일 제목에도 자동으로 넣습니다.
+    const inquiryProduct = new URLSearchParams(location.search).get("product")?.trim().slice(0, 160);
+    if (inquiryProduct) {
+      const inquiry = document.getElementById("selectedProductInquiry");
+      const productName = document.getElementById("selectedProductName");
+      const emailLink = document.querySelector('.contact-item[href^="mailto:"]');
+      productName.textContent = inquiryProduct;
+      inquiry.hidden = false;
+      if (emailLink) {
+        const subject = `[SILUA 상품 문의] ${inquiryProduct}`;
+        const body = `문의 상품: ${inquiryProduct}\n희망 일정: \n문의 내용: `;
+        emailLink.href = `mailto:siluadress@naver.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      }
+    }
+  </script>
 </body>
 </html>
