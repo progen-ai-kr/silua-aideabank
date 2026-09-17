@@ -4,20 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>SILUA — Silhouette of Beauty</title>
-  <meta name="description" content="한국의 미와 절제된 미감을 현대적인 웨딩 및 드레스 실루엣으로 재해석하는 SILUA." />
+  <!-- [작성서 01] 브랜드명으로 바꾸세요 -->
+  <title>SILUA</title>
+  <!-- [작성서 02] 한 줄 소개 → 검색·공유 미리보기에 나오는 설명 -->
+  <meta name="description" content="브랜드 한 줄 소개를 여기에 적으세요." />
 
   <!-- 카톡/인스타 공유 미리보기 (OG 태그) — 브랜드명·소개·대표이미지로 바꾸세요 -->
-  <meta property="og:title" content="SILUA — Silhouette of Beauty" />
-  <meta property="og:description" content="특별한 날 빛나야 할 당신을 위한 단 하나의 우아함" />
-  <meta property="og:image" content="images/main-01.jpg" />
+  <meta property="og:title" content="SILUA" />
+  <meta property="og:description" content="브랜드 한 줄 소개" />
+  <meta property="og:image" content="images/og.jpg" />
   <meta property="og:type" content="website" />
 
   <!-- 탭 아이콘 (images/favicon.png 넣으면 표시됨) -->
-  <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="style.css?v=20260917-original-home-1" />
+  <link rel="icon" href="images/favicon.png" />
+  <link rel="stylesheet" href="style.css?v=20260915-home-logo-20" />
 </head>
-<body class="original-home">
+<body>
 
   <!-- ===== 상단 메뉴 (5페이지 공통 — 수정하면 모든 페이지에 똑같이 반영하세요) ===== -->
   <header class="site-header">
@@ -70,26 +72,26 @@
       <a href="products.html" class="btn">컬렉션 보기</a>
     </div>
     <!-- 이미지 수를 기준으로 전환 막대가 자동 생성됩니다. -->
-    <div class="hero-pagination" role="group" aria-label="메인 이미지 선택"></div>
+    <div class="hero-pagination" aria-label="메인 이미지 선택"></div>
   </section>
 
   <!-- 회전 이미지와 컬렉션 사이의 브랜드 전환 영역입니다. -->
-  <div class="home-transition" aria-hidden="true">
+  <div class="home-transition" aria-label="SILUA 컬렉션">
     <p>SILUA</p>
   </div>
 
   <!-- ===== 메인 카테고리: 전용 사진을 받으면 이미지 경로만 교체하세요. ===== -->
   <section class="home-categories" id="themes" aria-label="SILUA 카테고리">
     <a class="home-category" data-theme-category="self-wedding" href="products.html?collection=self-wedding">
-      <figure><img src="images/theme-bridal.webp" alt="브라이덜 컬렉션" width="250" height="571" /></figure>
-      <div class="home-category-copy"><h2>Self Wedding</h2><p>인생의 주인공이 되는 날</p><span>자세히 보기 &gt;</span></div>
+      <figure><img src="images/theme-bridal.png" alt="브라이덜 컬렉션" /></figure>
+      <div class="home-category-copy"><h2>Self Weading</h2><p>인생의 주인공이 되는 날</p><span>자세히 보기 &gt;</span></div>
     </a>
     <a class="home-category" data-theme-category="evening-party" href="products.html?collection=evening-party">
-      <figure><img src="images/theme-evening.webp" alt="이브닝 컬렉션" width="216" height="654" /></figure>
+      <figure><img src="images/theme-evening.png" alt="이브닝 컬렉션" /></figure>
       <div class="home-category-copy"><h2>Evening &amp; Party</h2><p>화려하게 빛나는 순간</p><span>자세히 보기 &gt;</span></div>
     </a>
     <a class="home-category" data-theme-category="wedding-attire" href="products.html?collection=wedding-attire">
-      <figure><img src="images/theme-modern.webp" alt="모던 컬렉션" width="207" height="601" /></figure>
+      <figure><img src="images/theme-modern.png" alt="모던 컬렉션" /></figure>
       <div class="home-category-copy"><h2>Wedding Attire</h2><p>특별한 날의 레디투웨어</p><span>자세히 보기 &gt;</span></div>
     </a>
   </section>
@@ -98,7 +100,7 @@
   <section class="popular-products" id="popular-products">
     <h2>인기 상품</h2>
     <div class="popular-product-grid" id="home-looks" aria-live="polite"></div>
-    <div class="popular-pagination" role="group" aria-label="인기상품 페이지 이동">
+    <div class="popular-pagination" aria-label="인기상품 페이지 이동">
       <button class="popular-page-button" id="popularPrevious" type="button" aria-label="이전 상품">‹</button>
       <p><strong id="popularCurrent">1</strong> / <span id="popularTotal">1</span></p>
       <button class="popular-page-button" id="popularNext" type="button" aria-label="다음 상품">›</button>
@@ -117,7 +119,7 @@
     <div class="footer-main">
       <div class="footer-brand">
         <p class="logo">SILUA</p>
-        <p class="footer-tagline">한국의 미와 절제된 미감을 현대적인 드레스 실루엣으로 재해석합니다.</p>
+        <p class="footer-tagline">전통을 다시 입는 것이 아니라, 오늘의 나를 위한 새로운 선으로 입는다.</p>
         <div class="footer-socials">
           <a href="https://www.instagram.com/siluadress_official/" target="_blank" rel="noopener noreferrer" aria-label="SILUA Instagram"><span class="footer-social-icon" aria-hidden="true">IG</span><span>@siluadress_official</span></a>
           <a href="contact.html" aria-label="SILUA KakaoTalk"><span class="footer-social-icon" aria-hidden="true">K</span><span>KakaoTalk</span></a>
@@ -127,7 +129,7 @@
         <h2>고객센터</h2>
         <p class="footer-customer-title">문의</p><a class="footer-phone" href="tel:07045719545">070-4571-9545</a>
         <a class="footer-email" href="mailto:siluadress@naver.com">siluadress@naver.com</a>
-        <p class="footer-hours">운영 시간은 문의해 주세요</p>
+        <p class="footer-hours">평일 10:00 – 18:00</p>
       </div>
       <div class="footer-company">
         <h2>COMPANY</h2>
@@ -137,7 +139,7 @@
     <div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div>
   </footer>
 
-  <script src="script.js?v=20260917-original-home-1"></script>
+  <script src="script.js?v=20260914-slide-spacing-17"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
     // 공개 제품을 인기상품 카드로 보여주며 화면 크기에 맞춰 페이지를 나눕니다.
