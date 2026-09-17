@@ -6,7 +6,7 @@
   <title>제품 — SILUA</title>
   <meta name="description" content="SILUA의 드레스, 원피스와 투피스 컬렉션을 만나보세요." />
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="style-renewal.css?v=20260917-brand-renewal-7" />
+  <link rel="stylesheet" href="style-renewal.css?v=20260918-product-view-10" />
 </head>
 <body class="collection-page">
 
@@ -23,8 +23,9 @@
     <a class="collection-store-link" href="https://smartstore.naver.com/silua" target="_blank" rel="noopener noreferrer">네이버 스마트스토어 방문 <span aria-hidden="true">↗</span></a>
   </section>
 
-  <nav class="collection-filter" aria-label="컬렉션 바로가기">
-    <a href="products.html">전체</a><a href="products.html?collection=self-wedding">셀프 웨딩</a><a href="products.html?collection=evening-party">이브닝 &amp; 파티</a><a href="products.html?collection=wedding-attire">웨딩 예복</a><a href="accessories.html">액세서리</a>
+  <nav class="collection-filter service-filter" aria-label="제품 이용 방식">
+    <a href="products.html?mode=rental" data-product-service="rental">대여</a>
+    <a href="products.html?service=custom" data-product-service="custom">맞춤제작</a>
   </nav>
 
   <!-- ===== 제품 목록 =====
@@ -62,11 +63,12 @@
     <div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div>
   </footer>
 
-  <script src="script-renewal.js?v=20260917-brand-renewal-5"></script>
+  <script src="script-renewal.js?v=20260918-product-view-10"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
     const productListParams = new URLSearchParams(location.search);
-    const isRentalMode = productListParams.get("mode") === "rental";
+    const selectedService = productListParams.get("service") === "custom" ? "custom" : "rental";
+    const isRentalMode = selectedService === "rental";
     const productCollection = productListParams.get("collection") || "";
     const productService = productListParams.get("service") || "";
     const productType = productListParams.get("type") || "";
@@ -115,14 +117,36 @@
       const isEnglish = document.documentElement.lang === "en";
       const language = isEnglish ? "en" : "ko";
       const collection = collectionLabels[productCollection]?.[language];
-      const detailKey = isRentalMode ? "rental" : (productService || productType);
+      const detailKey = productType || selectedService;
       const detail = detailLabels[detailKey]?.[language];
-      if (!collection && !detail) return;
+      const hasExplicitContext = productListParams.has("mode") || productListParams.has("service") || productListParams.has("collection") || productListParams.has("type");
       if (isRentalMode) document.body.classList.add("rental-mode");
-      document.querySelector(".page-head h1").textContent = [collection, detail].filter(Boolean).join(" · ");
-      document.querySelector(".page-head p").textContent = isEnglish
-        ? (isRentalMode ? "Select a product, then choose your rental period." : "Explore the collection selected from the SILUA menu.")
-        : (isRentalMode ? "상품을 선택한 뒤 대여 기간을 지정할 수 있습니다." : "SILUA 메뉴에서 선택한 컬렉션을 확인해보세요.");
+      if (hasExplicitContext) {
+        document.querySelector(".page-head h1").textContent = [collection, detail].filter(Boolean).join(" · ");
+        document.querySelector(".page-head p").textContent = isEnglish
+          ? (isRentalMode ? "Browse the rental collection and ask about available dates." : "Explore made-to-order options using the same SILUA collection.")
+          : (isRentalMode ? "대여 가능한 제품과 일정을 확인해보세요." : "동일한 SILUA 제품을 맞춤제작 방식으로 상담해보세요.");
+      }
+
+      document.querySelectorAll("[data-product-service]").forEach((link) => {
+        const service = link.dataset.productService;
+        const params = new URLSearchParams();
+        if (productCollection) params.set("collection", productCollection);
+        if (productType) params.set("type", productType);
+        if (service === "rental") params.set("mode", "rental");
+        if (service === "custom") params.set("service", "custom");
+        link.href = "products.html?" + params.toString();
+        link.textContent = service === "rental" ? (isEnglish ? "RENTAL" : "대여") : (isEnglish ? "MADE TO ORDER" : "맞춤제작");
+        if (service === selectedService) link.setAttribute("aria-current", "page");
+        else link.removeAttribute("aria-current");
+      });
+
+      const noteTitle = document.querySelector(".collection-note p");
+      const noteCopy = document.querySelector(".collection-note span");
+      if (noteTitle) noteTitle.textContent = isRentalMode ? "RENTAL COLLECTION" : "MADE TO ORDER";
+      if (noteCopy) noteCopy.textContent = isEnglish
+        ? (isRentalMode ? "Ask about rental dates and availability for any product." : "Request made-to-order consultation for the same product collection.")
+        : (isRentalMode ? "모든 제품의 대여 일정과 재고를 문의할 수 있습니다." : "동일한 제품을 기준으로 맞춤제작 상담을 받을 수 있습니다.");
     }
 
     document.addEventListener("silua:languagechange", applyProductListContext);
@@ -144,14 +168,19 @@
               ? '<img src="' + ProductCatalog.escapeHtml(image) + '" alt="' + ProductCatalog.escapeHtml(p.name) + '" onerror="this.remove()" />'
               : "";
             const price = p.price ? '<p class="price">' + ProductCatalog.escapeHtml(p.price) + "</p>" : "";
-            const inquiryHref = "contact.html?product=" + encodeURIComponent(p.name) + "&amp;productId=" + encodeURIComponent(p.id);
+            // 같은 제품을 보여주되 선택한 이용 방식에 따라 상세 화면의 신청 버튼을 구분합니다.
+            const detailMode = isRentalMode ? "rental" : "purchase";
+            const detailHref = "product.html?id=" + encodeURIComponent(p.id) + "&amp;mode=" + detailMode;
+            const actionLabel = isRentalMode
+              ? (document.documentElement.lang === "en" ? "SELECT RENTAL DATES" : "대여 일정 선택")
+              : (document.documentElement.lang === "en" ? "PURCHASE" : "구매하기");
             return (
-              '<a class="card" href="' + inquiryHref + '" aria-label="' + ProductCatalog.escapeHtml(p.name) + ' 문의하기">' +
+              '<a class="card" href="' + detailHref + '" aria-label="' + ProductCatalog.escapeHtml(p.name) + ' ' + actionLabel + '">' +
               '<div class="card-img">' + img + "</div>" +
               '<p class="k">' + ProductCatalog.escapeHtml(p.label || p.category || "") + "</p>" +
               "<h3>" + ProductCatalog.escapeHtml(p.name) + "</h3>" +
               "<p>" + ProductCatalog.escapeHtml(p.summary || "") + "</p>" + price +
-              '<span class="card-contact">상품 문의하기 <span aria-hidden="true">↗</span></span>' +
+              '<span class="card-contact">' + actionLabel + ' <span aria-hidden="true">↗</span></span>' +
               "</a>"
             );
           })

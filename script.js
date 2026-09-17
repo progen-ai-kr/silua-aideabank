@@ -85,19 +85,19 @@ if (currentPageName !== "index.html") {
 // 메뉴마다 서로 다른 화면과 필터가 열리도록 링크를 한 곳에서 관리합니다.
 const menuDestinations = {
   "SELF WEDDING": {
-    main: "products.html?collection=self-wedding",
-    children: ["products.html?collection=self-wedding&mode=rental", "products.html?collection=self-wedding&service=custom"]
+    main: "products.html",
+    children: ["products.html?mode=rental", "products.html?service=custom"]
   },
   "EVENING & PARTY": {
-    main: "products.html?collection=evening-party",
-    children: ["products.html?collection=evening-party&mode=rental", "products.html?collection=evening-party&service=custom"]
+    main: "products.html",
+    children: ["products.html?mode=rental", "products.html?service=custom"]
   },
   "WEDDING ATTIRE": {
-    main: "products.html?collection=wedding-attire",
+    main: "products.html",
     children: [
-      "products.html?collection=wedding-attire&type=one-piece",
-      "products.html?collection=wedding-attire&type=two-piece",
-      "products.html?collection=wedding-attire&type=suit"
+      "products.html?type=one-piece",
+      "products.html?type=two-piece",
+      "products.html?type=suit"
     ]
   },
   "ACCESSORIES": {

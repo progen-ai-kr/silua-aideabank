@@ -16,19 +16,30 @@ if (isDesktopDevice && menuButton) menuButton.style.display = "none";
 const currentPageName = location.pathname.split("/").pop() || "index.html";
 const naverStoreUrl = "https://smartstore.naver.com/silua?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQMxMDAAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGnv1MFuXjtQTcyL1PA4nfN-EuYGHiJiQA5nOwWwHYXm5M75KVDRZ5vL_VDS7k_aem_1hpZ7Qv7sLsdz2Af72ynQQ";
 
-// 하위 페이지는 단순한 탐색 메뉴를 사용하고, 홈은 기존 카테고리 메뉴를 유지합니다.
+// 하위 페이지에서도 홈과 같은 카테고리 및 하위 메뉴를 유지합니다.
 if (menu && currentPageName !== "index.html") {
   menu.innerHTML = `
-    <li><a href="products.html">COLLECTION</a></li>
-    <li><a href="about.html">STORY</a></li>
-    <li><a href="reservation.html#personal-color">PERSONAL FIT</a></li>
-    <li><a href="reservation.html#workshop">ATELIER</a></li>
-    <li><a href="portfolio.html">PORTFOLIO</a></li>
-    <li><a href="contact.html">CONTACT</a></li>`;
-  menu.querySelectorAll("a").forEach((link) => {
-    const destination = link.getAttribute("href")?.split("#")[0];
-    if (destination === currentPageName) link.setAttribute("aria-current", "page");
-  });
+    <li class="gnb-category">
+      <a href="products.html">SELF WEDDING</a>
+      <ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html?service=custom">맞춤제작</a></li></ul>
+    </li>
+    <li class="gnb-category">
+      <a href="products.html">EVENING &amp; PARTY</a>
+      <ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html?service=custom">맞춤제작</a></li></ul>
+    </li>
+    <li class="gnb-category">
+      <a href="products.html">WEDDING ATTIRE</a>
+      <ul class="gnb-submenu"><li><a href="products.html?type=one-piece">원피스</a></li><li><a href="products.html?type=two-piece">투피스</a></li><li><a href="products.html?type=suit">수트</a></li></ul>
+    </li>
+    <li class="gnb-category">
+      <a href="accessories.html">ACCESSORIES</a>
+      <ul class="gnb-submenu"><li><a href="accessories.html?type=shoes">구두</a></li><li><a href="accessories.html?type=goods">잡화</a></li></ul>
+    </li>
+    <li class="gnb-category reservation-menu">
+      <a href="reservation.html">RESERVATION</a>
+      <ul class="gnb-submenu reservation-submenu"><li class="gnb-submenu-section">공방 체험</li><li class="gnb-submenu-detail"><a href="reservation.html?activity=norigae#workshop">노리개 만들기</a></li><li class="gnb-submenu-detail"><a href="reservation.html?activity=shoes#workshop">구두 꾸미기</a></li><li class="gnb-submenu-detail"><a href="reservation.html?activity=keyring#workshop">키링 만들기</a></li><li class="gnb-submenu-section">1:1 퍼스널 진단</li><li class="gnb-submenu-detail"><a href="reservation.html#personal-color">퍼스널컬러</a></li><li class="gnb-submenu-detail"><a href="reservation.html#body-shape">체형진단</a></li></ul>
+    </li>
+    <li><a href="about.html">STORY</a></li>`;
 }
 
 // 공통 헤더와 푸터 링크는 모든 공개 페이지에서 같은 주소와 디자인을 사용합니다.
@@ -100,19 +111,19 @@ if (currentPageName !== "index.html") {
 // 메뉴마다 서로 다른 화면과 필터가 열리도록 링크를 한 곳에서 관리합니다.
 const menuDestinations = {
   "SELF WEDDING": {
-    main: "products.html?collection=self-wedding",
-    children: ["products.html?collection=self-wedding&mode=rental", "products.html?collection=self-wedding&service=custom"]
+    main: "products.html",
+    children: ["products.html?mode=rental", "products.html?service=custom"]
   },
   "EVENING & PARTY": {
-    main: "products.html?collection=evening-party",
-    children: ["products.html?collection=evening-party&mode=rental", "products.html?collection=evening-party&service=custom"]
+    main: "products.html",
+    children: ["products.html?mode=rental", "products.html?service=custom"]
   },
   "WEDDING ATTIRE": {
-    main: "products.html?collection=wedding-attire",
+    main: "products.html",
     children: [
-      "products.html?collection=wedding-attire&type=one-piece",
-      "products.html?collection=wedding-attire&type=two-piece",
-      "products.html?collection=wedding-attire&type=suit"
+      "products.html?type=one-piece",
+      "products.html?type=two-piece",
+      "products.html?type=suit"
     ]
   },
   "ACCESSORIES": {
