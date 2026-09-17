@@ -3,25 +3,33 @@
    (예: RE:STITCH → --bg:#F7F4EE; --ink:#111; --accent:#0E5A5A;)
    ========================================================== */
 :root {
-  --bg: #fdfcf9;        /* 페이지 배경 */
-  --surface: #f5f2ec;   /* 카드·옅은 배경 */
-  --ink: #26231f;       /* 기본 글자색 */
-  --ink-soft: #77716a;  /* 보조 글자색 */
-  --accent: #26231f;    /* 강조색 (버튼·포인트) */
-  --line: #e8e4dd;      /* 테두리 선 */
+  --bg: #fdfcf9;        /* 따뜻한 아이보리 페이지 배경 */
+  --surface: #f5f2ec;   /* 기존 콘셉트의 크림 아이보리 */
+  --ink: #26231f;       /* 짙은 웜 차콜 */
+  --ink-soft: #77716a;  /* 따뜻한 회갈색 보조 글자 */
+  --accent: #26231f;    /* 기존 차콜 버튼·포인트 */
+  --line: #e8e4dd;      /* 아이보리 계열 테두리 */
   --header-dark: #222;
   --header-light: #fff;
-  --header-glass: rgba(245, 242, 236, .7);
+  --header-glass: rgba(245, 242, 236, .82);
   --header-hover: #9c7770;
   --hero-overlay: rgba(253, 252, 249, .54);
   --control-surface: rgba(38, 35, 31, .32);
   --control-muted: rgba(255, 255, 255, .48);
   --control-active: #fff;
+  --mint: #dcebe5;
+  --mint-deep: #bfd6cd;
+  --lilac: #e9e2ef;
+  --sky: #dfeaf1;
+  --cream: #f3eee4;
+  --blush: #eee2e2;
+  --paper: #fffdfa;
+  --shadow: rgba(38, 35, 31, .12);
   --font-main: "Pretendard", -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
   --font-display: Georgia, "Times New Roman", serif;
 
-  --radius: 12px;
-  --maxw: 1080px;
+  --radius: 4px;
+  --maxw: 1180px;
 }
 
 /* ===== 기본값 (모바일 우선 — 기본이 휴대폰 화면) ===== */
@@ -450,9 +458,9 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 .footer-banner { position: relative; display: flex; width: 100%; min-height: 132px; padding: 24px 25% 24px 22px; flex: none; flex-direction: column; justify-content: center; overflow: hidden; background: var(--bg); color: inherit; text-decoration: none; transition: background .25s ease; isolation: isolate; }
 .footer-banner::before { content: "›"; position: absolute; top: 50%; right: 20px; z-index: 2; color: var(--ink-soft); font-family: var(--font-display); font-size: 34px; line-height: 1; transform: translateY(-50%); }
 .footer-banner::after { content: ""; position: absolute; top: 0; right: 10%; bottom: 0; z-index: -1; width: 28%; background-position: center; background-repeat: no-repeat; background-size: contain; opacity: .42; transition: opacity .25s ease, transform .35s ease; }
-.footer-banner:nth-child(1)::after { background-image: url("images/theme-bridal.png"); }
-.footer-banner:nth-child(2)::after { background-image: url("images/theme-evening.png"); }
-.footer-banner:nth-child(3)::after { background-image: url("images/theme-modern.png"); }
+.footer-banner:nth-child(1)::after { background-image: url("images/theme-bridal.webp"); }
+.footer-banner:nth-child(2)::after { background-image: url("images/theme-evening.webp"); }
+.footer-banner:nth-child(3)::after { background-image: url("images/theme-modern.webp"); }
 .footer-banner:hover,
 .footer-banner:focus-visible { background: var(--surface); }
 .footer-banner:hover::after,
@@ -679,4 +687,233 @@ html.desktop-device .catalog-header-visible .gnb { background: rgba(245, 242, 23
   .home-category img { transition: none; }
   .gnb-menu.open > li { opacity: 1; transform: none; animation: none; }
   .customer-section.is-revealing { animation: none; }
+}
+
+/* ==========================================================
+   SILUA 브랜드 리뉴얼 2026
+   작성서의 파스텔 컬러와 맞춤 서비스 흐름을 공통 화면에 반영합니다.
+   ========================================================== */
+body { background: var(--bg); letter-spacing: -.012em; }
+body::selection { background: var(--mint-deep); color: var(--ink); }
+button, input, select, textarea { font: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.eyebrow { color: var(--accent); font-size: 10px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+.line-link { display: inline-flex; align-items: center; gap: 10px; padding-bottom: 4px; border-bottom: 1px solid currentColor; color: var(--ink); font-size: 13px; font-weight: 700; text-decoration: none; }
+.line-link span { transition: transform .25s ease; }
+.line-link:hover span { transform: translate(3px, -3px); }
+.section-heading { max-width: 680px; }
+.section-heading h2 { margin-top: 10px; font-family: var(--font-display); font-size: clamp(31px, 7vw, 58px); font-weight: 400; line-height: 1.14; letter-spacing: -.035em; word-break: keep-all; }
+.section-heading > p:last-child { margin-top: 18px; color: var(--ink-soft); line-height: 1.9; word-break: keep-all; }
+.inline-heading { display: flex; max-width: none; align-items: end; justify-content: space-between; gap: 24px; }
+
+/* 헤더는 모든 페이지에서 바로 보이는 단순한 탐색 구조를 사용합니다. */
+.site-header { background: var(--paper); box-shadow: 0 8px 30px var(--shadow); }
+.top-header { height: 30px; background: var(--header-dark); }
+.brand-links span { min-height: 30px; }
+.gnb { height: 66px; background: var(--header-glass); border-bottom: 1px solid var(--line); backdrop-filter: blur(18px); }
+.logo { font-size: 25px; letter-spacing: .18em; }
+.gnb-menu { background: var(--paper); }
+.gnb-menu a { font-weight: 600; }
+.gnb-menu a[aria-current="page"] { color: var(--accent); }
+.gnb-icons { gap: 2px; }
+
+/* 공통 하위 페이지 */
+.page-head { padding: 78px 22px 64px; background: linear-gradient(135deg, var(--cream), var(--mint)); }
+.page-head .eyebrow { margin-bottom: 11px; }
+.page-head h1 { font-size: clamp(45px, 10vw, 90px); font-weight: 400; line-height: 1.05; letter-spacing: -.04em; }
+.page-head p { max-width: 660px; margin: 18px auto 0; line-height: 1.85; word-break: keep-all; }
+.section { padding-top: 78px; padding-bottom: 78px; }
+
+/* 컬렉션과 제품 상세 */
+.collection-head { text-align: left; }
+.collection-head > * { max-width: var(--maxw); margin-right: auto; margin-left: auto; }
+.collection-head p { margin-left: auto; }
+.collection-head h1 { margin-top: 6px; }
+.collection-head .collection-store-link { display: flex; width: max-content; margin: 25px auto 0; padding-bottom: 4px; align-items: center; gap: 8px; border-bottom: 1px solid currentColor; color: var(--ink); font-size: 12px; font-weight: 700; text-decoration: none; }
+.collection-store-link span { transition: transform .2s ease; }
+.collection-store-link:hover span { transform: translate(3px, -3px); }
+.collection-filter { display: flex; overflow-x: auto; padding: 18px 22px; gap: 8px; border-bottom: 1px solid var(--line); background: var(--paper); scrollbar-width: none; }
+.collection-filter::-webkit-scrollbar { display: none; }
+.collection-filter a { display: inline-flex; min-height: 42px; padding: 0 17px; flex: 0 0 auto; align-items: center; border: 1px solid var(--line); color: var(--ink); font-size: 12px; text-decoration: none; transition: background .2s ease; }
+.collection-filter a:hover { background: var(--mint); }
+.collection-note { display: flex; margin-bottom: 30px; flex-direction: column; gap: 5px; }
+.collection-note p { color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: .16em; }
+.collection-note span { color: var(--ink-soft); font-size: 13px; }
+.collection-grid-section .grid { grid-template-columns: 1fr; gap: 36px 16px; }
+.collection-grid-section .card-img { aspect-ratio: 4 / 5; border-radius: 0; }
+.collection-grid-section .card .k { margin-top: 13px; color: var(--accent); }
+.collection-grid-section .card h3 { margin-top: 5px; font-family: var(--font-display); font-size: 22px; font-weight: 400; }
+.collection-grid-section .card > p:not(.k):not(.price) { display: -webkit-box; overflow: hidden; margin-top: 6px; line-height: 1.7; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.product-hero { padding-top: 20px; }
+.product-hero-image, .product-block-image, .product-gallery figure { border-radius: 0; }
+.product-info h1 { font-size: clamp(34px, 8vw, 60px); }
+.product-actions .btn { border-radius: 0; }
+.product-highlight { background: var(--mint); border-radius: 0; }
+
+/* 브랜드 소개 */
+.about-hero { position: relative; min-height: 520px; overflow: hidden; }
+.about-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 66% center; }
+.about-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--hero-overlay), transparent 90%); }
+.about-hero-copy { position: relative; z-index: 1; width: min(100%, var(--maxw)); margin: 0 auto; padding: 96px 22px; }
+.about-hero h1 { margin-top: 12px; font-family: var(--font-display); font-size: clamp(52px, 13vw, 112px); font-weight: 400; line-height: .9; letter-spacing: -.055em; }
+.about-hero-copy > p:last-child { max-width: 440px; margin-top: 30px; line-height: 1.9; word-break: keep-all; }
+.story-editorial { display: grid; grid-template-columns: 1fr; }
+.story-editorial figure { min-height: 440px; margin: 0; overflow: hidden; }
+.story-editorial img { width: 100%; height: 100%; object-fit: cover; }
+.story-editorial-copy { display: flex; padding: 64px 24px; flex-direction: column; justify-content: center; background: var(--paper); }
+.story-editorial-copy h2 { margin-top: 14px; font-family: var(--font-display); font-size: clamp(38px, 9vw, 68px); font-weight: 400; line-height: 1.17; letter-spacing: -.045em; }
+.story-editorial-copy > p:not(.eyebrow) { margin-top: 22px; color: var(--ink-soft); line-height: 1.95; word-break: keep-all; }
+.story-editorial-copy .btn { align-self: flex-start; margin-top: 30px; border-radius: 0; }
+.brand-values { padding: 84px 22px; background: var(--lilac); }
+.brand-values > .section-heading { width: min(100%, var(--maxw)); margin: 0 auto 34px; }
+.value-grid { display: grid; width: min(100%, var(--maxw)); margin: 0 auto; grid-template-columns: 1fr; border-top: 1px solid var(--ink); }
+.value-grid article { padding: 30px 0; border-bottom: 1px solid var(--ink); }
+.value-grid span { color: var(--ink-soft); font-family: var(--font-display); }
+.value-grid h3 { margin-top: 28px; font-family: var(--font-display); font-size: 28px; font-weight: 400; }
+.value-grid p { margin-top: 10px; color: var(--ink-soft); line-height: 1.8; }
+.story-philosophy figure { order: 0; }
+.story-philosophy .story-editorial-copy { background: var(--sky); }
+.story-strengths .features { grid-template-columns: 1fr; gap: 12px; }
+.story-strengths .feature { display: flex; min-height: 290px; padding: 30px; flex-direction: column; border-radius: 0; color: var(--ink); text-decoration: none; }
+.story-strengths .feature:first-child { background: var(--mint); }
+.story-strengths .feature:last-child { background: var(--lilac); }
+.story-strengths .feature h3 { margin-top: auto; font-family: var(--font-display); font-size: 32px; font-weight: 400; }
+.story-strengths .feature span { margin-top: 24px; font-size: 12px; font-weight: 700; }
+.story-portfolio { max-width: none; background: var(--surface); }
+.story-portfolio > * { width: min(100%, var(--maxw)); margin-right: auto; margin-left: auto; }
+.portfolio-teaser { display: grid; margin-top: 34px; grid-template-columns: 1fr; background: var(--paper); color: var(--ink); text-decoration: none; }
+.portfolio-teaser figure { min-height: 340px; overflow: hidden; }
+.portfolio-teaser img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.portfolio-teaser:hover img { transform: scale(1.025); }
+.portfolio-teaser > div { display: flex; min-height: 320px; padding: 34px; flex-direction: column; justify-content: center; }
+.portfolio-teaser p { color: var(--accent); font-size: 10px; font-weight: 700; letter-spacing: .18em; }
+.portfolio-teaser h3 { margin-top: 14px; font-family: var(--font-display); font-size: clamp(30px, 7vw, 54px); font-weight: 400; line-height: 1.2; }
+.portfolio-teaser span { margin-top: 28px; font-size: 12px; font-weight: 700; }
+.story-contact .section-heading { margin-bottom: 30px; }
+
+/* 포트폴리오 */
+.portfolio-head { background: linear-gradient(135deg, var(--lilac), var(--sky)); }
+.portfolio-section { max-width: 1000px; }
+.portfolio-intro { max-width: 650px; margin-bottom: 62px; }
+.portfolio-intro h2 { margin-top: 10px; font-family: var(--font-display); font-size: clamp(34px, 7vw, 58px); font-weight: 400; line-height: 1.2; }
+.portfolio-intro > p:last-child { margin-top: 15px; color: var(--ink-soft); line-height: 1.8; }
+.portfolio-content img, .portfolio-content iframe, .portfolio-content video { border-radius: 0; }
+.portfolio-content blockquote { border-color: var(--accent); }
+
+/* 문의 */
+.contact-hero { display: grid; grid-template-columns: 1fr; background: var(--mint); }
+.contact-hero-copy { display: flex; min-height: 440px; padding: 72px 24px; flex-direction: column; justify-content: center; }
+.contact-hero h1 { margin-top: 12px; font-family: var(--font-display); font-size: clamp(54px, 14vw, 106px); font-weight: 400; line-height: .92; letter-spacing: -.055em; }
+.contact-hero-copy > p:last-child { max-width: 520px; margin-top: 28px; color: var(--ink-soft); line-height: 1.9; word-break: keep-all; }
+.contact-hero figure { min-height: 460px; overflow: hidden; }
+.contact-hero img { width: 100%; height: 100%; object-fit: cover; }
+.contact-layout { display: grid; width: min(100%, var(--maxw)); margin: 0 auto; padding: 78px 22px; grid-template-columns: 1fr; gap: 50px; }
+.contact-intro h2 { margin-top: 12px; font-family: var(--font-display); font-size: clamp(38px, 9vw, 64px); font-weight: 400; line-height: 1.15; }
+.contact-intro > p:not(.eyebrow) { margin-top: 18px; color: var(--ink-soft); line-height: 1.85; word-break: keep-all; }
+.contact-intro .btn { margin-top: 28px; border-radius: 0; }
+.contact-page .contact-list { margin: 0; }
+.contact-page .contact-item { position: relative; display: grid; min-height: 116px; padding: 24px 52px 24px 24px; align-content: center; border: 1px solid var(--line); border-radius: 0; background: var(--paper); text-decoration: none; transition: background .2s ease; }
+.contact-page a.contact-item:hover { background: var(--mint); }
+.contact-item > span { position: absolute; top: 50%; right: 22px; transform: translateY(-50%); }
+.contact-item small { margin-top: 5px; color: var(--ink-soft); }
+.contact-service-links { background: var(--surface); }
+.contact-service-links > a { display: grid; min-height: 150px; padding: 26px 22px; grid-template-columns: 34px minmax(0, 1fr) 28px; align-items: center; gap: 16px; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+.contact-service-links span, .contact-service-links p { color: var(--ink-soft); font-size: 10px; letter-spacing: .14em; }
+.contact-service-links h2 { margin-top: 6px; font-family: var(--font-display); font-size: clamp(23px, 6vw, 36px); font-weight: 400; }
+.contact-service-links b { font-size: 20px; transition: transform .2s ease; }
+.contact-service-links a:hover b { transform: translate(3px, -3px); }
+
+/* 예약·고객센터·마이페이지 */
+.reservation-head { background: linear-gradient(135deg, var(--sky), var(--lilac)); }
+.reservation-guide { display: grid; grid-template-columns: 1fr; background: var(--paper); border-bottom: 1px solid var(--line); }
+.reservation-guide > div { display: grid; padding: 22px; grid-template-columns: 38px 1fr; gap: 12px; border-top: 1px solid var(--line); }
+.reservation-guide span { color: var(--accent); font-family: var(--font-display); }
+.reservation-guide p { color: var(--ink-soft); font-size: 13px; }
+.reservation-guide strong { display: block; margin-bottom: 3px; color: var(--ink); }
+.reservation-section { padding-top: 86px; padding-bottom: 86px; }
+.reservation-section:nth-of-type(odd) { background: var(--surface); }
+.reservation-form { border: 0; box-shadow: 0 20px 60px var(--shadow); }
+.reservation-form select, .reservation-date-button, .customer-form input, .customer-form select, .customer-form textarea { border-color: var(--line); background: var(--paper); }
+.workshop-options button { min-height: 170px; border-color: var(--line); transition: background .2s ease, transform .2s ease; }
+.workshop-options button:hover { background: var(--mint); transform: translateY(-3px); }
+.workshop-options button.is-active { border-color: var(--accent); box-shadow: inset 4px 0 0 var(--accent); }
+.customer-section, .mypage-card { border-color: var(--line); }
+
+/* 푸터 */
+.footer { background: var(--header-dark); }
+.footer-banners { background: var(--line); }
+.footer-banner { background: var(--paper); }
+.footer-main { padding-top: 34px; padding-bottom: 34px; }
+.footer-tagline { max-width: 300px; }
+.footer-bottom { border-color: var(--ink-soft); }
+
+@media (min-width: 560px) {
+  .collection-grid-section .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 720px) {
+  .collection-filter { justify-content: center; }
+  .collection-grid-section .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .story-editorial { grid-template-columns: 1fr 1fr; }
+  .story-editorial figure { min-height: 680px; }
+  .story-editorial-copy { padding: 8vw; }
+  .story-philosophy figure { order: 2; }
+  .value-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .value-grid article { min-height: 300px; padding: 34px 28px; border-bottom: 1px solid var(--ink); border-left: 1px solid var(--ink); }
+  .value-grid article:last-child { border-right: 1px solid var(--ink); }
+  .story-strengths .features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .portfolio-teaser { grid-template-columns: 1.15fr .85fr; }
+  .contact-hero { grid-template-columns: 1fr 1fr; }
+  .contact-hero-copy, .contact-hero figure { min-height: 680px; }
+  .contact-layout { grid-template-columns: .85fr 1.15fr; align-items: start; gap: 8vw; }
+  .contact-service-links > a { padding-right: 7vw; padding-left: 7vw; grid-template-columns: 48px minmax(0, 1fr) 40px; }
+  .reservation-guide { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .reservation-guide > div { padding: 28px; border-top: 0; border-left: 1px solid var(--line); }
+}
+
+@media (min-width: 901px) {
+  .gnb { height: 74px; }
+  html.desktop-device .gnb, html.desktop-device .catalog-header-visible .gnb { background: var(--header-glass); }
+  .gnb-menu, .gnb-menu.open, .catalog-header-visible .gnb-menu { display: flex; margin-left: clamp(36px, 4vw, 68px); gap: clamp(20px, 2.2vw, 38px); }
+  .gnb-menu > li > a { min-height: 74px; }
+  .gnb-menu.open > li { opacity: 1; transform: none; animation: none; }
+  .gnb-submenu { top: 62px; }
+  .footer-banners { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .footer-banner { min-height: 220px; padding: 34px 24% 34px 34px; }
+  .footer-banner::after { right: 4%; width: 35%; }
+}
+
+@media (min-width: 1200px) {
+  .footer-main { padding-right: max(42px, calc((100vw - 1280px) / 2)); padding-left: max(42px, calc((100vw - 1280px) / 2)); }
+}
+
+@media (max-width: 719px) {
+  .top-notice { display: none; }
+  .top-links > a { display: none; }
+  .inline-heading { align-items: flex-start; flex-direction: column; }
+  .story-contact .contact-list { grid-template-columns: 1fr; }
+  .footer-banner { min-height: 150px; }
+}
+
+/* 홈은 팀의 기존 시안처럼 투명 헤더와 로고 호버 카테고리를 유지합니다. */
+.original-home .site-header { background: transparent; box-shadow: none; }
+.original-home .top-header { height: 34px; }
+.original-home .brand-links span { min-height: 34px; }
+.original-home .gnb { height: 70px; background: var(--header-glass); border-bottom: 0; backdrop-filter: none; }
+.original-home .logo { font-size: 24px; letter-spacing: 2px; }
+.original-home .gnb-menu { background: var(--header-light); }
+.original-home .gnb-icons { gap: 4px; }
+
+@media (min-width: 901px), (min-width: 720px) and (hover: hover) and (pointer: fine) {
+  .original-home .gnb { height: 78px; padding: 0 24px; background: transparent; }
+  html.desktop-device .original-home .gnb { background: transparent; }
+  .original-home .gnb.is-menu-open { background: rgba(245, 242, 236, .94); backdrop-filter: blur(12px); }
+  .original-home .gnb-menu { display: none; margin-left: clamp(38px, 5vw, 84px); gap: clamp(26px, 3.5vw, 58px); }
+  .original-home .gnb-menu.open { display: flex; }
+  .original-home .gnb-menu > li > a { min-height: 78px; }
+  .original-home .gnb-menu.open > li { opacity: 0; transform: translateX(-10px); animation: gnb-item-reveal .36s ease forwards; }
+  .original-home .gnb-submenu { top: 66px; }
+  .original-home .footer-banners { display: block; }
+  .original-home .footer-banner { min-height: 158px; padding: 30px 38% 30px max(32px, 14vw); }
+  .original-home .footer-banner::after { right: 12%; width: 26%; }
 }
