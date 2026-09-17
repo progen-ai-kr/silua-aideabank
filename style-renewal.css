@@ -917,3 +917,55 @@ button, input, select, textarea { font: inherit; }
   .original-home .footer-banner { min-height: 158px; padding: 30px 38% 30px max(32px, 14vw); }
   .original-home .footer-banner::after { right: 12%; width: 26%; }
 }
+
+/* 하위 페이지 헤더: 배경이 메뉴 끝에서 끊기지 않도록 한 장으로 유지합니다. */
+.catalog-header-visible .site-header,
+.catalog-header-visible .gnb,
+html.desktop-device .catalog-header-visible .gnb {
+  background: var(--surface);
+}
+.catalog-header-visible .gnb,
+html.desktop-device .catalog-header-visible .gnb {
+  backdrop-filter: none;
+  transition: none;
+}
+.catalog-header-visible .gnb-menu { background: transparent; }
+.catalog-header-visible .gnb-icons { position: relative; z-index: 2; background: var(--surface); }
+
+/* 화면 확대를 포함한 중간 너비에서는 메뉴가 잘리기 전에 삼선 메뉴로 전환합니다. */
+@media (max-width: 1199px) {
+  .catalog-header-visible .menu-button,
+  html.desktop-device .catalog-header-visible .menu-button {
+    display: flex !important;
+  }
+  .catalog-header-visible .gnb-menu,
+  .catalog-header-visible .gnb-menu.open {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    display: none;
+    max-height: calc(100dvh - 96px);
+    overflow-y: auto;
+    margin: 0;
+    padding: 8px 20px 18px;
+    flex-direction: column;
+    gap: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 18px 30px var(--shadow);
+  }
+  .catalog-header-visible .gnb-menu.open { display: flex; }
+  .catalog-header-visible .gnb-menu > li > a {
+    min-height: 44px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    letter-spacing: 1.2px;
+  }
+  .catalog-header-visible .gnb-menu > li > a::after { bottom: 7px; }
+  .catalog-header-visible .gnb-menu.open > li {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
