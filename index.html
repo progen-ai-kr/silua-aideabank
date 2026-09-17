@@ -17,7 +17,7 @@
 
   <!-- 탭 아이콘 (images/favicon.png 넣으면 표시됨) -->
   <link rel="icon" href="images/favicon.png" />
-  <link rel="stylesheet" href="style.css?v=20260918-footer-images-21" />
+  <link rel="stylesheet" href="style.css?v=20260915-home-logo-20" />
 </head>
 <body>
 
@@ -139,7 +139,7 @@
     <div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div>
   </footer>
 
-  <script src="script.js?v=20260918-product-view-10"></script>
+  <script src="script.js?v=20260914-slide-spacing-17"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
     // 공개 제품을 인기상품 카드로 보여주며 화면 크기에 맞춰 페이지를 나눕니다.
@@ -162,16 +162,8 @@
           if (managedImage) card.querySelector("img").src = managedImage;
         });
 
-        // 신제품과 인기상품이 같은 목록으로 반복되지 않도록 서로 다른 상품군을 사용합니다.
         const featured = products.filter((product) => product.featured);
-        const newProducts = featured.length ? featured : products.slice(0, 9);
-        const newProductIds = new Set(newProducts.map((product) => product.id));
-        const otherProducts = products.filter((product) => !newProductIds.has(product.id));
-        // 모델 착용 모습을 또렷하게 확인할 수 있는 상품만 인기 목록에 노출합니다.
-        const popularExcludedIds = new Set(["store-82603705266", "store-82603705270"]);
-        const popularProducts = (otherProducts.length ? otherProducts : products)
-          .filter((product) => !popularExcludedIds.has(product.id))
-          .slice(0, 8);
+        const homeProducts = featured.length ? featured : products;
         const grid = document.getElementById("home-looks");
         const editorialGrid = document.getElementById("homeEditorialGrid");
         const previous = document.getElementById("popularPrevious");
@@ -185,9 +177,9 @@
 
         const renderProducts = () => {
           itemsPerPage = getItemsPerPage();
-          const totalPages = Math.max(1, Math.ceil(popularProducts.length / itemsPerPage));
+          const totalPages = Math.max(1, Math.ceil(homeProducts.length / itemsPerPage));
           currentPage = Math.min(currentPage, totalPages - 1);
-          const visibleProducts = popularProducts.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+          const visibleProducts = homeProducts.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
           const isEnglish = document.documentElement.lang === "en";
 
           grid.innerHTML = visibleProducts.map((p) => {
@@ -214,8 +206,8 @@
 
         const renderEditorialProducts = () => {
           const isEnglish = document.documentElement.lang === "en";
-          // 신제품은 관리자가 대표 제품으로 지정한 상품을 최대 9개까지 보여줍니다.
-          const editorialProducts = newProducts.slice(0, 9);
+          // 인기상품은 PC에서 3열 × 3행이 되도록 최대 9개까지만 보여줍니다.
+          const editorialProducts = homeProducts.slice(0, 9);
           editorialGrid.innerHTML = editorialProducts.map((p) => {
             const image = ProductCatalog.safeImageUrl(p.images && p.images[0]);
             const img = image
