@@ -6,7 +6,7 @@
   <title>제품 — SILUA</title>
   <meta name="description" content="SILUA의 드레스, 원피스와 투피스 컬렉션을 만나보세요." />
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="style-renewal.css?v=20260918-product-view-10" />
+  <link rel="stylesheet" href="style-renewal.css?v=20260918-collection-12" />
 </head>
 <body class="collection-page">
 
@@ -18,14 +18,21 @@
   <!-- [작성서 05: 취급 품목] -->
   <section class="page-head collection-head">
     <p class="eyebrow">SILUA COLLECTION</p>
-    <h1>Dress for<br />Your Moment</h1>
-    <p>셀프웨딩과 웨딩 스냅, 연주회와 파티를 위한 드레스·원피스·투피스를 만나보세요.</p>
+    <h1>SILUA COLLECTION</h1>
+    <p>이브닝·파티, 셀프웨딩, 스냅 웨딩드레스</p>
     <a class="collection-store-link" href="https://smartstore.naver.com/silua" target="_blank" rel="noopener noreferrer">네이버 스마트스토어 방문 <span aria-hidden="true">↗</span></a>
   </section>
 
   <nav class="collection-filter service-filter" aria-label="제품 이용 방식">
+    <a href="products.html" data-product-service="all">통합</a>
     <a href="products.html?mode=rental" data-product-service="rental">대여</a>
     <a href="products.html?service=custom" data-product-service="custom">맞춤제작</a>
+  </nav>
+  <nav class="collection-filter category-filter" aria-label="취급 품목">
+    <button type="button" data-product-category="">전체</button>
+    <button type="button" data-product-category="evening-party">이브닝·파티</button>
+    <button type="button" data-product-category="self-wedding">셀프웨딩</button>
+    <button type="button" data-product-category="snap-wedding">스냅 웨딩드레스</button>
   </nav>
 
   <!-- ===== 제품 목록 =====
@@ -63,20 +70,24 @@
     <div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div>
   </footer>
 
-  <script src="script-renewal.js?v=20260918-product-view-10"></script>
+  <script src="script-renewal.js?v=20260918-collection-12"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
     const productListParams = new URLSearchParams(location.search);
-    const selectedService = productListParams.get("service") === "custom" ? "custom" : "rental";
+    const selectedService = productListParams.get("mode") === "rental"
+      ? "rental"
+      : productListParams.get("service") === "custom" ? "custom" : "all";
     const isRentalMode = selectedService === "rental";
-    const productCollection = productListParams.get("collection") || "";
+    let productCollection = productListParams.get("collection") || "";
     const productService = productListParams.get("service") || "";
-    const productType = productListParams.get("type") || "";
+    let productType = productListParams.get("type") || "";
+    let visibleProducts = [];
 
     const collectionLabels = {
       "self-wedding": { ko: "셀프 웨딩", en: "SELF WEDDING" },
       "evening-party": { ko: "이브닝 & 파티", en: "EVENING & PARTY" },
-      "wedding-attire": { ko: "웨딩 예복", en: "WEDDING ATTIRE" }
+      "wedding-attire": { ko: "웨딩 예복", en: "WEDDING ATTIRE" },
+      "snap-wedding": { ko: "스냅 웨딩드레스", en: "WEDDING SNAP DRESS" }
     };
     const detailLabels = {
       rental: { ko: "대여", en: "RENTAL" },
@@ -88,7 +99,8 @@
     const collectionKeywords = {
       "self-wedding": ["self wedding", "self-wedding", "셀프웨딩", "셀프 웨딩", "bridal", "브라이덜"],
       "evening-party": ["evening", "party", "이브닝", "파티"],
-      "wedding-attire": ["wedding attire", "웨딩 예복", "예복", "one piece", "one-piece", "two piece", "two-piece", "원피스", "투피스", "suit", "수트"]
+      "wedding-attire": ["wedding attire", "웨딩 예복", "예복", "one piece", "one-piece", "two piece", "two-piece", "원피스", "투피스", "suit", "수트"],
+      "snap-wedding": ["wedding snap", "웨딩 스냅", "스냅 웨딩"]
     };
     const typeKeywords = {
       "one-piece": ["one piece", "one-piece", "원피스"],
@@ -112,21 +124,14 @@
       });
     }
 
-    // 선택한 상위 메뉴와 세부 메뉴에 맞춰 서로 다른 제목과 안내를 표시합니다.
+    // 제품 이용 방식과 취급 품목 버튼의 선택 상태를 한 곳에서 관리합니다.
     function applyProductListContext() {
       const isEnglish = document.documentElement.lang === "en";
-      const language = isEnglish ? "en" : "ko";
-      const collection = collectionLabels[productCollection]?.[language];
-      const detailKey = productType || selectedService;
-      const detail = detailLabels[detailKey]?.[language];
-      const hasExplicitContext = productListParams.has("mode") || productListParams.has("service") || productListParams.has("collection") || productListParams.has("type");
       if (isRentalMode) document.body.classList.add("rental-mode");
-      if (hasExplicitContext) {
-        document.querySelector(".page-head h1").textContent = [collection, detail].filter(Boolean).join(" · ");
-        document.querySelector(".page-head p").textContent = isEnglish
-          ? (isRentalMode ? "Browse the rental collection and ask about available dates." : "Explore made-to-order options using the same SILUA collection.")
-          : (isRentalMode ? "대여 가능한 제품과 일정을 확인해보세요." : "동일한 SILUA 제품을 맞춤제작 방식으로 상담해보세요.");
-      }
+      document.querySelector(".page-head h1").textContent = "SILUA COLLECTION";
+      document.querySelector(".page-head > p:not(.eyebrow)").textContent = isEnglish
+        ? "Evening & party, self wedding, and wedding snap dresses"
+        : "이브닝·파티, 셀프웨딩, 스냅 웨딩드레스";
 
       document.querySelectorAll("[data-product-service]").forEach((link) => {
         const service = link.dataset.productService;
@@ -135,45 +140,64 @@
         if (productType) params.set("type", productType);
         if (service === "rental") params.set("mode", "rental");
         if (service === "custom") params.set("service", "custom");
-        link.href = "products.html?" + params.toString();
-        link.textContent = service === "rental" ? (isEnglish ? "RENTAL" : "대여") : (isEnglish ? "MADE TO ORDER" : "맞춤제작");
+        const query = params.toString();
+        link.href = "products.html" + (query ? "?" + query : "");
+        link.textContent = service === "all"
+          ? (isEnglish ? "ALL SERVICES" : "통합")
+          : service === "rental" ? (isEnglish ? "RENTAL" : "대여") : (isEnglish ? "MADE TO ORDER" : "맞춤제작");
         if (service === selectedService) link.setAttribute("aria-current", "page");
         else link.removeAttribute("aria-current");
       });
 
+      const categoryCopy = {
+        "": { ko: "전체", en: "ALL" },
+        "evening-party": { ko: "이브닝·파티", en: "EVENING & PARTY" },
+        "self-wedding": { ko: "셀프웨딩", en: "SELF WEDDING" },
+        "snap-wedding": { ko: "스냅 웨딩드레스", en: "WEDDING SNAP DRESS" }
+      };
+      document.querySelectorAll("[data-product-category]").forEach((button) => {
+        const category = button.dataset.productCategory;
+        button.textContent = categoryCopy[category][isEnglish ? "en" : "ko"];
+        button.setAttribute("aria-pressed", String(category === productCollection));
+      });
+
       const noteTitle = document.querySelector(".collection-note p");
       const noteCopy = document.querySelector(".collection-note span");
-      if (noteTitle) noteTitle.textContent = isRentalMode ? "RENTAL COLLECTION" : "MADE TO ORDER";
+      if (noteTitle) noteTitle.textContent = selectedService === "all" ? "SILUA COLLECTION" : isRentalMode ? "RENTAL COLLECTION" : "MADE TO ORDER";
       if (noteCopy) noteCopy.textContent = isEnglish
-        ? (isRentalMode ? "Ask about rental dates and availability for any product." : "Request made-to-order consultation for the same product collection.")
-        : (isRentalMode ? "모든 제품의 대여 일정과 재고를 문의할 수 있습니다." : "동일한 제품을 기준으로 맞춤제작 상담을 받을 수 있습니다.");
+        ? (selectedService === "all" ? "Choose a product to view both rental and purchase options." : isRentalMode ? "Ask about rental dates and availability for any product." : "Request made-to-order consultation for the same product collection.")
+        : (selectedService === "all" ? "제품을 선택하면 대여와 맞춤제작 방식을 함께 확인할 수 있습니다." : isRentalMode ? "모든 제품의 대여 일정과 재고를 문의할 수 있습니다." : "동일한 제품을 기준으로 맞춤제작 상담을 받을 수 있습니다.");
     }
 
-    document.addEventListener("silua:languagechange", applyProductListContext);
+    document.addEventListener("silua:languagechange", () => {
+      applyProductListContext();
+      renderProductList();
+    });
     applyProductListContext();
 
-    // 공개된 products.json 제품을 카드로 그립니다. 학생은 CSS로 자유롭게 디자인할 수 있습니다.
-    ProductCatalog.loadVisibleProducts()
-      .then((products) => {
-        const box = document.getElementById("product-list");
-        const filteredProducts = filterProducts(products);
-        if (!filteredProducts.length) {
-          box.innerHTML = '<p class="catalog-empty">이 분류에 등록된 상품이 아직 없습니다.<br />관리자에서 상품의 카테고리 또는 키워드를 지정하면 자동으로 표시됩니다.</p>';
-          return;
-        }
-        box.innerHTML = filteredProducts
-          .map((p) => {
+    // 공개된 products.json 제품을 카드로 그립니다. 필터는 운영 데이터의 키워드만 읽습니다.
+    function renderProductList() {
+      const box = document.getElementById("product-list");
+      const filteredProducts = filterProducts(visibleProducts);
+      if (!filteredProducts.length) {
+        box.innerHTML = '<p class="catalog-empty">이 분류에 등록된 상품이 아직 없습니다.<br />관리자에서 상품의 키워드를 지정하면 자동으로 표시됩니다.</p>';
+        return;
+      }
+      box.innerHTML = filteredProducts
+        .map((p) => {
             const image = ProductCatalog.safeImageUrl(p.images && p.images[0]);
             const img = image
               ? '<img src="' + ProductCatalog.escapeHtml(image) + '" alt="' + ProductCatalog.escapeHtml(p.name) + '" onerror="this.remove()" />'
               : "";
             const price = p.price ? '<p class="price">' + ProductCatalog.escapeHtml(p.price) + "</p>" : "";
             // 같은 제품을 보여주되 선택한 이용 방식에 따라 상세 화면의 신청 버튼을 구분합니다.
-            const detailMode = isRentalMode ? "rental" : "purchase";
-            const detailHref = "product.html?id=" + encodeURIComponent(p.id) + "&amp;mode=" + detailMode;
-            const actionLabel = isRentalMode
-              ? (document.documentElement.lang === "en" ? "SELECT RENTAL DATES" : "대여 일정 선택")
-              : (document.documentElement.lang === "en" ? "PURCHASE" : "구매하기");
+            const detailMode = isRentalMode ? "rental" : selectedService === "custom" ? "purchase" : "";
+            const detailHref = "product.html?id=" + encodeURIComponent(p.id) + (detailMode ? "&amp;mode=" + detailMode : "");
+            const actionLabel = selectedService === "all"
+              ? (document.documentElement.lang === "en" ? "VIEW OPTIONS" : "대여·구매 보기")
+              : isRentalMode
+                ? (document.documentElement.lang === "en" ? "SELECT RENTAL DATES" : "대여 일정 선택")
+                : (document.documentElement.lang === "en" ? "PURCHASE" : "구매하기");
             return (
               '<a class="card" href="' + detailHref + '" aria-label="' + ProductCatalog.escapeHtml(p.name) + ' ' + actionLabel + '">' +
               '<div class="card-img">' + img + "</div>" +
@@ -183,8 +207,29 @@
               '<span class="card-contact">' + actionLabel + ' <span aria-hidden="true">↗</span></span>' +
               "</a>"
             );
-          })
-          .join("");
+        })
+        .join("");
+    }
+
+    document.querySelectorAll("[data-product-category]").forEach((button) => {
+      button.addEventListener("click", () => {
+        productCollection = button.dataset.productCategory;
+        productType = "";
+        if (productCollection) productListParams.set("collection", productCollection);
+        else productListParams.delete("collection");
+        productListParams.delete("type");
+        const query = productListParams.toString();
+        history.replaceState(null, "", location.pathname + (query ? "?" + query : ""));
+        applyProductListContext();
+        renderProductList();
+        document.querySelector(".collection-grid-section").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    ProductCatalog.loadVisibleProducts()
+      .then((products) => {
+        visibleProducts = products;
+        renderProductList();
       })
       .catch(() => {
         document.getElementById("product-list").innerHTML =

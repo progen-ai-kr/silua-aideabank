@@ -457,14 +457,14 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 .footer-banners { display: flex; flex-direction: column; gap: 1px; overflow: hidden; padding: 0; background: var(--line); color: var(--ink); }
 .footer-banner { position: relative; display: flex; width: 100%; min-height: 132px; padding: 24px 25% 24px 22px; flex: none; flex-direction: column; justify-content: center; overflow: hidden; background: var(--bg); color: inherit; text-decoration: none; transition: background .25s ease; isolation: isolate; }
 .footer-banner::before { content: "›"; position: absolute; top: 50%; right: 20px; z-index: 2; color: var(--ink-soft); font-family: var(--font-display); font-size: 34px; line-height: 1; transform: translateY(-50%); }
-.footer-banner::after { content: ""; position: absolute; top: 0; right: 10%; bottom: 0; z-index: -1; width: 28%; background-position: center; background-repeat: no-repeat; background-size: contain; opacity: .42; transition: opacity .25s ease, transform .35s ease; }
-.footer-banner:nth-child(1)::after { background-image: url("images/theme-bridal.webp"); }
-.footer-banner:nth-child(2)::after { background-image: url("images/theme-evening.webp"); }
-.footer-banner:nth-child(3)::after { background-image: url("images/theme-modern.webp"); }
+.footer-banner::after { content: ""; position: absolute; top: 0; right: 8%; bottom: 0; z-index: -1; width: 34%; background-position: center; background-repeat: no-repeat; background-size: cover; opacity: .5; transition: opacity .25s ease, transform .35s ease; }
+.footer-banner:nth-child(1)::after { background-image: url("images/footer-brand-story.png"); }
+.footer-banner:nth-child(2)::after { background-image: url("images/footer-personal-color.png"); }
+.footer-banner:nth-child(3)::after { background-image: url("images/footer-workshop.png"); }
 .footer-banner:hover,
 .footer-banner:focus-visible { background: var(--surface); }
 .footer-banner:hover::after,
-.footer-banner:focus-visible::after { opacity: .58; transform: scale(1.03); }
+.footer-banner:focus-visible::after { opacity: .68; transform: scale(1.03); }
 .footer-banner-label { color: var(--ink-soft); font-size: 10px; letter-spacing: 2px; }
 .footer-banner strong { margin-top: 8px; font-family: var(--font-display); font-size: 23px; font-weight: 500; }
 .footer-banner-copy { margin-top: 5px; color: var(--ink-soft); font-size: 12px; }
@@ -734,11 +734,15 @@ button, input, select, textarea { font: inherit; }
 .collection-store-link:hover span { transform: translate(3px, -3px); }
 .collection-filter { display: flex; overflow-x: auto; padding: 18px 22px; gap: 8px; border-bottom: 1px solid var(--line); background: var(--paper); scrollbar-width: none; }
 .collection-filter::-webkit-scrollbar { display: none; }
-.collection-filter a { display: inline-flex; min-height: 42px; padding: 0 17px; flex: 0 0 auto; align-items: center; border: 1px solid var(--line); color: var(--ink); font-size: 12px; text-decoration: none; transition: background .2s ease; }
-.collection-filter a:hover { background: var(--mint); }
+.collection-filter a,
+.collection-filter button { display: inline-flex; min-height: 42px; padding: 0 17px; flex: 0 0 auto; align-items: center; border: 1px solid var(--line); background: transparent; color: var(--ink); font-size: 12px; text-decoration: none; transition: background .2s ease, color .2s ease; cursor: pointer; }
+.collection-filter a:hover,
+.collection-filter button:hover { background: var(--mint); }
 .service-filter { justify-content: center; }
 .service-filter a { min-width: 124px; justify-content: center; }
 .service-filter a[aria-current="page"] { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+.category-filter { padding-top: 0; justify-content: center; }
+.category-filter button[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--paper); }
 .collection-note { display: flex; margin-bottom: 30px; flex-direction: column; gap: 5px; }
 .collection-note p { color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: .16em; }
 .collection-note span { color: var(--ink-soft); font-size: 13px; }
@@ -929,18 +933,47 @@ button, input, select, textarea { font: inherit; }
 }
 
 /* 하위 페이지 헤더: 배경이 메뉴 끝에서 끊기지 않도록 한 장으로 유지합니다. */
-.catalog-header-visible .site-header,
-.catalog-header-visible .gnb,
-html.desktop-device .catalog-header-visible .gnb {
-  background: var(--surface);
-}
-.catalog-header-visible .gnb,
-html.desktop-device .catalog-header-visible .gnb {
+.catalog-header-visible .site-header { background: transparent; box-shadow: none; }
+.catalog-header-visible .top-header { height: 34px; }
+.catalog-header-visible .brand-links span { min-height: 34px; }
+.catalog-header-visible .gnb {
+  height: 70px;
+  background: rgba(245, 242, 236, .7);
+  border-bottom: 0;
   backdrop-filter: none;
-  transition: none;
 }
-.catalog-header-visible .gnb-menu { background: transparent; }
-.catalog-header-visible .gnb-icons { position: relative; z-index: 2; background: var(--surface); }
+.catalog-header-visible .logo { font-size: 24px; line-height: normal; letter-spacing: 2px; }
+.catalog-header-visible .gnb-menu { background: var(--header-light); }
+.catalog-header-visible .gnb-menu a { font-weight: 400; }
+.catalog-header-visible .gnb-menu a[aria-current="page"] { color: var(--ink); }
+.catalog-header-visible .gnb-icons { position: relative; z-index: 2; gap: 4px; background: transparent; }
+
+@media (min-width: 901px), (min-width: 720px) and (hover: hover) and (pointer: fine) {
+  .catalog-header-visible .gnb,
+  html.desktop-device .catalog-header-visible .gnb {
+    height: 78px;
+    padding: 0 24px;
+    background: rgba(245, 242, 236, .94);
+    backdrop-filter: blur(12px);
+    transition: background-color .22s ease, backdrop-filter .22s ease;
+  }
+  .catalog-header-visible .logo { font-size: 27px; }
+  .catalog-header-visible .gnb-menu,
+  .catalog-header-visible .gnb-menu.open {
+    display: flex;
+    margin-left: clamp(38px, 5vw, 84px);
+    gap: clamp(26px, 3.5vw, 58px);
+  }
+  .catalog-header-visible .gnb-menu > li > a { min-height: 78px; }
+  .catalog-header-visible .gnb-submenu { top: 66px; }
+  .catalog-header-visible .gnb-icons { gap: clamp(20px, 2vw, 36px); }
+}
+
+@media (min-width: 1200px) {
+  .catalog-header-visible .top-header,
+  .catalog-header-visible .gnb,
+  html.desktop-device .catalog-header-visible .gnb { padding-right: 42px; padding-left: 42px; }
+}
 
 /* 모바일·태블릿에서는 삼선 메뉴를 유지하고, PC에서는 전체 메뉴를 바로 보여줍니다. */
 @media (max-width: 1199px) {
@@ -954,21 +987,21 @@ html.desktop-device .catalog-header-visible .gnb {
     right: 0;
     left: 0;
     display: none;
-    max-height: calc(100dvh - 96px);
+    max-height: calc(100dvh - 104px);
     overflow-y: auto;
     margin: 0;
     padding: 8px 20px 18px;
     flex-direction: column;
     gap: 0;
-    background: var(--surface);
+    background: var(--header-light);
     border-bottom: 1px solid var(--line);
-    box-shadow: 0 18px 30px var(--shadow);
+    box-shadow: none;
   }
   html:not(.desktop-device) .catalog-header-visible .gnb-menu.open { display: flex; }
   html:not(.desktop-device) .catalog-header-visible .gnb-menu > li > a {
     min-height: 44px;
     border-top: 1px solid var(--line);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 1.2px;
   }
   html:not(.desktop-device) .catalog-header-visible .gnb-menu > li > a::after { bottom: 7px; }
