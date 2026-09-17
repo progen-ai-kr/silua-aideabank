@@ -167,7 +167,10 @@
         const newProducts = featured.length ? featured : products.slice(0, 9);
         const newProductIds = new Set(newProducts.map((product) => product.id));
         const otherProducts = products.filter((product) => !newProductIds.has(product.id));
-        const popularProducts = (otherProducts.length ? otherProducts : products).slice(0, 8);
+        // 원단 확대 사진인 아넬로 대신 모델 착용 사진이 있는 상품을 인기 목록에 노출합니다.
+        const popularProducts = (otherProducts.length ? otherProducts : products)
+          .filter((product) => product.id !== "store-82603705270")
+          .slice(0, 8);
         const grid = document.getElementById("home-looks");
         const editorialGrid = document.getElementById("homeEditorialGrid");
         const previous = document.getElementById("popularPrevious");
