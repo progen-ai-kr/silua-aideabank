@@ -894,3 +894,26 @@ button, input, select, textarea { font: inherit; }
   .story-contact .contact-list { grid-template-columns: 1fr; }
   .footer-banner { min-height: 150px; }
 }
+
+/* 홈은 팀의 기존 시안처럼 투명 헤더와 로고 호버 카테고리를 유지합니다. */
+.original-home .site-header { background: transparent; box-shadow: none; }
+.original-home .top-header { height: 34px; }
+.original-home .brand-links span { min-height: 34px; }
+.original-home .gnb { height: 70px; background: var(--header-glass); border-bottom: 0; backdrop-filter: none; }
+.original-home .logo { font-size: 24px; letter-spacing: 2px; }
+.original-home .gnb-menu { background: var(--header-light); }
+.original-home .gnb-icons { gap: 4px; }
+
+@media (min-width: 901px), (min-width: 720px) and (hover: hover) and (pointer: fine) {
+  .original-home .gnb { height: 78px; padding: 0 24px; background: transparent; }
+  html.desktop-device .original-home .gnb { background: transparent; }
+  .original-home .gnb.is-menu-open { background: rgba(245, 242, 236, .94); backdrop-filter: blur(12px); }
+  .original-home .gnb-menu { display: none; margin-left: clamp(38px, 5vw, 84px); gap: clamp(26px, 3.5vw, 58px); }
+  .original-home .gnb-menu.open { display: flex; }
+  .original-home .gnb-menu > li > a { min-height: 78px; }
+  .original-home .gnb-menu.open > li { opacity: 0; transform: translateX(-10px); animation: gnb-item-reveal .36s ease forwards; }
+  .original-home .gnb-submenu { top: 66px; }
+  .original-home .footer-banners { display: block; }
+  .original-home .footer-banner { min-height: 158px; padding: 30px 38% 30px max(32px, 14vw); }
+  .original-home .footer-banner::after { right: 12%; width: 26%; }
+}
