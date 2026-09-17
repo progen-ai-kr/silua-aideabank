@@ -744,6 +744,9 @@ button, input, select, textarea { font: inherit; }
 .collection-grid-section .card .k { margin-top: 13px; color: var(--accent); }
 .collection-grid-section .card h3 { margin-top: 5px; font-family: var(--font-display); font-size: 22px; font-weight: 400; }
 .collection-grid-section .card > p:not(.k):not(.price) { display: -webkit-box; overflow: hidden; margin-top: 6px; line-height: 1.7; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.collection-grid-section .card-contact { display: inline-flex; align-items: center; gap: 8px; margin-top: 15px; padding-bottom: 3px; border-bottom: 1px solid currentColor; font-size: 12px; font-weight: 700; }
+.collection-grid-section .card-contact span { transition: transform .2s ease; }
+.collection-grid-section .card:hover .card-contact span { transform: translate(3px, -3px); }
 .product-hero { padding-top: 20px; }
 .product-hero-image, .product-block-image, .product-gallery figure { border-radius: 0; }
 .product-info h1 { font-size: clamp(34px, 8vw, 60px); }
@@ -811,6 +814,10 @@ button, input, select, textarea { font: inherit; }
 .contact-intro h2 { margin-top: 12px; font-family: var(--font-display); font-size: clamp(38px, 9vw, 64px); font-weight: 400; line-height: 1.15; }
 .contact-intro > p:not(.eyebrow) { margin-top: 18px; color: var(--ink-soft); line-height: 1.85; word-break: keep-all; }
 .contact-intro .btn { margin-top: 28px; border-radius: 0; }
+.selected-product-inquiry { margin-bottom: 34px; padding: 22px; border: 1px solid var(--line); background: var(--cream); }
+.selected-product-inquiry > p { color: var(--accent); font-size: 10px; font-weight: 700; letter-spacing: .18em; }
+.selected-product-inquiry strong { display: block; margin-top: 7px; font-family: var(--font-display); font-size: clamp(24px, 6vw, 36px); font-weight: 400; line-height: 1.25; }
+.selected-product-inquiry span { display: block; margin-top: 10px; color: var(--ink-soft); font-size: 13px; line-height: 1.7; word-break: keep-all; }
 .contact-page .contact-list { margin: 0; }
 .contact-page .contact-item { position: relative; display: grid; min-height: 116px; padding: 24px 52px 24px 24px; align-content: center; border: 1px solid var(--line); border-radius: 0; background: var(--paper); text-decoration: none; transition: background .2s ease; }
 .contact-page a.contact-item:hover { background: var(--mint); }

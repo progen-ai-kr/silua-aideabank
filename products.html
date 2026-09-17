@@ -6,7 +6,7 @@
   <title>제품 — SILUA</title>
   <meta name="description" content="SILUA의 드레스, 원피스와 투피스 컬렉션을 만나보세요." />
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="style-renewal.css?v=20260917-brand-renewal-6" />
+  <link rel="stylesheet" href="style-renewal.css?v=20260917-brand-renewal-7" />
 </head>
 <body class="collection-page">
 
@@ -31,7 +31,7 @@
        ★ 제품은 여기 HTML이 아니라 products.json 파일에서 관리합니다.
        products.json에 제품을 추가하면 이 목록과 상세 페이지에 자동으로 나타납니다. -->
   <section class="section collection-grid-section">
-    <div class="collection-note"><p>RENTAL &amp; MADE TO ORDER</p><span>각 제품의 대여와 맞춤 제작 여부는 상세 페이지에서 확인할 수 있습니다.</span></div>
+    <div class="collection-note"><p>RENTAL COLLECTION</p><span>상품을 선택하면 구매·대여 일정과 재고를 바로 문의할 수 있습니다.</span></div>
     <div class="grid" id="product-list">
       <!-- products.json 내용이 자동으로 채워집니다 -->
     </div>
@@ -144,14 +144,14 @@
               ? '<img src="' + ProductCatalog.escapeHtml(image) + '" alt="' + ProductCatalog.escapeHtml(p.name) + '" onerror="this.remove()" />'
               : "";
             const price = p.price ? '<p class="price">' + ProductCatalog.escapeHtml(p.price) + "</p>" : "";
-            const detailMode = isRentalMode ? "rental" : productService === "custom" ? "purchase" : "";
-            const modeSuffix = detailMode ? "&amp;mode=" + detailMode : "";
+            const inquiryHref = "contact.html?product=" + encodeURIComponent(p.name) + "&amp;productId=" + encodeURIComponent(p.id);
             return (
-              '<a class="card" href="product.html?id=' + encodeURIComponent(p.id) + modeSuffix + '">' +
+              '<a class="card" href="' + inquiryHref + '" aria-label="' + ProductCatalog.escapeHtml(p.name) + ' 문의하기">' +
               '<div class="card-img">' + img + "</div>" +
               '<p class="k">' + ProductCatalog.escapeHtml(p.label || p.category || "") + "</p>" +
               "<h3>" + ProductCatalog.escapeHtml(p.name) + "</h3>" +
               "<p>" + ProductCatalog.escapeHtml(p.summary || "") + "</p>" + price +
+              '<span class="card-contact">상품 문의하기 <span aria-hidden="true">↗</span></span>' +
               "</a>"
             );
           })
