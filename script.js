@@ -16,8 +16,8 @@ if (isDesktopDevice && menuButton) menuButton.style.display = "none";
 const currentPageName = location.pathname.split("/").pop() || "index.html";
 const naverStoreUrl = "https://smartstore.naver.com/silua?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQMxMDAAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGnv1MFuXjtQTcyL1PA4nfN-EuYGHiJiQA5nOwWwHYXm5M75KVDRZ5vL_VDS7k_aem_1hpZ7Qv7sLsdz2Af72ynQQ";
 
-// 공개 메뉴는 드레스 선택에서 상담까지의 흐름이 한눈에 보이도록 단순화합니다.
-if (menu) {
+// 하위 페이지는 단순한 탐색 메뉴를 사용하고, 홈은 기존 카테고리 메뉴를 유지합니다.
+if (menu && currentPageName !== "index.html") {
   menu.innerHTML = `
     <li><a href="products.html">COLLECTION</a></li>
     <li><a href="about.html">STORY</a></li>

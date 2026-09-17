@@ -15,9 +15,9 @@
 
   <!-- 탭 아이콘 (images/favicon.png 넣으면 표시됨) -->
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="style.css?v=20260917-brand-renewal-4" />
+  <link rel="stylesheet" href="style.css?v=20260917-original-home-1" />
 </head>
-<body>
+<body class="original-home">
 
   <!-- ===== 상단 메뉴 (5페이지 공통 — 수정하면 모든 페이지에 똑같이 반영하세요) ===== -->
   <header class="site-header">
@@ -28,7 +28,25 @@
     </div>
     <nav class="gnb" aria-label="주요 메뉴">
       <button class="logo logo-menu-button" type="button" aria-label="주요 메뉴 열기" aria-controls="primary-menu" aria-expanded="false">SILUA</button>
-      <ul class="gnb-menu" id="primary-menu"><li><a href="products.html">COLLECTION</a></li><li><a href="about.html">STORY</a></li><li><a href="reservation.html#personal-color">PERSONAL FIT</a></li><li><a href="reservation.html#workshop">ATELIER</a></li><li><a href="portfolio.html">PORTFOLIO</a></li><li><a href="contact.html">CONTACT</a></li></ul>
+      <ul class="gnb-menu" id="primary-menu">
+        <li class="gnb-category">
+          <a href="products.html">SELF WEDDING</a>
+          <ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤제작</a></li></ul>
+        </li>
+        <li class="gnb-category">
+          <a href="products.html">EVENING &amp; PARTY</a>
+          <ul class="gnb-submenu"><li><a href="products.html?mode=rental">대여</a></li><li><a href="products.html">맞춤제작</a></li></ul>
+        </li>
+        <li class="gnb-category">
+          <a href="products.html">WEDDING ATTIRE</a>
+          <ul class="gnb-submenu"><li><a href="products.html">원피스</a></li><li><a href="products.html">투피스</a></li><li><a href="products.html">수트</a></li></ul>
+        </li>
+        <li class="gnb-category">
+          <a href="products.html">ACCESSORIES</a>
+          <ul class="gnb-submenu"><li><a href="products.html">구두</a></li><li><a href="products.html">잡화</a></li></ul>
+        </li>
+        <li class="gnb-category reservation-menu"><a href="contact.html">RESERVATION</a><ul class="gnb-submenu reservation-submenu"><li class="gnb-submenu-section">공방 체험</li><li class="gnb-submenu-detail"><a href="contact.html">노리개 만들기</a></li><li class="gnb-submenu-detail"><a href="contact.html">구두 꾸미기</a></li><li class="gnb-submenu-detail"><a href="contact.html">키링 만들기</a></li><li class="gnb-submenu-section">1:1 퍼스널 진단</li><li class="gnb-submenu-detail"><a href="reservation.html#personal-color">퍼스널컬러</a></li><li class="gnb-submenu-detail"><a href="reservation.html#body-shape">체형진단</a></li></ul></li><li><a href="about.html">STORY</a></li>
+      </ul>
       <div class="gnb-icons">
         <button class="icon-button menu-button" type="button" aria-label="메뉴 열기" aria-controls="primary-menu" aria-expanded="false"><span></span><span></span><span></span></button>
         <button class="icon-button user-button" type="button" aria-label="로그인 및 회원가입"><span class="user-head"></span><span class="user-body"></span></button>
@@ -119,7 +137,7 @@
     <div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div>
   </footer>
 
-  <script src="script.js?v=20260917-brand-renewal-3"></script>
+  <script src="script.js?v=20260917-original-home-1"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
     // 공개 제품을 인기상품 카드로 보여주며 화면 크기에 맞춰 페이지를 나눕니다.
