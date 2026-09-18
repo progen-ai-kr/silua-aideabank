@@ -222,9 +222,9 @@ a { color: inherit; }
 .category-page-head::after { content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none; }
 .category-page-head::before { background-position: center; background-repeat: no-repeat; background-size: cover; opacity: .62; filter: saturate(.86) contrast(.94); }
 .category-page-head::after { z-index: -1; background: linear-gradient(90deg, rgba(253, 252, 249, .46), rgba(253, 252, 249, .2) 48%, rgba(253, 252, 249, .42)); }
-.category-page-head.category-self-wedding::before { background-image: url("images/category-self-wedding.png"); }
-.category-page-head.category-evening-party::before { background-image: url("images/category-evening-party.png"); }
-.category-page-head.category-wedding-attire::before { background-image: url("images/category-wedding-attire.png"); }
+.category-page-head.category-self-wedding::before { background-image: url("images/category-self-wedding.png?v=20260918-2"); }
+.category-page-head.category-evening-party::before { background-image: url("images/category-evening-party.png?v=20260918-2"); }
+.category-page-head.category-wedding-attire::before { background-image: url("images/category-wedding-attire.png?v=20260918-2"); }
 .category-page-head.category-accessories::before { background-image: url("images/category-accessories.png"); }
 .category-page-head.category-reservation::before { background-image: url("images/category-reservation.png"); }
 .category-page-head h1,
