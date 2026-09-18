@@ -142,12 +142,14 @@ a { color: inherit; }
 .hero p { width: 100%; max-width: 560px; overflow-wrap: anywhere; color: var(--ink-soft); }
 
 /* ===== 홈 카테고리: 이미지 + 제목 + 짧은 소개 ===== */
-.home-transition { display: grid; min-height: 180px; padding: 0 22px; grid-template-columns: minmax(24px, 1fr) auto minmax(24px, 1fr); align-items: center; gap: 20px; background: var(--bg); }
+.home-transition { display: grid; min-height: 300px; padding: 72px 22px; grid-template-columns: minmax(24px, 1fr) minmax(0, 680px) minmax(24px, 1fr); align-items: center; gap: 20px; background: var(--bg); }
 .home-transition::before,
-.home-transition::after { content: ""; width: 100%; max-width: 240px; border-top: 1px solid var(--line); }
+.home-transition::after { content: ""; width: 100%; max-width: 240px; margin-top: 25px; align-self: start; border-top: 1px solid var(--line); }
 .home-transition::before { justify-self: end; }
 .home-transition::after { justify-self: start; }
-.home-transition p { margin: 0; font-family: var(--font-display); font-size: clamp(37.5px, 10.5vw, 54px); font-weight: 500; letter-spacing: 7px; line-height: 1; text-align: center; }
+.home-transition-inner { min-width: 0; text-align: center; }
+.home-transition-logo { margin: 0; font-family: var(--font-display); font-size: clamp(37.5px, 10.5vw, 54px); font-weight: 500; letter-spacing: 7px; line-height: 1; }
+.home-transition-copy { max-width: 680px; margin: 30px auto 0; color: var(--ink-soft); font-size: clamp(13px, 3.6vw, 16px); line-height: 2; word-break: keep-all; }
 .home-categories { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: var(--bg); }
 .home-category { min-width: 0; color: var(--ink); text-align: center; text-decoration: none; }
 .home-category figure { aspect-ratio: 4 / 5; margin: 0; overflow: hidden; background: var(--surface); }
@@ -207,25 +209,24 @@ a { color: inherit; }
 .page-head h1 { font-family: var(--font-display); font-size: clamp(26px, 7vw, 44px); }
 .page-head p { color: var(--ink-soft); margin-top: 8px; }
 
-/* 제품 페이지의 취급 품목을 네모형 버튼으로 간단히 분류합니다. */
-.product-category-filter { display: flex; overflow-x: auto; padding: 16px 18px; justify-content: flex-start; gap: 8px; border-bottom: 1px solid var(--line); background: var(--bg); scrollbar-width: none; }
-.product-category-filter[hidden] { display: none; }
-.product-category-filter::-webkit-scrollbar { display: none; }
-.product-category-filter button { min-height: 44px; padding: 0 16px; flex: 0 0 auto; border: 1px solid var(--line); border-radius: 0; background: var(--bg); color: var(--ink); font: inherit; font-size: 12px; cursor: pointer; transition: border-color .2s ease, background .2s ease, color .2s ease; }
-.product-category-filter button:hover,
-.product-category-filter button:focus-visible { border-color: var(--ink); }
-.product-category-filter button[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--header-light); }
+/* 통합 컬렉션의 취급 품목은 버튼이 아닌 장식형 키워드로 보여줍니다. */
+.collection-keywords { display: flex; margin-top: 22px; flex-wrap: wrap; justify-content: center; gap: 7px; }
+.collection-keywords[hidden] { display: none; }
+.collection-keywords span { display: inline-flex; min-height: 36px; align-items: center; padding: 0 14px; border: 1px solid var(--line); background: rgba(255, 255, 255, .34); color: var(--ink-soft); font-size: 10px; letter-spacing: 1.1px; }
+.category-description[hidden] { display: none; }
 .product-grid-section { scroll-margin-top: 112px; }
 
 /* 헤더에서 선택한 드레스 카테고리는 각각의 전용 이미지 배너로 구분합니다. */
 .category-page-head { position: relative; display: flex; min-height: 260px; padding: 54px 22px; overflow: hidden; flex-direction: column; justify-content: center; isolation: isolate; background: var(--surface); }
 .category-page-head::before,
 .category-page-head::after { content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none; }
-.category-page-head::before { background-position: center; background-repeat: no-repeat; background-size: cover; opacity: .34; filter: saturate(.78) contrast(.9); }
-.category-page-head::after { z-index: -1; background: linear-gradient(90deg, rgba(253, 252, 249, .72), rgba(253, 252, 249, .42) 48%, rgba(253, 252, 249, .66)); }
+.category-page-head::before { background-position: center; background-repeat: no-repeat; background-size: cover; opacity: .62; filter: saturate(.86) contrast(.94); }
+.category-page-head::after { z-index: -1; background: linear-gradient(90deg, rgba(253, 252, 249, .46), rgba(253, 252, 249, .2) 48%, rgba(253, 252, 249, .42)); }
 .category-page-head.category-self-wedding::before { background-image: url("images/category-self-wedding.png"); }
 .category-page-head.category-evening-party::before { background-image: url("images/category-evening-party.png"); }
 .category-page-head.category-wedding-attire::before { background-image: url("images/category-wedding-attire.png"); }
+.category-page-head.category-accessories::before { background-image: url("images/category-accessories.png"); }
+.category-page-head.category-reservation::before { background-image: url("images/category-reservation.png"); }
 .category-page-head h1,
 .category-page-head p { position: relative; z-index: 1; text-shadow: 0 1px 12px rgba(255, 255, 255, .72); }
 /* 소개 배너: 모바일에서는 사진 아래에 문구를 배치해 가독성을 지킵니다. */
@@ -566,10 +567,9 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 
 /* ===== 큰 화면(태블릿/PC) — 720px 이상 ===== */
 @media (min-width: 720px) {
-  .product-category-filter { justify-content: center; }
   .category-page-head { min-height: 330px; padding: 72px 7%; }
   .top-notice { width: 50%; font-size: 11px; }
-  .home-transition { min-height: 300px; padding-right: max(32px, 7vw); padding-left: max(32px, 7vw); gap: 34px; }
+  .home-transition { min-height: 420px; padding: 104px max(32px, 7vw); gap: 34px; }
   .home-categories { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .home-category figure { aspect-ratio: 3 / 4; }
   .home-category-copy { padding: 26px 18px 46px; }

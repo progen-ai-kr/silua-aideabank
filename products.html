@@ -6,7 +6,7 @@
   <title>제품 — SILUA</title>
   <meta name="description" content="브랜드의 제품(컬렉션)을 소개합니다." />
   <link rel="icon" href="images/favicon.png" />
-  <link rel="stylesheet" href="style.css?v=20260918-category-pages-23" />
+  <link rel="stylesheet" href="style.css?v=20260918-category-images-24" />
 </head>
 <body>
 
@@ -18,15 +18,13 @@
   <!-- [작성서 05: 취급 품목] -->
   <section class="page-head">
     <h1>SILUA COLLECTION</h1>
-    <p>이브닝·파티, 셀프웨딩, 스냅 웨딩드레스</p>
+    <div class="collection-keywords" aria-label="SILUA 컬렉션 키워드">
+      <span>SELF WEDDING</span>
+      <span>EVENING &amp; PARTY</span>
+      <span>WEDDING ATTIRE</span>
+    </div>
+    <p class="category-description" hidden></p>
   </section>
-
-  <nav class="product-category-filter" aria-label="취급 품목">
-    <button type="button" data-product-category="">전체</button>
-    <button type="button" data-product-category="evening-party">이브닝·파티</button>
-    <button type="button" data-product-category="self-wedding">셀프웨딩</button>
-    <button type="button" data-product-category="snap-wedding">스냅 웨딩드레스</button>
-  </nav>
 
   <!-- ===== 제품 목록 =====
        ★ 제품은 여기 HTML이 아니라 products.json 파일에서 관리합니다.
@@ -122,37 +120,24 @@
       const detailKey = isRentalMode ? "rental" : (productService || productType);
       const detail = detailLabels[detailKey]?.[language];
       const pageHead = document.querySelector(".page-head");
-      const categoryFilter = document.querySelector(".product-category-filter");
+      const collectionKeywords = document.querySelector(".collection-keywords");
+      const categoryDescription = document.querySelector(".category-description");
       if (isRentalMode) document.body.classList.add("rental-mode");
       pageHead.classList.remove("category-page-head", "category-self-wedding", "category-evening-party", "category-wedding-attire");
       if (hasCategoryPageContext && ["self-wedding", "evening-party", "wedding-attire"].includes(productCollection)) {
         pageHead.classList.add("category-page-head", "category-" + productCollection);
       }
-      categoryFilter.hidden = hasCategoryPageContext;
+      collectionKeywords.hidden = hasCategoryPageContext;
+      categoryDescription.hidden = !hasCategoryPageContext;
 
       if (hasCategoryPageContext) {
         document.querySelector(".page-head h1").textContent = [collection, detail].filter(Boolean).join(" · ") || "SILUA COLLECTION";
-        document.querySelector(".page-head p").textContent = isEnglish
+        categoryDescription.textContent = isEnglish
           ? (isRentalMode ? "Select a product, then choose your rental period." : productService === "custom" ? "Explore made-to-order pieces in this collection." : "Explore the collection selected from the SILUA menu.")
           : (isRentalMode ? "상품을 선택한 뒤 대여 기간을 지정할 수 있습니다." : productService === "custom" ? "이 컬렉션의 맞춤제작 제품을 확인해보세요." : "SILUA 메뉴에서 선택한 컬렉션을 확인해보세요.");
       } else {
         document.querySelector(".page-head h1").textContent = "SILUA COLLECTION";
-        document.querySelector(".page-head p").textContent = isEnglish
-          ? "Evening & party, self wedding, and wedding snap dresses"
-          : "이브닝·파티, 셀프웨딩, 스냅 웨딩드레스";
       }
-
-      const categoryCopy = {
-        "": { ko: "전체", en: "ALL" },
-        "evening-party": { ko: "이브닝·파티", en: "EVENING & PARTY" },
-        "self-wedding": { ko: "셀프웨딩", en: "SELF WEDDING" },
-        "snap-wedding": { ko: "스냅 웨딩드레스", en: "WEDDING SNAP DRESS" }
-      };
-      document.querySelectorAll("[data-product-category]").forEach((button) => {
-        const category = button.dataset.productCategory;
-        button.textContent = categoryCopy[category][isEnglish ? "en" : "ko"];
-        button.setAttribute("aria-pressed", String(category === productCollection));
-      });
     }
 
     document.addEventListener("silua:languagechange", () => {
@@ -189,16 +174,6 @@
         })
         .join("");
     }
-
-    document.querySelectorAll("[data-product-category]").forEach((button) => {
-      button.addEventListener("click", () => {
-        productCollection = button.dataset.productCategory;
-        productType = "";
-        applyProductListContext();
-        renderProductList();
-        document.querySelector(".product-grid-section").scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
 
     ProductCatalog.loadVisibleProducts()
       .then((products) => {
