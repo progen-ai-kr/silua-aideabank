@@ -6,7 +6,7 @@
   <title>제품 — SILUA</title>
   <meta name="description" content="브랜드의 제품(컬렉션)을 소개합니다." />
   <link rel="icon" href="images/favicon.png" />
-  <link rel="stylesheet" href="style.css?v=20260918-home-copy-26" />
+  <link rel="stylesheet" href="style.css?v=20260918-collection-hero-27" />
 </head>
 <body>
 
@@ -16,7 +16,7 @@
   </header>
 
   <!-- [작성서 05: 취급 품목] -->
-  <section class="page-head">
+  <section class="page-head collection-landing-head">
     <h1>SILUA COLLECTION</h1>
     <div class="collection-keywords" aria-label="SILUA 컬렉션 키워드">
       <span>SELF WEDDING</span>
@@ -123,6 +123,7 @@
       const collectionKeywords = document.querySelector(".collection-keywords");
       const categoryDescription = document.querySelector(".category-description");
       if (isRentalMode) document.body.classList.add("rental-mode");
+      pageHead.classList.toggle("collection-landing-head", !hasCategoryPageContext);
       pageHead.classList.remove("category-page-head", "category-self-wedding", "category-evening-party", "category-wedding-attire");
       if (hasCategoryPageContext && ["self-wedding", "evening-party", "wedding-attire"].includes(productCollection)) {
         pageHead.classList.add("category-page-head", "category-" + productCollection);

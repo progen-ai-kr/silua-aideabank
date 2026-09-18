@@ -220,6 +220,15 @@ a { color: inherit; }
 .category-description[hidden] { display: none; }
 .product-grid-section { scroll-margin-top: 112px; }
 
+/* 메인에서 들어오는 통합 컬렉션 화면은 여백이 있는 웨딩 공간 사진을 사용합니다. */
+.collection-landing-head { position: relative; display: flex; min-height: 270px; padding: 58px 22px; overflow: hidden; flex-direction: column; align-items: center; justify-content: center; isolation: isolate; background: var(--surface); }
+.collection-landing-head::before,
+.collection-landing-head::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+.collection-landing-head::before { z-index: -2; background: url("images/collection-hero.png?v=20260918-1") center / cover no-repeat; opacity: .88; }
+.collection-landing-head::after { z-index: -1; background: rgba(253, 252, 249, .24); }
+.collection-landing-head h1,
+.collection-landing-head .collection-keywords { position: relative; z-index: 1; }
+
 /* 헤더에서 선택한 드레스 카테고리는 각각의 전용 이미지 배너로 구분합니다. */
 .category-page-head { position: relative; display: flex; min-height: 260px; padding: 54px 22px; overflow: hidden; flex-direction: column; justify-content: center; isolation: isolate; background: var(--surface); }
 .category-page-head::before,
@@ -571,6 +580,7 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 
 /* ===== 큰 화면(태블릿/PC) — 720px 이상 ===== */
 @media (min-width: 720px) {
+  .collection-landing-head { min-height: 360px; padding: 78px 7%; }
   .category-page-head { min-height: 330px; padding: 72px 7%; }
   .top-notice { width: 50%; font-size: 11px; }
   .home-transition { min-height: 420px; padding: 104px max(32px, 7vw); gap: 34px; }
