@@ -13,6 +13,7 @@
   --header-light: #fff;
   --header-glass: rgba(245, 242, 236, .7);
   --header-hover: #9c7770;
+  --brand-brown: #765548;
   --hero-overlay: rgba(253, 252, 249, .54);
   --control-surface: rgba(38, 35, 31, .32);
   --control-muted: rgba(255, 255, 255, .48);
@@ -142,12 +143,17 @@ a { color: inherit; }
 .hero p { width: 100%; max-width: 560px; overflow-wrap: anywhere; color: var(--ink-soft); }
 
 /* ===== 홈 카테고리: 이미지 + 제목 + 짧은 소개 ===== */
-.home-transition { display: grid; min-height: 180px; padding: 0 22px; grid-template-columns: minmax(24px, 1fr) auto minmax(24px, 1fr); align-items: center; gap: 20px; background: var(--bg); }
+.home-transition { display: grid; min-height: 300px; padding: 72px 22px; grid-template-columns: minmax(24px, 1fr) minmax(0, 680px) minmax(24px, 1fr); align-items: center; gap: 20px; background: var(--bg); }
 .home-transition::before,
-.home-transition::after { content: ""; width: 100%; max-width: 240px; border-top: 1px solid var(--line); }
+.home-transition::after { content: ""; width: 100%; max-width: 240px; margin-top: 25px; align-self: start; border-top: 1px solid var(--line); }
 .home-transition::before { justify-self: end; }
 .home-transition::after { justify-self: start; }
-.home-transition p { margin: 0; font-family: var(--font-display); font-size: clamp(37.5px, 10.5vw, 54px); font-weight: 500; letter-spacing: 7px; line-height: 1; text-align: center; }
+.home-transition-inner { min-width: 0; text-align: center; }
+.home-transition-logo { margin: 0; font-family: var(--font-display); font-size: clamp(37.5px, 10.5vw, 54px); font-weight: 500; letter-spacing: 7px; line-height: 1; }
+.home-transition-copy { max-width: 680px; margin: 30px auto 0; color: var(--ink-soft); font-size: clamp(13px, 3.6vw, 16px); line-height: 2; word-break: keep-all; }
+.home-transition-copy span { display: block; }
+.home-transition-copy span + span { margin-top: 20px; }
+.home-transition-emphasis { color: var(--brand-brown); font-weight: 600; }
 .home-categories { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: var(--bg); }
 .home-category { min-width: 0; color: var(--ink); text-align: center; text-decoration: none; }
 .home-category figure { aspect-ratio: 4 / 5; margin: 0; overflow: hidden; background: var(--surface); }
@@ -206,6 +212,36 @@ a { color: inherit; }
 .page-head { background: var(--surface); text-align: center; padding: 64px 22px 48px; }
 .page-head h1 { font-family: var(--font-display); font-size: clamp(26px, 7vw, 44px); }
 .page-head p { color: var(--ink-soft); margin-top: 8px; }
+
+/* 통합 컬렉션의 취급 품목은 버튼이 아닌 장식형 키워드로 보여줍니다. */
+.collection-keywords { display: flex; margin-top: 22px; flex-wrap: wrap; justify-content: center; gap: 7px; }
+.collection-keywords[hidden] { display: none; }
+.collection-keywords span { display: inline-flex; min-height: 36px; align-items: center; padding: 0 14px; border: 1px solid var(--line); background: rgba(255, 255, 255, .34); color: var(--ink-soft); font-size: 10px; letter-spacing: 1.1px; }
+.category-description[hidden] { display: none; }
+.product-grid-section { scroll-margin-top: 112px; }
+
+/* 메인에서 들어오는 통합 컬렉션 화면은 여백이 있는 웨딩 공간 사진을 사용합니다. */
+.collection-landing-head { position: relative; display: flex; min-height: 270px; padding: 58px 22px; overflow: hidden; flex-direction: column; align-items: center; justify-content: center; isolation: isolate; background: var(--surface); }
+.collection-landing-head::before,
+.collection-landing-head::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+.collection-landing-head::before { z-index: -2; background: url("images/collection-hero.png?v=20260918-1") center / cover no-repeat; opacity: .88; }
+.collection-landing-head::after { z-index: -1; background: rgba(253, 252, 249, .24); }
+.collection-landing-head h1,
+.collection-landing-head .collection-keywords { position: relative; z-index: 1; }
+
+/* 헤더에서 선택한 드레스 카테고리는 각각의 전용 이미지 배너로 구분합니다. */
+.category-page-head { position: relative; display: flex; min-height: 260px; padding: 54px 22px; overflow: hidden; flex-direction: column; justify-content: center; isolation: isolate; background: var(--surface); }
+.category-page-head::before,
+.category-page-head::after { content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none; }
+.category-page-head::before { background-position: center; background-repeat: no-repeat; background-size: cover; opacity: .62; filter: saturate(.86) contrast(.94); }
+.category-page-head::after { z-index: -1; background: linear-gradient(90deg, rgba(253, 252, 249, .46), rgba(253, 252, 249, .2) 48%, rgba(253, 252, 249, .42)); }
+.category-page-head.category-self-wedding::before { background-image: url("images/category-self-wedding.png?v=20260918-2"); }
+.category-page-head.category-evening-party::before { background-image: url("images/category-evening-party.png?v=20260918-2"); }
+.category-page-head.category-wedding-attire::before { background-image: url("images/category-wedding-attire.png?v=20260918-2"); }
+.category-page-head.category-accessories::before { background-image: url("images/category-accessories.png"); }
+.category-page-head.category-reservation::before { background-image: url("images/category-reservation.png"); }
+.category-page-head h1,
+.category-page-head p { position: relative; z-index: 1; text-shadow: 0 1px 12px rgba(255, 255, 255, .72); }
 /* 소개 배너: 모바일에서는 사진 아래에 문구를 배치해 가독성을 지킵니다. */
 .page-head.about-banner { position: relative; padding: 0 0 32px; overflow: hidden; }
 .about-banner-image { display: block; width: 100%; height: 240px; object-fit: cover; object-position: 75% center; }
@@ -445,18 +481,19 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 .contact-item .value { margin-top: 4px; overflow-wrap: anywhere; font-size: 16px; word-break: keep-all; }
 
 /* ===== 푸터 (배너·SNS·고객센터·사업자 정보) ===== */
+.home-page .footer { margin-top: clamp(72px, 8vw, 140px); }
 .footer { border-top: 1px solid var(--line); background: var(--header-dark); color: var(--header-light); font-size: 13px; text-align: left; }
 .footer-banners { display: flex; flex-direction: column; gap: 1px; overflow: hidden; padding: 0; background: var(--line); color: var(--ink); }
 .footer-banner { position: relative; display: flex; width: 100%; min-height: 132px; padding: 24px 25% 24px 22px; flex: none; flex-direction: column; justify-content: center; overflow: hidden; background: var(--bg); color: inherit; text-decoration: none; transition: background .25s ease; isolation: isolate; }
 .footer-banner::before { content: "›"; position: absolute; top: 50%; right: 20px; z-index: 2; color: var(--ink-soft); font-family: var(--font-display); font-size: 34px; line-height: 1; transform: translateY(-50%); }
-.footer-banner::after { content: ""; position: absolute; top: 0; right: 10%; bottom: 0; z-index: -1; width: 28%; background-position: center; background-repeat: no-repeat; background-size: contain; opacity: .42; transition: opacity .25s ease, transform .35s ease; }
-.footer-banner:nth-child(1)::after { background-image: url("images/theme-bridal.png"); }
-.footer-banner:nth-child(2)::after { background-image: url("images/theme-evening.png"); }
-.footer-banner:nth-child(3)::after { background-image: url("images/theme-modern.png"); }
+.footer-banner::after { content: ""; position: absolute; top: 0; right: 5%; bottom: 0; z-index: -1; width: 40%; background-position: center; background-repeat: no-repeat; background-size: cover; opacity: .56; transition: opacity .25s ease, transform .35s ease; -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, .35) 18%, #000 42%, #000 100%); mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, .35) 18%, #000 42%, #000 100%); }
+.footer-banner:nth-child(1)::after { background-image: url("images/footer-brand-story.png"); }
+.footer-banner:nth-child(2)::after { background-image: url("images/footer-personal-color.png"); }
+.footer-banner:nth-child(3)::after { background-image: url("images/footer-workshop.png"); }
 .footer-banner:hover,
 .footer-banner:focus-visible { background: var(--surface); }
 .footer-banner:hover::after,
-.footer-banner:focus-visible::after { opacity: .58; transform: scale(1.03); }
+.footer-banner:focus-visible::after { opacity: .68; transform: scale(1.03); }
 .footer-banner-label { color: var(--ink-soft); font-size: 10px; letter-spacing: 2px; }
 .footer-banner strong { margin-top: 8px; font-family: var(--font-display); font-size: 23px; font-weight: 500; }
 .footer-banner-copy { margin-top: 5px; color: var(--ink-soft); font-size: 12px; }
@@ -543,8 +580,10 @@ body:has(.rental-calendar-dialog[open]) { overflow: hidden; }
 
 /* ===== 큰 화면(태블릿/PC) — 720px 이상 ===== */
 @media (min-width: 720px) {
+  .collection-landing-head { min-height: 360px; padding: 78px 7%; }
+  .category-page-head { min-height: 330px; padding: 72px 7%; }
   .top-notice { width: 50%; font-size: 11px; }
-  .home-transition { min-height: 300px; padding-right: max(32px, 7vw); padding-left: max(32px, 7vw); gap: 34px; }
+  .home-transition { min-height: 420px; padding: 104px max(32px, 7vw); gap: 34px; }
   .home-categories { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .home-category figure { aspect-ratio: 3 / 4; }
   .home-category-copy { padding: 26px 18px 46px; }

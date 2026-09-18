@@ -17,9 +17,9 @@
 
   <!-- 탭 아이콘 (images/favicon.png 넣으면 표시됨) -->
   <link rel="icon" href="images/favicon.png" />
-  <link rel="stylesheet" href="style.css?v=20260915-home-logo-20" />
+  <link rel="stylesheet" href="style.css?v=20260918-collection-hero-27" />
 </head>
-<body>
+<body class="home-page">
 
   <!-- ===== 상단 메뉴 (5페이지 공통 — 수정하면 모든 페이지에 똑같이 반영하세요) ===== -->
   <header class="site-header">
@@ -77,21 +77,24 @@
 
   <!-- 회전 이미지와 컬렉션 사이의 브랜드 전환 영역입니다. -->
   <div class="home-transition" aria-label="SILUA 컬렉션">
-    <p>SILUA</p>
+    <div class="home-transition-inner">
+      <p class="home-transition-logo">SILUA</p>
+      <p class="home-transition-copy"><span class="home-transition-emphasis">특별한 날, 나를 위한 아름다움</span><span>나에게 가장 어울리는 실루엣과 스타일을 제안합니다.</span></p>
+    </div>
   </div>
 
   <!-- ===== 메인 카테고리: 전용 사진을 받으면 이미지 경로만 교체하세요. ===== -->
   <section class="home-categories" id="themes" aria-label="SILUA 카테고리">
     <a class="home-category" data-theme-category="self-wedding" href="products.html?collection=self-wedding">
-      <figure><img src="images/theme-bridal.png" alt="브라이덜 컬렉션" /></figure>
+      <figure><img src="images/theme-bridal.png?v=20260918-4" alt="브라이덜 컬렉션" /></figure>
       <div class="home-category-copy"><h2>Self Weading</h2><p>인생의 주인공이 되는 날</p><span>자세히 보기 &gt;</span></div>
     </a>
     <a class="home-category" data-theme-category="evening-party" href="products.html?collection=evening-party">
-      <figure><img src="images/theme-evening.png" alt="이브닝 컬렉션" /></figure>
+      <figure><img src="images/theme-evening.png?v=20260918-4" alt="이브닝 컬렉션" /></figure>
       <div class="home-category-copy"><h2>Evening &amp; Party</h2><p>화려하게 빛나는 순간</p><span>자세히 보기 &gt;</span></div>
     </a>
     <a class="home-category" data-theme-category="wedding-attire" href="products.html?collection=wedding-attire">
-      <figure><img src="images/theme-modern.png" alt="모던 컬렉션" /></figure>
+      <figure><img src="images/theme-modern.png?v=20260918-4" alt="모던 컬렉션" /></figure>
       <div class="home-category-copy"><h2>Wedding Attire</h2><p>특별한 날의 레디투웨어</p><span>자세히 보기 &gt;</span></div>
     </a>
   </section>
@@ -139,7 +142,7 @@
     <div class="footer-bottom"><p>© SILUA. All rights reserved.</p></div>
   </footer>
 
-  <script src="script.js?v=20260914-slide-spacing-17"></script>
+  <script src="script.js?v=20260918-collection-images-18"></script>
   <script src="catalog.js?v=20260826-rich-editor-1"></script>
   <script>
     // 공개 제품을 인기상품 카드로 보여주며 화면 크기에 맞춰 페이지를 나눕니다.
