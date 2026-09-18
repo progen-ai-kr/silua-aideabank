@@ -6,7 +6,7 @@
   <title>제품 — SILUA</title>
   <meta name="description" content="브랜드의 제품(컬렉션)을 소개합니다." />
   <link rel="icon" href="images/favicon.png" />
-  <link rel="stylesheet" href="style.css?v=20260918-collection-images-22" />
+  <link rel="stylesheet" href="style.css?v=20260918-category-pages-23" />
 </head>
 <body>
 
@@ -71,6 +71,7 @@
     const productService = productListParams.get("service") || "";
     let productType = productListParams.get("type") || "";
     let visibleProducts = [];
+    const hasCategoryPageContext = productListParams.has("collection") || productListParams.has("service") || productListParams.has("mode") || productListParams.has("type");
 
     const collectionLabels = {
       "self-wedding": { ko: "셀프 웨딩", en: "SELF WEDDING" },
@@ -88,7 +89,7 @@
     const collectionKeywords = {
       "self-wedding": ["self wedding", "self-wedding", "셀프웨딩", "셀프 웨딩", "bridal", "브라이덜"],
       "evening-party": ["evening", "party", "이브닝", "파티"],
-      "wedding-attire": ["wedding attire", "웨딩 예복", "예복", "one piece", "one-piece", "two piece", "two-piece", "원피스", "투피스", "suit", "수트"],
+      "wedding-attire": ["wedding attire", "웨딩 예복", "예복", "one piece", "one-piece", "two piece", "two-piece", "원피스", "투피스", "suit", "수트", "웨딩 스냅", "셀프웨딩", "셀프 웨딩"],
       "snap-wedding": ["wedding snap", "웨딩 스냅", "스냅 웨딩"]
     };
     const typeKeywords = {
@@ -113,14 +114,33 @@
       });
     }
 
-    // 제품 제목은 유지하고 취급 품목 버튼의 선택 상태만 갱신합니다.
+    // 통합 컬렉션과 헤더에서 들어온 카테고리 전용 화면을 서로 다르게 표시합니다.
     function applyProductListContext() {
       const isEnglish = document.documentElement.lang === "en";
+      const language = isEnglish ? "en" : "ko";
+      const collection = collectionLabels[productCollection]?.[language];
+      const detailKey = isRentalMode ? "rental" : (productService || productType);
+      const detail = detailLabels[detailKey]?.[language];
+      const pageHead = document.querySelector(".page-head");
+      const categoryFilter = document.querySelector(".product-category-filter");
       if (isRentalMode) document.body.classList.add("rental-mode");
-      document.querySelector(".page-head h1").textContent = "SILUA COLLECTION";
-      document.querySelector(".page-head p").textContent = isEnglish
-        ? "Evening & party, self wedding, and wedding snap dresses"
-        : "이브닝·파티, 셀프웨딩, 스냅 웨딩드레스";
+      pageHead.classList.remove("category-page-head", "category-self-wedding", "category-evening-party", "category-wedding-attire");
+      if (hasCategoryPageContext && ["self-wedding", "evening-party", "wedding-attire"].includes(productCollection)) {
+        pageHead.classList.add("category-page-head", "category-" + productCollection);
+      }
+      categoryFilter.hidden = hasCategoryPageContext;
+
+      if (hasCategoryPageContext) {
+        document.querySelector(".page-head h1").textContent = [collection, detail].filter(Boolean).join(" · ") || "SILUA COLLECTION";
+        document.querySelector(".page-head p").textContent = isEnglish
+          ? (isRentalMode ? "Select a product, then choose your rental period." : productService === "custom" ? "Explore made-to-order pieces in this collection." : "Explore the collection selected from the SILUA menu.")
+          : (isRentalMode ? "상품을 선택한 뒤 대여 기간을 지정할 수 있습니다." : productService === "custom" ? "이 컬렉션의 맞춤제작 제품을 확인해보세요." : "SILUA 메뉴에서 선택한 컬렉션을 확인해보세요.");
+      } else {
+        document.querySelector(".page-head h1").textContent = "SILUA COLLECTION";
+        document.querySelector(".page-head p").textContent = isEnglish
+          ? "Evening & party, self wedding, and wedding snap dresses"
+          : "이브닝·파티, 셀프웨딩, 스냅 웨딩드레스";
+      }
 
       const categoryCopy = {
         "": { ko: "전체", en: "ALL" },
@@ -174,11 +194,6 @@
       button.addEventListener("click", () => {
         productCollection = button.dataset.productCategory;
         productType = "";
-        if (productCollection) productListParams.set("collection", productCollection);
-        else productListParams.delete("collection");
-        productListParams.delete("type");
-        const query = productListParams.toString();
-        history.replaceState(null, "", location.pathname + (query ? "?" + query : ""));
         applyProductListContext();
         renderProductList();
         document.querySelector(".product-grid-section").scrollIntoView({ behavior: "smooth", block: "start" });
